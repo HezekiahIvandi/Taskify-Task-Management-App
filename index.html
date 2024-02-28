@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Taskify</title>
+    <link rel="stylesheet" href="style.css"> 
+    <!-- Font Awesome 5.15.4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <img alt="Logo Taskify" class="logo" src="Taskify.png">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a class="active" href="#">Projects</a></li>
+                <li><a href="#">Why Us?</a></li>
+            </ul>
+        </nav>
+        <a class="login" href="#"><button class="login-button">Login</button></a>
+    </header>
+    <div class='app'>
+        <main class='taskify'>
+            <div class='taskify-tasks'>
+                <div class='taskify-col'>
+                    <div class='taskify-col-header'>
+                        <h1 class='taskify-col-header-title'>Task To Do 📝</h1>
+                    </div>
+
+                    <div class='task'>
+                        <div class='task-tags'>
+                            <span class='task-tag'>Maintenance</span>
+                            <button class='task-options'><i class="fas fa-bars"></i></button>
+                        </div>
+                        <p>Peningkatan fitur berdasarkan umpan balik pengguna dan evaluasi kinerja.</p>
+                        <div class='task-desc'>
+                            <span><i class="fas fa-calendar"></i> Feb 27</span> 
+                            <button class="comments"><span><i class="fas fa-comments"></i> 2</span></button>
+                            <span class='task-owner'>M</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- tambahkan kolom task -->
+                <div class='taskify-col'>
+                    <div class='taskify-col-header'>
+                        <h1 class='taskify-col-header-title'>On Going ⏳</h1>
+                    </div>
+                    
+                    <div class='task'>
+                        <div class='task-tags'>
+                            <span class='task-tag'>Desain UI/UX</span>
+                            <button class='task-options'><i class="fas fa-bars"></i></button>
+                        </div>
+                        <p>Pembuatan wireframe dan mockup untuk merencanakan tata letak dan navigasi.</p>
+                        <div class='task-desc'>
+                            <span><i class="fas fa-calendar"></i> Feb 25</span> 
+                            <button class="comments"><span><i class="fas fa-comments"></i> 3</span></button>
+                            <span class='task-owner'>M</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- tambahkan kolom task -->
+                <div class='taskify-col'>
+                    <div class='taskify-col-header'>
+                        <h1 class='taskify-col-header-title'>Needs Review 🔎</h1>
+                    </div>
+
+                    <div class='task'>
+                        <div class='task-tags'>
+                            <span class='task-tag'>Testing</span>
+                            <button class='task-options'><i class="fas fa-bars"></i></button>
+                        </div>
+                        <p>Pengujian fungsionalitas aplikasi untuk memastikan bahwa semua fitur berjalan dengan baik.</p>
+                        <div class='task-desc'>
+                            <span><i class="fas fa-calendar"></i> Feb 5</span>
+                            <button class="comments"><span><i class="fas fa-comments"></i> 3</span></button>
+                            <span class='task-owner'>H</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- tambahkan kolom task -->
+                <div class='taskify-col'>
+                    <div class='taskify-col-header'>
+                        <h1 class='taskify-col-header-title'>Done 💯</h1>
+                    </div>
+
+                    <div class='task'>
+                        <div class='task-tags'>
+                            <span class='task-tag'>Perencanaan</span>
+                            <button class='task-options'><i class="fas fa-bars"></i></button>
+                        </div>
+                        <p>Identifikasi kebutuhan pengguna dan tujuan aplikasi.</p>
+                        <div class='task-desc'>
+                            <span><i class="fas fa-calendar"></i> Jan 27</span> 
+                            <button class="comments"><span><i class="fas fa-comments"></i> 10</span></button> 
+                            <span class='task-owner'>V</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+        <aside class='taskify-progress'>
+            <div class='tag-progress'>
+                <h1>Task Progress 💯🚀🎯</h1>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Perencanaan<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Desain UI/UX<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Frontend<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Backend<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Testing<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Deployment<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+                <!-- tambahkan div untuk progress -->
+                <div class='tag-progress'>
+                    <p>Maintenance<span>2/4</span></p>
+                    <progress class="progress" value="2" max="4"></progress>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>
