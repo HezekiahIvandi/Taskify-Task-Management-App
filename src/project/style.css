@@ -272,3 +272,31 @@ button:hover {
 .chat-button:hover {
     background-color: #0051ff; 
 }
+
+/* Aturan media queries untuk tampilan pada layar ponsel */
+@media only screen and (max-width: 600px) {
+    .app {
+        padding: 1rem; /* Mengurangi padding untuk tampilan pada layar kecil */
+    }
+
+    .taskify {
+        max-width: 100%; /* Menggunakan lebar penuh untuk tampilan pada layar kecil */
+    }
+
+    .taskify-tasks {
+        grid-template-columns: repeat(1, 1fr); /* Menampilkan satu kolom task per baris untuk tampilan pada layar kecil */
+        grid-column-gap: 1rem; /* Menambahkan jarak antara kolom task untuk tampilan pada layar kecil */
+    }
+
+    .taskify-progress {
+        width: 100%; /* Menggunakan lebar penuh untuk sidebar progress pada layar kecil */
+        border-left: none; /* Menghilangkan border kiri pada sidebar progress untuk tampilan pada layar kecil */
+    }
+}
+
+/* Aturan media queries untuk tampilan pada layar tablet */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    .taskify-tasks {
+        grid-template-columns: repeat(2, 1fr); /* Menampilkan dua kolom task per baris untuk tampilan pada layar tablet */
+    }
+}
