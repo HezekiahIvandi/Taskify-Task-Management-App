@@ -1,0 +1,251 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+/* Global Styles */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+/* Header Styles */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 5%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    cursor: pointer;
+    width: 200px;
+}
+
+.navbar a {
+    font-size: 16px;
+    color: #a1a1a1;
+    transition: all 0.3s ease 0s;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 40px;
+}
+
+.navbar a:hover {
+    color: #007bff;
+}
+
+.navbar a.active {
+    color: #007bff;
+}
+
+.login-button {
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 16;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    margin-left: 100px;
+    border-radius: 8px;
+}
+
+.login-button:hover {
+    background-color: #a1a1a1;
+}
+
+.main {
+    background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    /* Tinggi viewport - tinggi header */
+    margin-top: 70px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.main-title {
+    margin-top: 20vh;
+    font-size: 3.6em;
+    font-weight: 700;
+}
+
+.main-title span {
+    color: #231e6b;
+}
+
+.main-subtitle {
+    margin-top: 10px;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #a1a1a1;
+}
+
+.start-button {
+    width: 160px;
+    height: 60px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+.start-button:hover {
+    background-color: #a1a1a1;
+}
+
+.trusted {
+    margin-top: 25vh;
+    color: #231e6b;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.features {
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    background-image: linear-gradient(to bottom, rgba(210, 153, 194, 0.4) 0%, rgba(166, 80, 247, 0.4) 100%);
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.features-title {
+    text-align: center;
+    font-size: 3.6em;
+    color: #000000;
+}
+
+.features-carousel {
+    margin-top: 1vh;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60vw;
+    height: 36vw;
+    position: relative;
+}
+
+.features-carousel > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.carousel-items {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: 200ms opacity ease-in-out;
+    transition-delay: 200ms;
+}
+
+.carousel-items[data-active] {
+    opacity: 1;
+    transition-delay: 0ms;
+    z-index: 1;
+}
+
+.features-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border: solid 4px #007bff;
+    border-radius: 24px;
+}
+
+.carousel-button {
+    position: absolute;
+    background: none;
+    border: none;
+    font-size: 4rem;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    color: #007bff;
+    opacity: 0.5;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+.carousel-button:hover , .carousel-button:focus {
+    color: #231e6b;
+    opacity: 0.5;
+}
+
+.carousel-button.prev {
+    left: 1rem;
+}
+
+.carousel-button.next {
+    right: 1rem;
+}
+
+.footer-divider {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #a1a1a1;
+}
+
+.footer {
+    background-image: linear-gradient(to bottom, rgba(166, 80, 247, 0.4) 0%, rgba(166, 80, 247, 0.6) 100%);
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.socialIcons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.socialIcons a {
+    text-decoration: none;
+    padding: 10px 12px;
+    background-color: #ffffff;
+    margin: 16px;
+    border-radius: 50%;
+}
+
+.socialIcons a i {
+    font-size: 1.5em;
+    color: #231e6b;
+    opacity: 0.9;
+}
+
+.socialIcons a:hover {
+    background-color: #231e6b;
+    transition: 0.5s;
+}
+
+.socialIcons a i:hover {
+    color: #ffffff;
+    opacity: 0.9;
+    transition: 0.5s;
+}
+
+.footer-bottom {
+    text-align: center;
+    color: #231e6b;
+    margin-top: 20px;
+}

@@ -59,14 +59,17 @@ header {
 }
 
 .login-button {
+    width: 100px;
+    height: 40px;
     font-weight: bold;
-    padding: 9px 25px;
+    font-size: 16;
     color: #ffffff;
     background-color: #007bff;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease 0s;
-    border-radius: 6px;
+    margin-left: 60px;
+    border-radius: 8px;
 }
 
 button:hover {
@@ -80,7 +83,8 @@ button:hover {
     /* Tinggi viewport - tinggi header */
     margin-top: 70px;
     padding-top: 20px;
-    background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 100%);
+    /* background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 100%); */
+    background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
 }
 
 /* taskify Styles */
