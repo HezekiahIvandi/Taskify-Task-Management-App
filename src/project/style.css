@@ -247,3 +247,28 @@ button:hover {
     background-color: #007bff;
     border-radius: 10px;
 }
+
+.chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #ffffff; 
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.chat-button img {
+    width: 50%;
+    height: auto;
+    color: white;
+}
+
+.chat-button:hover {
+    background-color: #0051ff; 
+}
