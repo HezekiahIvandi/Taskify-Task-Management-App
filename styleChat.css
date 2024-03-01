@@ -1,0 +1,134 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.container-fitur-chat{
+    display: flex;
+    padding: 1rem;
+    min-height: 90vh;
+}
+
+.chat-contacts{
+width: 35%;
+min-height: inherit;
+}
+.chat-contacts-header{
+ border: solid 1px lightgrey;
+ padding: 1rem;
+ border-radius:5px 5px 0 0;
+ 
+}
+.chat-contacts-header p{
+  font-weight: 900;
+}
+.chat-contacts-list{
+    border: solid 1px lightgrey;
+    border-top: none;
+    border-radius:0px 0px 0px 5px;
+    border-right:none;
+    min-height: inherit;
+}
+
+.contact{
+    display: flex;
+   
+    padding: 0.7rem;
+}
+.contact img{
+    width: 3rem;
+    margin-right:0.4rem ;
+    border-radius: 50%;
+}
+
+.latest-chat{
+    color: gray;
+}
+.chat-box{
+width: 100%;
+min-height: inherit;
+}
+.chat-box-header{
+display: flex;
+justify-content: space-between;
+/* border: solid 1px lightgrey; */
+
+padding: 1rem;
+border-radius:5px 5px 0 0;
+}
+.chat-box-header img{
+  width: 3rem;
+  margin-right:0.4rem ;
+  border-radius: 50%;
+}
+.chat-box-header-info{
+    display: flex;
+}
+
+.chat-header-title{
+    font-weight: 900;
+}
+.chats{
+    background-color: rgb(238, 238, 238);
+    width: 100%;
+    min-height: 84.5%;
+}
+
+.contact-selected{
+    background-color: #a6cef8;
+}
+
+.chat-input img{
+ width: 1rem;
+}
+
+.chat-input input{
+    width:94%;
+    height: 2rem;
+    border: none;
+    margin: 0 5px 0 5px;
+}
+.chat-input{
+    display: flex;
+    padding: 1rem 1rem 1rem 1rem;
+    border: solid 1px lightgrey;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 5px 0;
+}
+
+.chat-date{
+    padding-top:1rem;
+    text-align: center;
+    color: rgb(119, 114, 114);
+}
+
+.chat-bubble-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-bubble{
+
+}
+.chat-bubble{
+    display: flex;
+   
+    padding: 0.7rem;
+}
+.chat-bubble-container img{
+    width: 3rem;
+    margin-right:0.4rem ;
+    border-radius: 50%;
+}
+.bubble{
+    border: solid 1px lightgrey;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+}
