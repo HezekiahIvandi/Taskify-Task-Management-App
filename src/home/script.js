@@ -1,3 +1,4 @@
+// Carousel Button
 const buttons = document.querySelectorAll("[data-carousel-button]")
 
 buttons.forEach(button => {
@@ -14,3 +15,26 @@ buttons.forEach(button => {
         delete activeSlide.dataset.active
     })
 });
+
+// Text Changing
+const changingText = ["easily", "efficiently", "neatly"];
+let textIndex = 0;
+const element = document.getElementById("changing-text");
+element.innerHTML = changingText[textIndex];
+let lastIntervalTimeStamp = 0;
+
+function render(now) {
+    if (!lastIntervalTimeStamp || now - lastIntervalTimeStamp >= 1500) {
+        lastIntervalTimeStamp = now;
+        element.innerHTML = changingText[textIndex];
+        ++textIndex;
+
+        if (textIndex >= changingText.length) {
+            textIndex = 0;
+        }
+    }
+
+    requestAnimationFrame(render);
+}
+
+window.requestAnimationFrame(render);
