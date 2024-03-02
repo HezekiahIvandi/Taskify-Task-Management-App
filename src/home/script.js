@@ -17,16 +17,17 @@ buttons.forEach(button => {
 });
 
 // Text Changing
-const changingText = ["easily", "efficiently", "neatly"];
-let textIndex = 0;
-const element = document.getElementById("changing-text");
-element.innerHTML = changingText[textIndex];
+const changingText = ["easily", "efficiently", "neatly", "quickly", "effortlessly"];
+let textIndex = 0;// Carousel Changing
+const changingCarousel = document.querySelectorAll("[data-carousel]"); 
+const textElement = document.getElementById("changing-text");
+textElement.innerHTML = changingText[textIndex];
 let lastIntervalTimeStamp = 0;
 
-function render(now) {
-    if (!lastIntervalTimeStamp || now - lastIntervalTimeStamp >= 1500) {
+function renderText(now) {
+    if (!lastIntervalTimeStamp || now - lastIntervalTimeStamp >=  1.5 * 1000) {
         lastIntervalTimeStamp = now;
-        element.innerHTML = changingText[textIndex];
+        textElement.innerHTML = changingText[textIndex];
         ++textIndex;
 
         if (textIndex >= changingText.length) {
@@ -34,7 +35,7 @@ function render(now) {
         }
     }
 
-    requestAnimationFrame(render);
+    requestAnimationFrame(renderText);
 }
 
-window.requestAnimationFrame(render);
+window.requestAnimationFrame(renderText);

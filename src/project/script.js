@@ -14,14 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startDrag() {
         draggedTask = this;
-        // Menyembunyikan task yang sedang di drag untuk sementara
-        this.classList.add('invisible');
         setTimeout(() => this.style.opacity = '0.5', 0); // Mengurangi opasitas untuk memberikan efek drag
     }
 
     function endDrag() {
         // Menampilkan kembali task yang sedang di drag
-        draggedTask.classList.remove('invisible');
         draggedTask.style.opacity = '1'; // Mengembalikan opasitas ke nilai aslinya
         draggedTask = null; // Mereset referensi
     }
@@ -30,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     dropAreas.forEach(area => {
         area.addEventListener('dragover', overArea); // Task di atas area
         area.addEventListener('dragenter', enterArea); // Task masuk ke dalam area
-        area.addEventListener('dragleave', leaveArea); // Task meninggalkan area 
         area.addEventListener('drop', dropArea); // Task dilepas di dalam area 
     });
 
@@ -39,16 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function enterArea(event) {
-        event.preventDefault();
-        this.classList.add('hovered');
-    }
-
-    function leaveArea() {
-        this.classList.remove('hovered');
+        event.preventDefault(); // Agar browser memperbolehkan drop task di area
     }
 
     function dropArea() {
-        this.classList.remove('hovered');
         this.appendChild(draggedTask); // Menempatkan task di dalam area
     }
 });

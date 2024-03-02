@@ -90,7 +90,8 @@ body {
     height: 4rem;
     overflow: hidden;
     padding: 0;
-    animation: 1.5s transition ease infinite;
+    animation: 1.5s transition ease-out infinite;
+    animation-delay: 10ms;
 }
 
 @keyframes transition {
