@@ -1,107 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <img alt="Logo Taskify" class="logo" src="../../assets/Taskify.png" />
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../home/index.html">Home</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a class="active" href="../chat/index.html">Conversation</a></li>
+        </ul>
+      </nav>
+      <a class="login" href="#"><button class="login-button">Login</button></a>
+    </header>
     <div class="container-fitur-chat">
-        <div class="chat-contacts">
-            <div class="chat-contacts-header">
-                <p>Messages</p>
-                <p>Collaborator, people, messages</p>
-            </div>
-            <div class="chat-contacts-list">
-                <div class="contact contact-selected">
-                    <img src="../../assets/Pfp.png" alt="">
-                    <div>
-                        <p class="name">Taskify development team</p>
-                        <p class="latest-chat">Morning!</p>
-                    </div>
-                </div>
-                <div class="contact">
-                    <img src="../../assets/Pfp.png" alt="">
-                    <div>
-                        <p class="name">Vie Huang</p>
-                        <p class="latest-chat">Hello</p>
-                    </div>
-                </div>
-                <div class="contact" id="vie">
-                    <img src="../../assets/Pfp.png" alt="">
-                    <div>
-                        <p class="name">Hezekiah Ivandi</p>
-                        <p class="latest-chat">Good, how about you?</p>
-                    </div>
-                </div>
-                <div class="contact" id="marchella">
-                    <img src="../../assets/Pfp.png" alt="">
-                    <div>
-                        <p class="name">Marchella Angelina</p>
-                        <p class="latest-chat">Hi</p>
-                    </div>
-                </div>
-        
-           
-            </div>
+      <div class="chat-contacts">
+        <div class="chat-contacts-header">
+          <p>Messages</p>
+          <p class="light-blue">Collaborator, people, messages</p>
         </div>
-        <div class="chat-box">
-            <div class="chat-box-header">
-                <div class="chat-box-header-info">
-                   <img src="../../assets/Pfp.png" alt="">
-                <div>
-                    <p class="chat-header-title">Taskify development team</p>
-                    <p class="group-stat">3 members, 0 online</p>
-                </div> 
-                </div>
-
-                <button class="clear-button"> <i class="fa-regular fa-trash-can fa-xl" style="color: #74C0FC;"></i></button>
-               
-                
+        <div class="chat-contacts-list">
+          <div class="contact contact-selected">
+            <img src="../../assets/Pfp.png" alt="" />
+            <div>
+              <p class="name">Taskify development team</p>
+              <p class="latest-chat">Morning!</p>
             </div>
-            <div class="chats">
-              <p class="chat-date">Today</p>
-              <div class="chat-bubble-container">
-                <div class="chat-bubble">
-                    <div><img src="../../assets/Pfp.png" alt=""></div>
-                    
-                    <div>
-                        <p class="chat-current-contact-name">Hezekiah Ivandi</p>
-                        <div class="bubble">
-                            <p class="latest-chat">Good morning!</p>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="my-chat-bubble">
-                    <div class="my-chat-bubble-text">
-                        <p>You</p>
-                        <div class="my-bubble">
-                            <p class="latest-chat last-chat">Morning!</p>
-                        </div>
-                    </div>
-                    <div><img src="../../assets/Pfp.png" alt=""></div>
+          </div>
+          <div class="contact not-selected">
+            <img src="../../assets/Pfp.png" alt="" />
+            <div>
+              <p class="name">Vie Huang</p>
+              <p class="latest-chat">Hello</p>
+            </div>
+          </div>
+          <div class="contact not-selected" id="vie">
+            <img src="../../assets/Pfp.png" alt="" />
+            <div>
+              <p class="name">Hezekiah Ivandi</p>
+              <p class="latest-chat">Good, how about you?</p>
+            </div>
+          </div>
+          <div class="contact not-selected" id="marchella">
+            <img src="../../assets/Pfp.png" alt="" />
+            <div>
+              <p class="name">Marchella Angelina</p>
+              <p class="latest-chat">Hi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-box">
+        <div class="chat-box-header">
+          <div class="chat-box-header-info">
+            <img src="../../assets/Pfp.png" alt="" />
+            <div>
+              <p class="chat-header-title">Taskify development team</p>
+              <p class="group-stat light-blue highlight">3 members, 0 online</p>
+            </div>
+          </div>
+
+          <button class="clear-button">
+            <i class="fa-regular fa-trash-can fa-xl"></i>
+          </button>
+        </div>
+        <div class="chats">
+          <p class="chat-date">Today</p>
+          <div class="chat-bubble-container">
+            <div class="chat-bubble">
+              <div><img src="../../assets/Pfp.png" alt="" /></div>
+
+              <div>
+                <p class="chat-current-contact-name">Hezekiah Ivandi</p>
+                <div class="bubble">
+                  <p>Good morning!</p>
                 </div>
               </div>
             </div>
-          
+            <div class="my-chat-bubble">
+              <div class="my-chat-bubble-text">
+                <p>You</p>
+                <div class="my-bubble">
+                  <p class="last-chat">Morning!</p>
+                </div>
+              </div>
+              <div><img src="../../assets/Pfp.png" alt="" /></div>
+            </div>
+          </div>
         </div>
-        
+      </div>
     </div>
     <div class="footer">
-        <form class="chat-input-form">
-            <i class="fa-solid fa-plus plus-button"></i>
-            <input class="text-area" type="text" placeholder="Type message here!">
+      <form class="chat-input-form">
+        <i class="fa-solid fa-plus plus-button"></i>
+        <input class="text-area" type="text" placeholder="Type message here!" />
 
-            <i class="fa-solid fa-icons fa-xl attach-button"></i>
-            <i class="fa-solid fa-microphone fa-lg attach-button"></i>
-            <button type="submit" class="send-button"><i class="fa-regular fa-paper-plane fa-xl attach-button"></i></button>
-        </form>
-        
+        <i class="fa-solid fa-icons fa-xl attach-button"></i>
+        <i class="fa-solid fa-microphone fa-lg attach-button"></i>
+        <button type="submit" class="send-button">
+          <i class="fa-regular fa-paper-plane fa-xl attach-button"></i>
+        </button>
+      </form>
     </div>
-   
+
     <script src="script.js"></script>
-    <script src="https://kit.fontawesome.com/7d135c556b.js" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://kit.fontawesome.com/7d135c556b.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
