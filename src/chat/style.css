@@ -32,7 +32,6 @@ min-height: inherit;
     border: solid 1px lightgrey;
     border-top: none;
     border-radius:0px 0px 0px 5px;
-    border-right:none;
     min-height: inherit;
     
  border-bottom: none;
@@ -65,6 +64,10 @@ min-height: inherit;
     padding: 1rem;
     border-radius:5px 5px 0 0;
     align-items:center ;
+    border: 1px solid lightgrey;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .chat-box-header i{
@@ -172,7 +175,10 @@ min-height: inherit;
     background-color: white;
     
 }
-.send-button i{
+.send-button i:hover, .plus-button:hover{
+    color: blue;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .attach-button{
@@ -184,8 +190,10 @@ min-height: inherit;
     margin-right: 10px;
 }
 
-.text-area:focus, input:focus{
+.text-area:focus, input:focus, .text-area:hover{
     outline: none;
+    font-size: 1em;
+    transition: ease-in-out 0.2s;
 }
 /* chat section*/
 
@@ -201,4 +209,7 @@ min-height: inherit;
 
 .chat-input-form{
     width: 100%;
+}
+
+.text-area::placeholder{
 }
