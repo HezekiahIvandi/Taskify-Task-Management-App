@@ -116,7 +116,7 @@ const createChatBubble = (prop) => `
 const displayChatBubble = (event) => {
   event.preventDefault();
   const message = ["You", chatTextArea.value];
-  const partner = chatHeader.innerText;
+  let partner = chatHeader.innerText;
   saveChanges(partner, message);
   chatMessages.innerHTML += createMyChatBubble(message[1]);
 
@@ -124,8 +124,9 @@ const displayChatBubble = (event) => {
   contactLists.forEach((contact) => {
     //current contact's name
     const name = contact.querySelector(".name").textContent;
-    if (name == partner) {
-      latestChat.innerText = message[1];
+    if (name == chatHeader.innerText) {
+      const latest = contact.querySelector(".latest-chat");
+      latest.innerText = message[1];
     }
   });
 };
