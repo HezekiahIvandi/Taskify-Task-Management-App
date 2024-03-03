@@ -40,7 +40,8 @@ body {
     transition: all 0.3s ease 0s;
     font-weight: bold;
     text-decoration: none;
-    margin-left: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .navbar a:hover {
@@ -52,8 +53,8 @@ body {
 }
 
 .login-button {
-    width: 100px;
-    height: 40px;
+    min-width: 100px;
+    min-height: 40px;
     font-weight: bold;
     font-size: 16;
     color: #ffffff;
@@ -61,12 +62,12 @@ body {
     border: none;
     cursor: pointer;
     transition: all 0.3s ease 0s;
-    margin-left: 100px;
+    margin-left: 60px;
     border-radius: 8px;
 }
 
 .login-button:hover {
-    background-color: #a1a1a1;
+    background-color: #01377e;
 }
 
 .main {
@@ -91,19 +92,21 @@ body {
     overflow: hidden;
     padding: 0;
     animation: 1.5s transition ease-out infinite;
-    animation-delay: 10ms;
 }
 
 @keyframes transition {
     0% {
         opacity: 0;
     }
+
     20% {
         opacity: 1;
     }
+
     80% {
         opacity: 1;
     }
+
     100% {
         opacity: 0;
     }
@@ -275,4 +278,34 @@ body {
     text-align: center;
     color: #231e6b;
     margin-top: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    .main-title {
+        font-size: 2.8em;
+    }
+
+    .main-subtitle {
+        font-size: 1.2em;
+    }
+
+    .features-title {
+        font-size: 2.8em;
+    }
+    
+}
+
+@media only screen and (max-width: 1024px) {
+    .features {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .features-carousel {
+        width: 90vw;
+        height: 54vw;
+        margin-top: 5vh;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
