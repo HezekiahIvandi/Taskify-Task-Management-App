@@ -18,8 +18,7 @@ buttons.forEach(button => {
 
 // Text Changing
 const changingText = ["easily", "efficiently", "neatly", "quickly", "effortlessly"];
-let textIndex = 0;// Carousel Changing
-const changingCarousel = document.querySelectorAll("[data-carousel]"); 
+let textIndex = 0;
 const textElement = document.getElementById("changing-text");
 textElement.innerHTML = changingText[textIndex];
 let lastIntervalTimeStamp = 0;
