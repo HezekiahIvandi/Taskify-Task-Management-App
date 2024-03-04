@@ -231,7 +231,6 @@ body {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    color: #a1a1a1;
 }
 
 .footer {
@@ -244,32 +243,26 @@ body {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .socialIcons a {
     text-decoration: none;
-    padding: 10px 12px;
+    padding-top: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
     background-color: #ffffff;
     margin: 16px;
     border-radius: 50%;
 }
 
-.socialIcons a i {
-    font-size: 1.5em;
-    color: #231e6b;
-    opacity: 0.9;
-}
 
 .socialIcons a:hover {
-    background-color: #231e6b;
+    background-color: #a1a1a1;
     transition: 0.5s;
 }
 
-.socialIcons a i:hover {
-    color: #ffffff;
-    opacity: 0.9;
-    transition: 0.5s;
-}
 
 .footer-bottom {
     text-align: center;
