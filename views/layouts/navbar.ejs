@@ -1,0 +1,23 @@
+<header>
+  <img alt="Logo Taskify" class="logo" src="assets/Taskify.png" />
+  <nav>
+    <ul class="nav-links">
+      <li>
+        <a class="<%= currentPage === '/' ? 'active' : '' %>" href="/">Home</a>
+      </li>
+      <li>
+        <a
+          href="/project"
+          class="<%= currentPage === '/project' ? 'active' : '' %>"
+          >Projects</a
+        >
+      </li>
+      <li>
+        <a href="/chat" class="<%= currentPage === '/chat' ? 'active' : '' %>"
+          >Conversation</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <a class="login" href="/login"><button class="login-button">Login</button></a>
+</header>
