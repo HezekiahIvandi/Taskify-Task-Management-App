@@ -13,6 +13,26 @@
           <!-- Kartu tambahan untuk menambahkan tugas -->
           <div class="add-task-card">
             <button class="add-task-button">+ Add Task Card</button>
+
+            <div id="taskFormModal" class="modal">
+              <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Add New Task</h2>
+                <form id="taskForm">
+                  <label for="tag">Tag:</label>
+                  <input type="text" id="tag" name="tag" required>
+                  <label for="description">Description:</label>
+                  <textarea id="description" name="description" required></textarea>
+                  <label for="date">Date:</label>
+                  <input type="date" id="date" name="date" required>
+                  <label for="comments">Comments:</label>
+                  <input type="text" id="comments" name="comments">
+                  <label for="owner">Owner:</label>
+                  <input type="text" id="owner" name="owner" required>
+                  <button type="submit">Add Task</button>
+                </form>
+              </div>
+            </div>
           </div>
 
           <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
@@ -30,10 +50,8 @@
                     <a href="#" class="delete-option"><i class="fas fa-trash-alt"></i> Delete</a>
                   </div>
                 </div>
-              
               </div>
             
-              
               <!-- Menampilkan deskripsi tugas -->
               <p><%= task.description %></p>
 
@@ -46,7 +64,6 @@
               </div>
             </div>
           <% } %>
-
         </div>
       <% } %>
     </div>
@@ -70,3 +87,5 @@
 <a href="/chat" class="chat-button">
   <img src="assets/conversation.png" alt="Chat Icon" />
 </a>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
