@@ -6,33 +6,48 @@
       <% for (let col of columns) { %>
       
         <div class="taskify-col">
-        <div class="taskify-col-header">
-          <h1 class="taskify-col-header-title"><%= col.title %></h1>
-        </div>
-
-        <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
-        <% for (let task of col.tasks) { %>
-        
-          <div class="task" draggable="true">
-          <div class="task-tags">
-            <span class="task-tag"><%= task.tag %></span>
-            <button class="task-options">
-              <i class="fas fa-bars"></i>
-            </button>
+          <div class="taskify-col-header">
+            <h1 class="taskify-col-header-title"><%= col.title %></h1>
           </div>
-          <!-- Menampilkan deskripsi tugas -->
-          <p><%= task.description %></p>
 
-          <div class="task-desc">
-            <span><i class="fas fa-calendar"></i> <%= task.date %></span>
-            <button class="comments">
-              <span><i class="fas fa-comments"></i> <%= task.comments %></span>
-            </button>
-            <span class="task-owner"><%= task.owner %></span>
+          <!-- Kartu tambahan untuk menambahkan tugas -->
+          <div class="add-task-card">
+            <button class="add-task-button">+ Add Task Card</button>
           </div>
+
+          <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
+          <% for (let task of col.tasks) { %>
+            <div class="task" draggable="true">
+              <div class="task-tags">
+                <span class="task-tag"><%= task.tag %></span>
+                
+                <div class="task-options">
+                  <button class="dropdown-button">
+                    <i class="fas fa-bars"></i>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="#" class="edit-option"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="#" class="delete-option"><i class="fas fa-trash-alt"></i> Delete</a>
+                  </div>
+                </div>
+              
+              </div>
+            
+              
+              <!-- Menampilkan deskripsi tugas -->
+              <p><%= task.description %></p>
+
+              <div class="task-desc">
+                <span><i class="fas fa-calendar"></i> <%= task.date %></span>
+                <button class="comments">
+                  <span><i class="fas fa-comments"></i> <%= task.comments %></span>
+                </button>
+                <span class="task-owner"><%= task.owner %></span>
+              </div>
+            </div>
+          <% } %>
+
         </div>
-        <% } %>
-      </div>
       <% } %>
     </div>
   </main>
@@ -42,12 +57,11 @@
 
       <!-- Mulai iterasi untuk setiap data progres -->
       <% for (let progress of progressData) { %>
-
-      <div class="tag-progress">
-        <!-- Menampilkan tag progres -->
-        <p><%= progress.tag %><span><%= progress.current %>/<%= progress.total %></span></p>
-        <progress class="progress" value="<%= progress.current %>" max="<%= progress.total %>"></progress>
-      </div>
+        <div class="tag-progress">
+          <!-- Menampilkan tag progres -->
+          <p><%= progress.tag %><span><%= progress.current %>/<%= progress.total %></span></p>
+          <progress class="progress" value="<%= progress.current %>" max="<%= progress.total %>"></progress>
+        </div>
       <% } %>
     </div>
   </aside>
