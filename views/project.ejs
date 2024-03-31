@@ -7,7 +7,7 @@
       
         <div class="taskify-col">
           <div class="taskify-col-header">
-            <h1 class="taskify-col-header-title"><%= column.title %></h1>
+            <h1 class="taskify-col-header-title" title="<%= column.title %>"><%= column.title %></h1>
           </div>
 
           <!-- Kartu tambahan untuk menambahkan tugas -->
@@ -55,7 +55,7 @@
               </div>
             
               <!-- Menampilkan deskripsi tugas -->
-              <p><%= task.description %></p>
+              <p description="<%= task.description %>"><%= task.description %></p>
 
               <div class="task-desc">
                 <span><i class="fas fa-calendar"></i> <%= task.date %></span>

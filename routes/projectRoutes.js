@@ -3,16 +3,18 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Task = require('../models/projectModel');
 
+const app = express();
+
 router.get("/project", async (req, res) => {
   try {
-    const client = await mongoose.connection.getClient(); // Mendapatkan instance MongoClient
+    // Dapatkan instance database dari koneksi mongoose
+    const db = mongoose.connection.db;
 
-    // Dapatkan data dari masing-masing koleksi
-    const database = client.db('task-database');
-    const tasksToDoCollection = database.collection('Task To Do');
-    const onGoingCollection = database.collection('On Going');
-    const needsReviewCollection = database.collection('Needs Review');
-    const doneCollection = database.collection('Done');
+    // Dapatkan koleksi dari database
+    const tasksToDoCollection = db.collection('Task To Do');
+    const onGoingCollection = db.collection('On Going');
+    const needsReviewCollection = db.collection('Needs Review');
+    const doneCollection = db.collection('Done');
 
     // Ambil data dari masing-masing koleksi
     const tasksToDo = await tasksToDoCollection.find({}).toArray();
@@ -27,10 +29,10 @@ router.get("/project", async (req, res) => {
 
     // Buat struktur data yang sesuai dengan tampilan Anda
     const columns = [
-      { title: "Task To Do 📝", tasks: tasksToDo },
-      { title: "On Going ⏳", tasks: onGoing },
-      { title: "Needs Review 🔄", tasks: needsReview },
-      { title: "Done 💯", tasks: done }
+      { title: "Task To Do", tasks: tasksToDo },
+      { title: "On Going", tasks: onGoing },
+      { title: "Needs Review", tasks: needsReview },
+      { title: "Done", tasks: done }
     ];
 
     let progressData = [
@@ -62,10 +64,8 @@ router.post("/project", async (req, res) => {
   try {
     const { title, tag, description, date, comments, owner } = req.body; // Ambil data dari body permintaan
 
-    const client = await mongoose.connection.getClient(); // Dapatkan instance MongoClient
-    const database = client.db('task-database');
-
-    console.log(`pertama ${title}`);
+    // Dapatkan instance database dari koneksi mongoose
+    const db = mongoose.connection.db;
 
     // Tentukan koleksi berdasarkan title yang diberikan
     let collectionName;
@@ -87,9 +87,7 @@ router.post("/project", async (req, res) => {
     }
 
     // Dapatkan koleksi yang sesuai
-    const collection = database.collection(collectionName);
-
-    console.log(`kedua${title}`);
+    const collection = db.collection(collectionName);
 
     // Masukkan tugas baru ke dalam koleksi yang sesuai
     await collection.insertOne({ 
@@ -109,5 +107,31 @@ router.post("/project", async (req, res) => {
   }
 });
 
+router.delete('/delete-task', async (req, res) => {
+  try {
+    const collectionName = req.query.collection; // Mendapatkan nama koleksi dari permintaan
+    const dataDescription = req.query.data; // Mendapatkan deskripsi data yang akan dihapus dari permintaan
+    console.log(collectionName);
+    console.log(dataDescription);
+
+    // Dapatkan instance database dari koneksi mongoose
+    const db = mongoose.connection.db;
+    
+    const collection = db.collection(collectionName);
+
+    // Menghapus data dari koleksi berdasarkan deskripsi yang diberikan
+    const result = await collection.deleteOne({ description: dataDescription });
+
+    // Periksa apakah data berhasil dihapus
+    if (result.deletedCount === 1) {
+      res.send('Data deleted successfully');
+    } else {
+      res.send('Data not found or already deleted');
+    }
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    res.status(500).send('Error deleting data');
+  }
+});
 
 module.exports = router;

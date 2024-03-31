@@ -189,3 +189,37 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none"; // Pastikan variabel modal didefinisikan sebelum digunakan
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Memilih semua tombol delete
+  var deleteButtons = document.querySelectorAll('.delete-option');
+
+  // Menambahkan event listener ke setiap tombol delete
+  deleteButtons.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
+      var taskElement = button.closest('.taskify-col');
+      var collectionName = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
+
+      // Mengambil deskripsi data dari atribut description pada elemen <p> yang sesuai
+      var dataDescription = taskElement.querySelector('p').getAttribute('description');
+
+      // Mengirim permintaan penghapusan ke backend
+      fetch('/delete-task?collection=' + collectionName + '&data=' + dataDescription, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to delete task');
+        }
+        // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
+        console.log('Task deleted successfully');
+      })
+      .catch(error => {
+        console.error('Error deleting task:', error);
+      });
+    });
+  });
+});
