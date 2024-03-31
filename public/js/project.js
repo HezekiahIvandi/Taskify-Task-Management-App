@@ -190,75 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Memilih semua tombol delete
-  var deleteButtons = document.querySelectorAll('.delete-option');
-
-  // Menambahkan event listener ke setiap tombol delete
-  deleteButtons.forEach(function (button) {
-    button.addEventListener('click', function (event) {
-      event.preventDefault();
-
-      // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
-      var taskElement = button.closest('.taskify-col');
-      var collectionName = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
-
-      // Mengambil deskripsi data dari atribut description pada elemen <p> yang sesuai
-      var dataDescription = taskElement.querySelector('p').getAttribute('description');
-
-      // Mengirim permintaan penghapusan ke backend
-      fetch('/delete-task?collection=' + collectionName + '&data=' + dataDescription, {
-        method: 'DELETE'
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to delete task');
-        }
-        // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
-        console.log('Task deleted successfully');
-      })
-      .catch(error => {
-        console.error('Error deleting task:', error);
-      });
-    });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Memilih semua tombol delete
-  var deleteButtons = document.querySelectorAll('.delete-option');
-
-  // Menambahkan event listener ke setiap tombol delete
-  deleteButtons.forEach(function (button) {
-    button.addEventListener('click', function (event) {
-      event.preventDefault();
-
-      // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
-      var taskElement = button.closest('.taskify-col');
-      var collectionName = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
-
-      // Mengambil deskripsi data dari atribut description pada elemen <p> yang sesuai
-      var dataDescription = taskElement.querySelector('p').getAttribute('description');
-
-      // Mengirim permintaan penghapusan ke backend
-      fetch('/delete-task?collection=' + collectionName + '&data=' + dataDescription, {
-        method: 'DELETE'
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to delete task');
-        }
-        // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
-        console.log('Task deleted successfully');
-      })
-      .catch(error => {
-        console.error('Error deleting task:', error);
-      });
-    });
-  });
-});
-
-// Tambahkan event listener untuk setiap tombol "Edit"
+// Menambahkan event listener untuk setiap tombol "Edit"
 document.querySelectorAll('.edit-option').forEach(button => {
   button.addEventListener('click', function(event) {
     event.preventDefault(); // Menghentikan default behavior dari link
@@ -292,18 +224,8 @@ document.querySelectorAll('.edit-option').forEach(button => {
   });
 });
 
-// Tambahkan event listener untuk tombol close pada modal
-document.querySelectorAll('.close').forEach(button => {
-  button.addEventListener('click', function(event) {
-    event.preventDefault();
-    const modal = this.closest('.modal');
-    modal.style.display = "none";
-  });
-});
-
-
-// Tambahkan event listener untuk tombol submit pada form
-document.getElementById('taskForm').addEventListener('submit', function(event) {
+// Menambahkan event listener untuk tombol submit pada form
+document.getElementById('taskForm').addEventListener('submit', async function(event) {
   event.preventDefault();
   
   // Ambil data dari formulir
@@ -317,26 +239,83 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
   const title = document.getElementById('title').value;
 
   // Kirim data ke endpoint update-task di backend
-  fetch('/update-task', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      title: title,
-      description: updatedData.description,
-      updatedData: updatedData
-    })
-  })
-  .then(response => {
+  try {
+    const response = await fetch('/update-task', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: title,
+        description: updatedData.description,
+        updatedData: updatedData
+      })
+    });
     if (!response.ok) {
       throw new Error('Failed to update task');
     }
     // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
     console.log('Task updated successfully');
-    // Anda mungkin ingin menambahkan logika di sini untuk memperbarui tampilan frontend jika diperlukan
-  })
-  .catch(error => {
+    // Tampilkan SweetAlert bahwa proses edit selesai
+    Swal.fire({
+      title: 'Success!',
+      text: 'Task berhasil diedit',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  } catch (error) {
     console.error('Error updating task:', error);
+  }
+
+  // Tutup modal form edit setelah selesai
+  const modal = document.getElementById('taskFormModal');
+  modal.style.display = "none";
+});
+
+
+// Menambahkan event listener untuk tombol delete pada setiap tugas
+document.querySelectorAll('.delete-option').forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
+    var taskElement = button.closest('.taskify-col');
+    var collectionName = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
+
+    // Mengambil deskripsi data dari atribut description pada elemen <p> yang sesuai
+    var dataDescription = taskElement.querySelector('p').getAttribute('description');
+
+    // Mengirim permintaan penghapusan ke backend
+    fetch('/delete-task?collection=' + collectionName + '&data=' + dataDescription, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to delete task');
+      }
+      // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
+      console.log('Task deleted successfully');
+      // Menampilkan SweetAlert untuk memberi umpan balik visual
+      Swal.fire({
+        title: 'Success!',
+        text: 'Task berhasil dihapus',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    })
+    .catch(error => {
+      console.error('Error deleting task:', error);
+    });
+  });
+});
+
+// Menambahkan event listener untuk tombol "Edit Task"
+document.querySelector('#taskForm button[type="submit"]').addEventListener('click', function(event) {
+  // Menampilkan SweetAlert untuk memberi umpan balik visual
+  Swal.fire({
+    title: 'Success!',
+    text: 'Task sedang diedit',
+    icon: 'success',
+    confirmButtonText: 'OK'
   });
 });

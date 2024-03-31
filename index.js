@@ -4,7 +4,6 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const port = 3000;
 const bodyParser = require('body-parser');
-const Task = require('./models/projectModel');
 
 const chatRoutes = require("./routes/chatRoutes");
 const homeRoutes = require("./routes/homeRoutes");
@@ -62,3 +61,5 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => {
     console.error('MongoDB connection error:', err.message);
   });
+
+  

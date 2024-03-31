@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
-const Task = require('../models/projectModel');
 
 const app = express();
 
@@ -29,10 +28,10 @@ router.get("/project", async (req, res) => {
 
     // Buat struktur data yang sesuai dengan tampilan Anda
     const columns = [
-      { title: "Task To Do", tasks: tasksToDo },
-      { title: "On Going", tasks: onGoing },
-      { title: "Needs Review", tasks: needsReview },
-      { title: "Done", tasks: done }
+      { title: "Task To Do 📝", tasks: tasksToDo },
+      { title: "On Going ⏳", tasks: onGoing },
+      { title: "Needs Review 🔎", tasks: needsReview },
+      { title: "Done 💯", tasks: done }
     ];
 
     let progressData = [
@@ -70,16 +69,16 @@ router.post("/project", async (req, res) => {
     // Tentukan koleksi berdasarkan title yang diberikan
     let collectionName;
     switch (title) {
-      case "Task To Do":
+      case "Task To Do 📝":
         collectionName = "Task To Do";
         break;
-      case "On Going":
+      case "On Going ⏳":
         collectionName = "On Going";
         break;
-      case "Needs Review":
+      case "Needs Review 🔎":
         collectionName = "Needs Review";
         break;
-      case "Done":
+      case "Done 💯":
         collectionName = "Done";
         break;
       default:
@@ -109,14 +108,30 @@ router.post("/project", async (req, res) => {
 
 router.delete('/delete-task', async (req, res) => {
   try {
-    const collectionName = req.query.collection; // Mendapatkan nama koleksi dari permintaan
+    const title = req.query.collection; // Mendapatkan nama koleksi dari permintaan
     const dataDescription = req.query.data; // Mendapatkan deskripsi data yang akan dihapus dari permintaan
-    console.log(collectionName);
-    console.log(dataDescription);
 
     // Dapatkan instance database dari koneksi mongoose
     const db = mongoose.connection.db;
     
+    let collectionName;
+    switch (title) {
+      case "Task To Do 📝":
+        collectionName = "Task To Do";
+        break;
+      case "On Going ⏳":
+        collectionName = "On Going";
+        break;
+      case "Needs Review 🔎":
+        collectionName = "Needs Review";
+        break;
+      case "Done 💯":
+        collectionName = "Done";
+        break;
+      default:
+        throw new Error("Title yang diberikan tidak valid");
+    }
+
     const collection = db.collection(collectionName);
 
     // Menghapus data dari koleksi berdasarkan deskripsi yang diberikan
@@ -148,16 +163,16 @@ router.put("/update-task", async (req, res) => {
     // Tentukan koleksi berdasarkan title yang diberikan
     let collectionName;
     switch (title) {
-      case "Task To Do":
+      case "Task To Do 📝":
         collectionName = "Task To Do";
         break;
-      case "On Going":
+      case "On Going ⏳":
         collectionName = "On Going";
         break;
-      case "Needs Review":
+      case "Needs Review 🔎":
         collectionName = "Needs Review";
         break;
-      case "Done":
+      case "Done 💯":
         collectionName = "Done";
         break;
       default:
