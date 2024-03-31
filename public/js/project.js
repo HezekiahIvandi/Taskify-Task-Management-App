@@ -191,38 +191,69 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Menambahkan event listener untuk setiap tombol "Edit"
-document.querySelectorAll('.edit-option').forEach(button => {
-  button.addEventListener('click', function(event) {
-    event.preventDefault(); // Menghentikan default behavior dari link
-    
-    // Ambil informasi tugas terkait
-    const taskElement = this.closest('.task');
-    const taskTitle = document.querySelector('.taskify-col-header-title').getAttribute('title');
-    const taskTag = taskElement.querySelector('.task-tag').textContent;
-    const taskDescription = taskElement.querySelector('p').getAttribute('description');
-    const taskDate = taskElement.querySelector('.task-desc span:first-child').textContent.trim();
-    const taskComments = taskElement.querySelector('.comments span').textContent.trim();
-    const taskOwner = taskElement.querySelector('.task-owner').textContent.trim();
-    
-    // Isi formulir edit dengan informasi tugas yang diambil
-    document.getElementById('title').value = taskTitle;
-    document.getElementById('tag').value = taskTag;
-    document.getElementById('description').value = taskDescription;
-    document.getElementById('date').value = taskDate;
-    document.getElementById('comments').value = taskComments;
-    document.getElementById('owner').value = taskOwner;
+document.addEventListener('DOMContentLoaded', function() {
+  // Menambahkan event listener untuk setiap tombol "Edit"
+  document.querySelectorAll('.edit-option').forEach(button => {
+      button.addEventListener('click', function(event) {
+          event.preventDefault(); // Menghentikan default behavior dari link
+          
+          // Tampilkan kolom input New Title jika belum ada
+          if (!document.getElementById('newTitle')) {
+              const newTitleInput = document.createElement('input');
+              newTitleInput.setAttribute('type', 'text');
+              newTitleInput.setAttribute('id', 'newTitle');
+              newTitleInput.setAttribute('name', 'newTitle');
+              newTitleInput.setAttribute('placeholder', 'New Title');
+              document.getElementById('taskForm').appendChild(newTitleInput);
+          }
 
-    // Tampilkan modal form edit
-    const modal = document.getElementById('taskFormModal');
-    modal.style.display = "block";
+          // Tampilkan kolom input New Description jika belum ada
+          if (!document.getElementById('newDescription')) {
+              const newDescriptionInput = document.createElement('textarea');
+              newDescriptionInput.setAttribute('id', 'newDescription');
+              newDescriptionInput.setAttribute('name', 'newDescription');
+              newDescriptionInput.setAttribute('placeholder', 'New Description');
+              document.getElementById('taskForm').appendChild(newDescriptionInput);
+          }
 
-    // Ubah title modal
-    document.querySelector('#taskFormModal h2').textContent = "Edit Current Task";
-    
-    // Ubah teks tombol submit
-    document.querySelector('#taskForm button[type="submit"]').textContent = "Edit Task";
+          // Ambil informasi tugas terkait
+          var taskElement = button.closest('.taskify-col');
+          const taskTitle = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
+          const taskTag = taskElement.querySelector('.task-tag').textContent;
+          const taskDescription = taskElement.querySelector('p').getAttribute('description');
+          const taskDate = taskElement.querySelector('.task-desc span:first-child').textContent.trim();
+          const taskComments = taskElement.querySelector('.comments span').textContent.trim();
+          const taskOwner = taskElement.querySelector('.task-owner').textContent.trim();
+          
+          // Isi formulir edit dengan informasi tugas yang diambil
+          document.getElementById('title').value = taskTitle;
+          document.getElementById('tag').value = taskTag;
+          document.getElementById('description').value = taskDescription;
+          document.getElementById('date').value = taskDate;
+          document.getElementById('comments').value = taskComments;
+          document.getElementById('owner').value = taskOwner;
+
+          // Ambil informasi tugas terkait untuk New Title dan New Description dari input di form
+          const newTitle = document.getElementById('newTitle').value;
+          const newDescription = document.getElementById('newDescription').value;
+          
+          // Isi nilai input New Title dan New Description dengan nilai dari input di form
+          document.getElementById('newTitle').value = newTitle;
+          document.getElementById('newDescription').value = newDescription;
+
+          // Tampilkan modal form edit
+          const modal = document.getElementById('taskFormModal');
+          modal.style.display = "block";
+
+          // Ubah title modal
+          document.querySelector('#taskFormModal h2').textContent = "Edit Current Task";
+          
+          // Ubah teks tombol submit
+          document.querySelector('#taskForm button[type="submit"]').textContent = "Edit Task";
+      });
   });
 });
+
 
 // Menambahkan event listener untuk tombol submit pada form
 document.getElementById('taskForm').addEventListener('submit', async function(event) {
