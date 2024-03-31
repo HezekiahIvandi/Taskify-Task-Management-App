@@ -3,11 +3,11 @@
     <div class="taskify-tasks">
 
       <!-- Mulai iterasi untuk setiap kolom -->
-      <% for (let col of columns) { %>
+      <% for (let column of columns) { %>
       
         <div class="taskify-col">
           <div class="taskify-col-header">
-            <h1 class="taskify-col-header-title"><%= col.title %></h1>
+            <h1 class="taskify-col-header-title"><%= column.title %></h1>
           </div>
 
           <!-- Kartu tambahan untuk menambahkan tugas -->
@@ -18,7 +18,9 @@
               <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Add New Task</h2>
-                <form id="taskForm">
+                <form action="/project" method="POST" id="taskForm">
+                  <label for="title">Title:</label>
+                  <input type="text" id="title" name="title" required>  
                   <label for="tag">Tag:</label>
                   <input type="text" id="tag" name="tag" required>
                   <label for="description">Description:</label>
@@ -36,7 +38,7 @@
           </div>
 
           <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
-          <% for (let task of col.tasks) { %>
+          <% for (let task of column.tasks) { %>
             <div class="task" draggable="true">
               <div class="task-tags">
                 <span class="task-tag"><%= task.tag %></span>
@@ -87,5 +89,3 @@
 <a href="/chat" class="chat-button">
   <img src="assets/conversation.png" alt="Chat Icon" />
 </a>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
