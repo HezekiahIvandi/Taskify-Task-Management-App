@@ -1,0 +1,55 @@
+[{
+  "_id": {
+    "$oid": "660928f17e0be20a15204799"
+  },
+  "title": "On Going",
+  "tag": "Desain UI/UX",
+  "description": "Pembuatan wireframe dan mockup untuk merencanakan tata letak dan navigasi.",
+  "date": "Feb 25",
+  "comments": 3,
+  "owner": "M"
+},
+{
+  "_id": {
+    "$oid": "660928f17e0be20a1520479a"
+  },
+  "title": "On Going",
+  "tag": "Desain UI/UX",
+  "description": "Desain antarmuka pengguna (UI) termasuk warna, tipografi, ikon, dan elemen grafis lainnya.",
+  "date": "Feb 27",
+  "comments": 6,
+  "owner": "H"
+},
+{
+  "_id": {
+    "$oid": "660928f17e0be20a1520479b"
+  },
+  "title": "On Going",
+  "tag": "Perencanaan",
+  "description": "Analisis pesaing dan pasar untuk memahami tren dan kebutuhan pengguna.",
+  "date": "Feb 12",
+  "comments": 17,
+  "owner": "V"
+},
+{
+  "_id": {
+    "$oid": "660928f17e0be20a1520479c"
+  },
+  "title": "On Going",
+  "tag": "Backend",
+  "description": "Implementasi API untuk interaksi antara frontend dan backend.",
+  "date": "Feb 21",
+  "comments": 4,
+  "owner": "H"
+},
+{
+  "_id": {
+    "$oid": "660928f17e0be20a1520479d"
+  },
+  "title": "On Going",
+  "tag": "Frontend",
+  "description": "Implementasi desain UI/UX menggunakan HTML, CSS, dan JavaScript.",
+  "date": "Mar 8",
+  "comments": 8,
+  "owner": "M"
+}]

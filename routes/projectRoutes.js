@@ -134,4 +134,66 @@ router.delete('/delete-task', async (req, res) => {
   }
 });
 
+
+router.put("/update-task", async (req, res) => {
+  try {
+    const { title, description, updatedData } = req.body; // Ambil data dari body permintaan
+    console.log(title);
+    console.log(description);
+    console.log(updatedData);
+
+    // Dapatkan instance database dari koneksi mongoose
+    const db = mongoose.connection.db;
+
+    // Tentukan koleksi berdasarkan title yang diberikan
+    let collectionName;
+    switch (title) {
+      case "Task To Do":
+        collectionName = "Task To Do";
+        break;
+      case "On Going":
+        collectionName = "On Going";
+        break;
+      case "Needs Review":
+        collectionName = "Needs Review";
+        break;
+      case "Done":
+        collectionName = "Done";
+        break;
+      default:
+        throw new Error("Title yang diberikan tidak valid");
+    }
+
+    // Dapatkan koleksi yang sesuai
+    const collection = db.collection(collectionName);
+
+    // Ambil data saat ini dari koleksi berdasarkan deskripsi yang diberikan
+    const currentData = await collection.findOne({ description: description });
+
+    if (!currentData) {
+      throw new Error("Data tidak ditemukan");
+    }
+
+    // Gabungkan data saat ini dengan data yang diperbarui
+    const newData = { ...currentData, ...updatedData };
+
+    // Perbarui data di koleksi yang sesuai
+    const result = await collection.updateOne(
+      { description: description },
+      { $set: newData }
+    );
+
+    // Periksa apakah data berhasil diperbarui
+    if (result.modifiedCount === 1) {
+      res.send(`Data di koleksi '${collectionName}' berhasil diperbarui`);
+    } else {
+      res.send('Data tidak ditemukan atau tidak diperbarui');
+    }
+  } catch (error) {
+    console.error("Error saat memperbarui data:", error);
+    res.status(500).send("Terjadi kesalahan saat memperbarui data");
+  }
+});
+
+
 module.exports = router;
