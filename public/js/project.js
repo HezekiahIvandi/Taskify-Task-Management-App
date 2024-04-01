@@ -190,163 +190,37 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Menambahkan event listener untuk setiap tombol "Edit"
-document.addEventListener('DOMContentLoaded', function() {
-  // Menambahkan event listener untuk setiap tombol "Edit"
-  document.querySelectorAll('.edit-option').forEach(button => {
-      button.addEventListener('click', function(event) {
-          event.preventDefault(); // Menghentikan default behavior dari link
-          
-          // Tampilkan kolom input New Title jika belum ada
-          if (!document.getElementById('newTitle')) {
-              const newTitleInput = document.createElement('input');
-              newTitleInput.setAttribute('type', 'text');
-              newTitleInput.setAttribute('id', 'newTitle');
-              newTitleInput.setAttribute('name', 'newTitle');
-              newTitleInput.setAttribute('placeholder', 'New Title');
-              document.getElementById('taskForm').appendChild(newTitleInput);
-          }
-
-          // Tampilkan kolom input New Description jika belum ada
-          if (!document.getElementById('newDescription')) {
-              const newDescriptionInput = document.createElement('textarea');
-              newDescriptionInput.setAttribute('id', 'newDescription');
-              newDescriptionInput.setAttribute('name', 'newDescription');
-              newDescriptionInput.setAttribute('placeholder', 'New Description');
-              document.getElementById('taskForm').appendChild(newDescriptionInput);
-          }
-
-          // Ambil informasi tugas terkait
-          var taskElement = button.closest('.taskify-col');
-          const taskTitle = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
-          const taskTag = taskElement.querySelector('.task-tag').textContent;
-          const taskDescription = taskElement.querySelector('p').getAttribute('description');
-          const taskDate = taskElement.querySelector('.task-desc span:first-child').textContent.trim();
-          const taskComments = taskElement.querySelector('.comments span').textContent.trim();
-          const taskOwner = taskElement.querySelector('.task-owner').textContent.trim();
-          
-          // Isi formulir edit dengan informasi tugas yang diambil
-          document.getElementById('title').value = taskTitle;
-          document.getElementById('tag').value = taskTag;
-          document.getElementById('description').value = taskDescription;
-          document.getElementById('date').value = taskDate;
-          document.getElementById('comments').value = taskComments;
-          document.getElementById('owner').value = taskOwner;
-
-          // Ambil informasi tugas terkait untuk New Title dan New Description dari input di form
-          const newTitle = document.getElementById('newTitle').value;
-          const newDescription = document.getElementById('newDescription').value;
-          
-          // Isi nilai input New Title dan New Description dengan nilai dari input di form
-          document.getElementById('newTitle').value = newTitle;
-          document.getElementById('newDescription').value = newDescription;
-
-          // Tampilkan modal form edit
-          const modal = document.getElementById('taskFormModal');
-          modal.style.display = "block";
-
-          // Ubah title modal
-          document.querySelector('#taskFormModal h2').textContent = "Edit Current Task";
-          
-          // Ubah teks tombol submit
-          document.querySelector('#taskForm button[type="submit"]').textContent = "Edit Task";
-      });
-  });
-});
-
-
-// Menambahkan event listener untuk tombol submit pada form
-document.getElementById('taskForm').addEventListener('submit', async function(event) {
-  event.preventDefault();
-  
-  // Ambil data dari formulir
-  const formData = new FormData(this);
-  const updatedData = {};
-  formData.forEach((value, key) => {
-    updatedData[key] = value;
-  });
-
-  // Ambil title dari formulir untuk menentukan koleksi yang akan diperbarui
-  const title = document.getElementById('title').value;
-
-  // Kirim data ke endpoint update-task di backend
-  try {
-    const response = await fetch('/update-task', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: title,
-        description: updatedData.description,
-        updatedData: updatedData
-      })
-    });
-    if (!response.ok) {
-      throw new Error('Failed to update task');
-    }
-    // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
-    console.log('Task updated successfully');
-    // Tampilkan SweetAlert bahwa proses edit selesai
-    Swal.fire({
-      title: 'Success!',
-      text: 'Task berhasil diedit',
-      icon: 'success',
-      confirmButtonText: 'OK'
-    });
-  } catch (error) {
-    console.error('Error updating task:', error);
-  }
-
-  // Tutup modal form edit setelah selesai
-  const modal = document.getElementById('taskFormModal');
-  modal.style.display = "none";
-});
-
-
 // Menambahkan event listener untuk tombol delete pada setiap tugas
-document.querySelectorAll('.delete-option').forEach(button => {
-  button.addEventListener('click', function(event) {
-    event.preventDefault();
+// document.querySelectorAll('.delete-option').forEach(button => {
+//   button.addEventListener('click', function(event) {
+//     event.preventDefault();
 
-    // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
-    var taskElement = button.closest('.taskify-col');
-    var collectionName = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
+//     // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
+//     var taskElement = button.closest('.taskify-col');
+//     var title = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
 
-    // Mengambil deskripsi data dari atribut description pada elemen <p> yang sesuai
-    var dataDescription = taskElement.querySelector('p').getAttribute('description');
+//     // Mengirim permintaan penghapusan ke backend
+//     fetch(`/delete-task/:title`, {
+//       method: 'POST'
+//     })
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error('Failed to delete task');
+//       }
+//       // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
+//       console.log('Task deleted successfully');
+//       // Menampilkan SweetAlert untuk memberi umpan balik visual
+//       Swal.fire({
+//         title: 'Success!',
+//         text: 'Task berhasil dihapus',
+//         icon: 'success',
+//         confirmButtonText: 'OK'
+//       });
+//     })
+//     .catch(error => {
+//       console.error('Error deleting task:', error);
+//     });
+//   });
+// });
 
-    // Mengirim permintaan penghapusan ke backend
-    fetch('/delete-task?collection=' + collectionName + '&data=' + dataDescription, {
-      method: 'DELETE'
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to delete task');
-      }
-      // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
-      console.log('Task deleted successfully');
-      // Menampilkan SweetAlert untuk memberi umpan balik visual
-      Swal.fire({
-        title: 'Success!',
-        text: 'Task berhasil dihapus',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-    })
-    .catch(error => {
-      console.error('Error deleting task:', error);
-    });
-  });
-});
 
-// Menambahkan event listener untuk tombol "Edit Task"
-document.querySelector('#taskForm button[type="submit"]').addEventListener('click', function(event) {
-  // Menampilkan SweetAlert untuk memberi umpan balik visual
-  Swal.fire({
-    title: 'Success!',
-    text: 'Task sedang diedit',
-    icon: 'success',
-    confirmButtonText: 'OK'
-  });
-});

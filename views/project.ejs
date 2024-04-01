@@ -1,72 +1,87 @@
 <div class="app">
   <main class="taskify">
     <div class="taskify-tasks">
-
       <!-- Mulai iterasi untuk setiap kolom -->
       <% for (let column of columns) { %>
-      
-        <div class="taskify-col">
-          <div class="taskify-col-header">
-            <h1 class="taskify-col-header-title" title="<%= column.title %>"><%= column.title %></h1>
+
+      <div class="taskify-col">
+        <div class="taskify-col-header">
+          <h1 class="taskify-col-header-title" title="<%= column.title %>">
+            <%= column.title %>
+          </h1>
+        </div>
+
+        <!-- Kartu tambahan untuk menambahkan tugas -->
+        <div class="add-task-card">
+          <button class="add-task-button">+ Add Task Card</button>
+
+          <div id="taskFormModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h2>Add New Task</h2>
+              <form action="/project" method="POST" id="taskForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required />
+                <label for="tag">Tag:</label>
+                <input type="text" id="tag" name="tag" required />
+                <label for="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                ></textarea>
+                <label for="date">Date:</label>
+                <input type="text" id="date" name="date" required />
+                <label for="comments">Comments:</label>
+                <input type="text" id="comments" name="comments" />
+                <label for="owner">Owner:</label>
+                <input type="text" id="owner" name="owner" required />
+                <button type="submit">Add Task</button>
+              </form>
+            </div>
           </div>
+        </div>
 
-          <!-- Kartu tambahan untuk menambahkan tugas -->
-          <div class="add-task-card">
-            <button class="add-task-button">+ Add Task Card</button>
+        <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
+        <% for (let task of column.tasks) { %>
+        <div class="task" draggable="true">
+          <div class="task-tags">
+            <span class="task-tag"><%= task.tag %></span>
 
-            <div id="taskFormModal" class="modal">
-              <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Add New Task</h2>
-                <form action="/project" method="POST" id="taskForm">
-                  <label for="title">Title:</label>
-                  <input type="text" id="title" name="title" required>  
-                  <label for="tag">Tag:</label>
-                  <input type="text" id="tag" name="tag" required>
-                  <label for="description">Description:</label>
-                  <textarea id="description" name="description" required></textarea>
-                  <label for="date">Date:</label>
-                  <input type="text" id="date" name="date" required>
-                  <label for="comments">Comments:</label>
-                  <input type="text" id="comments" name="comments">
-                  <label for="owner">Owner:</label>
-                  <input type="text" id="owner" name="owner" required>
-                  <button type="submit">Add Task</button>
+            <div class="task-options">
+              <button class="dropdown-button">
+                <i class="fas fa-bars"></i>
+              </button>
+              <div class="dropdown-content">
+                <button class="edit-option">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <form
+                  id="<%= task.owner%>"
+                  action="/delete-task/<%= task.title %>/<%= task._id %>"
+                  method="POST"
+                >
+                  <button type="submit" class="delete-option">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
                 </form>
               </div>
             </div>
           </div>
 
-          <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
-          <% for (let task of column.tasks) { %>
-            <div class="task" draggable="true">
-              <div class="task-tags">
-                <span class="task-tag"><%= task.tag %></span>
-                
-                <div class="task-options">
-                  <button class="dropdown-button">
-                    <i class="fas fa-bars"></i>
-                  </button>
-                  <div class="dropdown-content">
-                    <a href="#" class="edit-option"><i class="fas fa-edit"></i> Edit</a>
-                    <a href="#" class="delete-option"><i class="fas fa-trash-alt"></i> Delete</a>
-                  </div>
-                </div>
-              </div>
-            
-              <!-- Menampilkan deskripsi tugas -->
-              <p description="<%= task.description %>"><%= task.description %></p>
+          <!-- Menampilkan deskripsi tugas -->
+          <p description="<%= task.description %>"><%= task.description %></p>
 
-              <div class="task-desc">
-                <span><i class="fas fa-calendar"></i> <%= task.date %></span>
-                <button class="comments">
-                  <span><i class="fas fa-comments"></i> <%= task.comments %></span>
-                </button>
-                <span class="task-owner"><%= task.owner %></span>
-              </div>
-            </div>
-          <% } %>
+          <div class="task-desc">
+            <span><i class="fas fa-calendar"></i> <%= task.date %></span>
+            <button class="comments">
+              <span><i class="fas fa-comments"></i> <%= task.comments %></span>
+            </button>
+            <span class="task-owner"><%= task.owner %></span>
+          </div>
         </div>
+        <% } %>
+      </div>
       <% } %>
     </div>
   </main>
@@ -76,11 +91,19 @@
 
       <!-- Mulai iterasi untuk setiap data progres -->
       <% for (let progress of progressData) { %>
-        <div class="tag-progress">
-          <!-- Menampilkan tag progres -->
-          <p><%= progress.tag %><span><%= progress.current %>/<%= progress.total %></span></p>
-          <progress class="progress" value="<%= progress.current %>" max="<%= progress.total %>"></progress>
-        </div>
+      <div class="tag-progress">
+        <!-- Menampilkan tag progres -->
+        <p>
+          <%= progress.tag %><span
+            ><%= progress.current %>/<%= progress.total %></span
+          >
+        </p>
+        <progress
+          class="progress"
+          value="<%= progress.current %>"
+          max="<%= progress.total %>"
+        ></progress>
+      </div>
       <% } %>
     </div>
   </aside>

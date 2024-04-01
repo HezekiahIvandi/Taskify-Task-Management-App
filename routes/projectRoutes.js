@@ -1,6 +1,7 @@
 // Import modul yang dibutuhkan
 const express = require("express");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Task = require("../models/Task");
 
 // Membuat objek router menggunakan Router()
 const router = express.Router();
@@ -14,10 +15,10 @@ router.get("/project", async (req, res) => {
     const db = mongoose.connection.db;
 
     // Mengakses collection dari database
-    const tasksToDoCollection = db.collection('Task To Do');
-    const onGoingCollection = db.collection('On Going');
-    const needsReviewCollection = db.collection('Needs Review');
-    const doneCollection = db.collection('Done');
+    const tasksToDoCollection = db.collection("Task To Do");
+    const onGoingCollection = db.collection("On Going");
+    const needsReviewCollection = db.collection("Needs Review");
+    const doneCollection = db.collection("Done");
 
     // Mengambil data (task card) dari masing-masing collection menggunakan metode find({})
     const tasksToDo = await tasksToDoCollection.find({}).toArray();
@@ -30,7 +31,7 @@ router.get("/project", async (req, res) => {
       { title: "Task To Do 📝", tasks: tasksToDo },
       { title: "On Going ⏳", tasks: onGoing },
       { title: "Needs Review 🔎", tasks: needsReview },
-      { title: "Done 💯", tasks: done }
+      { title: "Done 💯", tasks: done },
     ];
     let progressData = [
       { tag: "Perencanaan", current: 3, total: 4 },
@@ -51,7 +52,7 @@ router.get("/project", async (req, res) => {
       columns: columns,
       progressData: progressData,
     });
-  
+
     // Error handling untuk mencetak pesan kesalahan dan detailnya ke konsol
     // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
   } catch (error) {
@@ -59,9 +60,6 @@ router.get("/project", async (req, res) => {
     res.status(500).send("Terjadi kesalahan saat mengambil data dari MongoDB");
   }
 });
-
-
-
 
 // Handling Request POST pada rute "/project"
 // Dapat dianalogikan dengan operasi Create dalam CRUD
@@ -72,7 +70,7 @@ router.post("/project", async (req, res) => {
     const db = mongoose.connection.db;
 
     // Mengambil nilai-nilai yang dimasukkan client melalui form dengan method POST menggunakan objek req.body
-    const { title, tag, description, date, comments, owner } = req.body; 
+    const { title, tag, description, date, comments, owner } = req.body;
 
     // Menentukan nama collection berdasarkan title yang dimasukkan client
     let collectionName;
@@ -97,17 +95,19 @@ router.post("/project", async (req, res) => {
     const collection = db.collection(collectionName);
 
     // Menambahkan satu data (task) baru ke dalam collection yang sesuai menggunakan insertOne()
-    await collection.insertOne({ 
+    await collection.insertOne({
       title,
       tag,
       description,
       date,
       comments,
-      owner
+      owner,
     });
 
     // Server mengirimkan respons HTTP dengan status code 201, yang menunjukkan bahwa permintaan telah berhasil dilakukan
-    res.status(201).send(`Data berhasil ditambahkan ke dalam koleksi '${collectionName}'`);
+    res
+      .status(201)
+      .send(`Data berhasil ditambahkan ke dalam koleksi '${collectionName}'`);
 
     // Error handling untuk mencetak pesan kesalahan dan detailnya ke konsol
     // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
@@ -117,24 +117,13 @@ router.post("/project", async (req, res) => {
   }
 });
 
-
-
-
 // Handling Request DELETE pada rute "/delete-task"
 // Dapat dianalogikan dengan operasi Delete dalam CRUD
 // Client mengirimkan data ke Server untuk dihapus dari MongoDB
-router.delete('/delete-task', async (req, res) => {
+router.post("/delete-task/:title/:id", async (req, res) => {
   try {
     // Mengakses objek database MongoDB
-    const db = mongoose.connection.db;
-
-    // Mengambil nilai title dan description dari query string yang dikirim client
-    const title = req.query.collection;
-    const dataDescription = req.query.data;
-
-    console.log('Deskripsi data yang akan dihapus:', dataDescription);
-    
-    // Menentukan nama collection berdasarkan title yang dimasukkan client
+    const title = req.params.title;
     let collectionName;
     switch (title) {
       case "Task To Do 📝":
@@ -152,79 +141,30 @@ router.delete('/delete-task', async (req, res) => {
       default:
         throw new Error("Title yang diberikan tidak valid");
     }
-
-    // Mengakses collection dari database
+    console.log(collectionName);
+    const db = mongoose.connection.db;
     const collection = db.collection(collectionName);
-
+    const id = new mongoose.Types.ObjectId(req.params.id);
     // Menghapus satu data (task) dari collection berdasarkan deskripsi yang diberikan menggunakan deleteOne()
-    const result = await collection.deleteOne({ description: dataDescription });
+    const result = await collection.deleteOne({
+      _id: id,
+    });
 
-    // Memeriksa apakah data berhasil dihapus
-    // Properti deletedCount merupakan objek hasil operasi penghapusan data yang dikembalikan oleh deleteOne()
-    if (result.deletedCount === 1) {
-      res.send('Data berhasil di hapus dari MongoDB');
-    } else {
-      res.send('Data tidak ditemukan atau sudah dihapus dari MongoDB');
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Document not found" });
     }
 
-    // Error handling untuk mencetak pesan kesalahan dan detailnya ke konsol
-    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
+    res.redirect("/project");
   } catch (error) {
-    console.error('Error saat menghapus data dari MongoDB:', error);
-    res.status(500).send('Terjadi kesalahan saat menghapus data dari MongoDB');
+    console.error("Error deleting data from MongoDB:", error);
+    res.status(500).send("An error occurred while deleting data from MongoDB");
   }
 });
-
-
-
-// Import model Task (asumsi Anda memiliki model Task)
-const Task = require('../models/Task');
 
 // Handling Request UPDATE pada rute "/update-task"
 // Dapat dianalogikan dengan operasi Update dalam CRUD
 // Client mengirimkan data ke Server untuk diperbaharui dari MongoDB
 // Route untuk meng-handle permintaan PUT
-router.put('/updateTask', async (req, res) => {
-    const oldTitle = req.body.oldTitle;
-    const oldDescription = req.body.oldDescription;
-
-    console.log('judul yang lama yang akan dihapus', oldTitle);
-    console.log(oldDescription);
-    
-    try {
-        // Cari tugas berdasarkan judul lama dan deskripsi lama
-        const task = await Task.findOne({ title: oldTitle, description: oldDescription });
-
-        if (!task) {
-            return res.status(404).json({ message: "Tugas tidak ditemukan" });
-        }
-
-        // Update data tugas dengan data baru
-        task.title = req.body.newTitle;
-        task.description = req.body.newDescription;
-
-        console.log('judul baru yang akan ditambahkan', task.title);
-        console.log(task.description);
-
-        task.tag = req.body.tag;
-        task.date = req.body.date;
-        task.comments = req.body.comments;
-        task.owner = req.body.owner;
-
-        // Simpan perubahan
-        await task.save();
-
-        res.status(200).json({ message: "Tugas berhasil diperbarui", updatedTask: task });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Terjadi kesalahan saat memperbarui tugas" });
-    }
-});
-
-
-
-
-
 
 // Mengekspor objek router
 module.exports = router;
