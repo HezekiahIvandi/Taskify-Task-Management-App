@@ -1,24 +1,23 @@
 <div class="main">
-  <div class="form">
+  <%- include ("partials/messages"); %>
+  <br>
+  <form class="form" action="/register" method="POST">
     <h1 class="form-title">Create Account</h1>
     <div class="textfield">
-      <label for="uname">Username</label>
-      <input type="text" placeholder="username" name="uname" required />
+      <label for="email">Email</label>
+      <input type="email" placeholder="email" name="email" id="email" required  value="<%= typeof email != 'undefined' ? email : '' %>"/>
+      <label for="name">Username</label>
+      <input type="name" placeholder="name" name="name" id="name" required value="<%= typeof name != 'undefined' ? name : '' %>"/>
       <br />
-      <label for="pwd">Password</label>
-      <input type="password" placeholder="password" name="pwd" required />
-      <label for="con-pwd">Confirm Password</label>
-      <input
-        type="password"
-        placeholder="confirm password"
-        name="con-pwd"
-        required
-      />
+      <label for="password">Password</label>
+      <input type="password" placeholder="password" name="password" id="password" required value="<%= typeof password != 'undefined' ? password : '' %>"/>
+      <label for="password2">Confirm Password</label>
+      <input type="password" placeholder="confirm password" name="password2" id="password2" required value="<%= typeof password2 != 'undefined' ? password2 : '' %>"/>
     </div>
     <br />
-    <button class="form-button" onclick="popupMenu()">Register</button>
+    <button class="form-button" type="submit">Register</button>
     <p class="signup">
       Already have an account? <a href="/login">Login</a> here
     </p>
-  </div>
+  </form>
 </div>
