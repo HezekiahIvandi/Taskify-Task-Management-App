@@ -25,7 +25,15 @@
   margin-top: 4rem;
   display: flex;
   min-height: 80vh;
+  position: relative;
 }
+
+.container-fitur-chat#blur.active {
+  filter: blur(20px);
+  pointer-events: none;
+  user-select: none;
+}
+
 .chat-contacts {
   width: 35%;
   min-height: inherit;
@@ -68,6 +76,19 @@
   margin-right: 0.4rem;
   border-radius: 50%;
 }
+.add-contact {
+  background-color: rgb(248, 240, 226);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  transition: ease-in-out 0.5s;
+}
+
+.add-contact:hover {
+  background-color: rgb(189, 188, 188);
+}
+
 /* contacts section */
 
 /* chat section*/
@@ -232,6 +253,69 @@ input:focus,
   font-size: 1em;
   transition: ease-in-out 0.2s;
 }
+
+#popup {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  padding: 50px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#popup.active {
+  top: 50%;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+#add-contact-header {
+  display: flex;
+  justify-content: space-between;
+}
+#add-contact-header button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#popup label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px;
+  margin-top: 8px;
+}
+
+#popup input {
+  width: 100%;
+  margin: 2px;
+  border: none;
+  outline: none;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid gray;
+}
+
+#popup #add-button {
+  border: none;
+  outline: none;
+  padding: 8px;
+  width: 100%;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 8px;
+  background: orange;
+}
+
 /* chat section*/
 
 .footer {

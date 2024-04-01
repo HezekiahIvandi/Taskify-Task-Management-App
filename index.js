@@ -8,9 +8,16 @@ const homeRoutes = require("./routes/homeRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const authRoutes = require("./routes/authRoutes");
 
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 app.set("view engine", "ejs");
 
-//static
+dotenv.config();
+const MONGO_CHAT_URL = process.env.MONGO_CHAT_URL;
+app.use(express.json());
+app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(expressLayouts);
 
@@ -26,7 +33,22 @@ app.use(projectRoutes);
 app.use(chatRoutes);
 app.use(authRoutes);
 
+//Connect to mongoDB
+const connectToDB = async () => {
+  try {
+    await mongoose.connect(MONGO_CHAT_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to mongodb");
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+};
+connectToDB();
+
 //Memulai server
 app.listen(port, () => {
-  console.log(`server is up on port localhost:${port}`);
+  console.log(`server is up on port http://localhost:${port}`);
 });

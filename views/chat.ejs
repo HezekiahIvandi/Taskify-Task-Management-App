@@ -1,71 +1,119 @@
-<div class="container-fitur-chat">
+<div class="container-fitur-chat" id="blur">
   <div class="chat-contacts">
     <div class="chat-contacts-header">
       <p>Messages</p>
       <p class="light-blue">Collaborator, people, messages</p>
     </div>
     <div class="chat-contacts-list">
-      <% contacts.forEach(function(contact) { %>
-        <div class="contact <%= contact.isSelected ? 'contact-selected' : 'not-selected' %>" id="<%= contact.id %>">
+      <div id="contacts-container">
+        <% contacts.forEach(function(contact, index) { %>
+        <div
+          class="contact <%= index == 0 ? 'contact-selected' : 'not-selected' %>"
+          id="<%= contact.id %>"
+        >
           <img src="<%= contact.imageUrl %>" alt="" />
           <div>
             <p class="name"><%= contact.name %></p>
             <p class="latest-chat"><%= contact.latestChat %></p>
           </div>
         </div>
-      <% }); %>
+        <% }); %>
+      </div>
+
+      <div class="contact add-contact">
+        <div><i class="fa-solid fa-plus"></i></div>
+      </div>
     </div>
   </div>
   <div class="chat-box">
     <div class="chat-box-header">
       <div class="chat-box-header-info">
-        <img src="<%= chatHeader.imageUrl %>" alt="" />
+        <% if (contacts && contacts.length > 0) { %>
+        <img src="<%= contacts[0].imageUrl %>" alt="" />
         <div>
-          <p class="chat-header-title"><%= chatHeader.title %></p>
-          <p class="group-stat light-blue highlight"><%= chatHeader.groupStat %></p>
+          <p class="chat-header-title"><%= contacts[0].name %></p>
+          <p class="group-stat light-blue highlight">
+            <%= contacts[0].groupStat %>
+          </p>
         </div>
+        <% } else { %>
+        <img src="assets/Pfp.png" alt="" />
+        <div>
+          <p class="chat-header-title">No Contacts Available</p>
+          <p class="group-stat"></p>
+        </div>
+        <% } %>
       </div>
       <button class="clear-button">
         <i class="fa-regular fa-trash-can fa-xl"></i>
       </button>
     </div>
     <div class="chats">
+      <% if (contacts && contacts.length > 0) { %>
       <p class="chat-date"><%= chatDate %></p>
       <div class="chat-bubble-container">
-        <% chats.forEach(function(chat) { %>
-          <div class="chat-bubble">
-            <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
-            <div>
-              <p class="chat-current-contact-name"><%= chat.sender.name %></p>
-              <div class="bubble">
-                <p><%= chat.message %></p>
-              </div>
+        <% contacts[0].chats.forEach(function(chat) { %> <% if (chat.sender.name
+        === currentUser) { %>
+        <div class="my-chat-bubble">
+          <div class="my-chat-bubble-text">
+            <p>You</p>
+            <div class="my-bubble">
+              <p class="last-chat"><%= chat.message %></p>
             </div>
           </div>
-          <% if (chat.isMine) { %>
-            <div class="my-chat-bubble">
-              <div class="my-chat-bubble-text">
-                <p>You</p>
-                <div class="my-bubble">
-                  <p class="last-chat"><%= chat.message %></p>
-                </div>
-              </div>
-              <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
+          <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
+        </div>
+        <% } else { %>
+        <div class="chat-bubble">
+          <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
+          <div>
+            <p class="chat-current-contact-name"><%= chat.sender.name %></p>
+            <div class="bubble">
+              <p><%= chat.message %></p>
             </div>
-          <% } %>
-        <% }); %>
+          </div>
+        </div>
+        <% } %> <% }); %>
       </div>
+      <% } %>
     </div>
   </div>
 </div>
 <div class="footer">
-  <form class="chat-input-form">
+  <div class="chat-input-form" id="message-form">
     <i class="fa-solid fa-plus plus-button"></i>
-    <input class="text-area" type="text" placeholder="<%= messagePlaceholder %>" />
-    <i class="fa-solid fa-icons fa-xl attach-button"></i>
-    <i class="fa-solid fa-microphone fa-lg attach-button"></i>
-    <button type="submit" class="send-button">
+    <input
+      id="message"
+      name="message"
+      class="text-area"
+      type="text"
+      placeholder="<%= messagePlaceholder %>"
+    />
+    <button class="send-button" type="submit">
       <i class="fa-regular fa-paper-plane fa-xl attach-button"></i>
     </button>
-  </form>
+  </div>
 </div>
+
+<!-- 
+  popup -->
+<form id="popup">
+  <div id="add-contact-header">
+    <h2>Add contact</h2>
+    <button id="close-popup"><i class="fa-solid fa-x"></i></button>
+  </div>
+  <label for="name">Name</label>
+  <input
+    type="text"
+    placeholder="Type contact's name here"
+    id="name"
+    name="name"
+    required
+  />
+  <label for="id">Id</label>
+  <input type="number" id="id" name="id" placeholder="123" required />
+  <button id="add-button" type="submit">add</button>
+</form>
+<script>
+  const currentUser = "<%= currentUser %>";
+</script>
