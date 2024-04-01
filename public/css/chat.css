@@ -8,6 +8,9 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+.relative {
+  position: relative;
+}
 
 .light-blue {
   color: #007bff;
@@ -76,6 +79,7 @@
   margin-right: 0.4rem;
   border-radius: 50%;
 }
+
 .add-contact {
   background-color: rgb(248, 240, 226);
   display: flex;
@@ -89,12 +93,13 @@
   background-color: rgb(189, 188, 188);
 }
 
+#popup-delete-contact {
+}
+
 /* contacts section */
 
 /* chat section*/
 .latest-chat {
-  /* color: gray; */
-
   display: inline;
 }
 

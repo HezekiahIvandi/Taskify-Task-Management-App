@@ -15,6 +15,8 @@ const sendButton = document.querySelector(".send-button");
 //contact lists from db
 let contacts;
 let currentContact;
+//current user sementara
+const currentUser = "Hezekiah";
 
 //get contacts from db
 const getContacts = async (callback = null) => {
@@ -28,10 +30,10 @@ const getContacts = async (callback = null) => {
     .then((data) => {
       // Handle the data received from the server
       contacts = data.contacts;
-      if (typeof callback === "function") {
+      try {
         callback(contacts);
-      } else {
-        console.error("Callback is not a function");
+      } catch {
+        console.log("No callback is called after reading datas from the DB");
       }
     })
     .catch((error) => {
@@ -68,21 +70,21 @@ const createChatBubble = (prop) => `
 </div>
 `;
 
-//Update current contact
+//Update current contact UI
 const updateCurrentContact = async (nameHeader) => {
-  //update data
-  getContacts();
   currentContact = nameHeader;
   chatMessages.innerHTML = "";
-  chatHeader.innerText = nameHeader;
-  let contact;
+  chatHeader.innerText = currentContact;
+
+  //currentContact data
+  let currentContactData;
+  //Find data matching with currentContact
   contacts.forEach((con) => {
-    if (con.name == nameHeader) {
-      contact = con;
+    if (con.name == currentContact) {
+      currentContactData = con;
     }
   });
-  contactStat.innerHTML = contact.groupStat;
-  chats = contact.chats;
+  chats = currentContactData.chats;
   chats.forEach((chat) => {
     if (chat.sender.name == currentUser) {
       chatMessages.innerHTML += createMyChatBubble(chat.message);
@@ -192,16 +194,19 @@ const clearChats = async () => {
 };
 clearChatBtn.addEventListener("click", clearChats);
 
-// Update chat to db
+// Update chat to db (add new chat to existing chats history)
 const updateChat = async (event) => {
+  //Prevent page from reloading after clicking the button
   event.preventDefault();
+
   // Get the value of the message from the text field
   const message = chatTextArea.value;
   if (!message) return; // If message is empty, do nothing
 
   //Find the contact object with the matching name
   currentContact = chatHeader.innerText;
-  console.log(currentContact);
+  console.log("Current contact: ", currentContact);
+  console.log("Current user: ", currentUser);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
     console.error("Contact not found");
@@ -242,7 +247,6 @@ const updateChat = async (event) => {
     chatTextArea.value = "";
     //update ui
     updateCurrentContact(currentContact);
-    //update latest chat UI
     UpdateContactListUI();
   } catch (error) {
     console.error("Error updating chat:", error.message);
@@ -250,7 +254,7 @@ const updateChat = async (event) => {
 };
 chatInputForm.addEventListener("click", updateChat);
 
-//add-contact to db
+//insert contact to db
 document
   .getElementById("popup")
   .addEventListener("submit", async function (event) {
@@ -302,5 +306,7 @@ closePopup.addEventListener("click", () => {
   const popup = document.getElementById("popup");
   popup.classList.toggle("active");
 });
+
+//Popup delete contact
 
 addEventListenerForContacts();

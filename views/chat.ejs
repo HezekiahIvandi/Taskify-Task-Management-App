@@ -8,7 +8,7 @@
       <div id="contacts-container">
         <% contacts.forEach(function(contact, index) { %>
         <div
-          class="contact <%= index == 0 ? 'contact-selected' : 'not-selected' %>"
+          class="contact <%= index == 0 ? 'contact-selected' : 'not-selected' %> relative"
           id="<%= contact.id %>"
         >
           <img src="<%= contact.imageUrl %>" alt="" />
@@ -16,11 +16,15 @@
             <p class="name"><%= contact.name %></p>
             <p class="latest-chat"><%= contact.latestChat %></p>
           </div>
+          <!-- Popup delete contact-->
+          <!-- <div id="popup-delete-contact">
+            <i class="fa-solid fa-user-minus"></i>
+          </div> -->
         </div>
         <% }); %>
       </div>
 
-      <div class="contact add-contact">
+      <div class="add-contact">
         <div><i class="fa-solid fa-plus"></i></div>
       </div>
     </div>
@@ -114,6 +118,3 @@
   <input type="number" id="id" name="id" placeholder="123" required />
   <button id="add-button" type="submit">add</button>
 </form>
-<script>
-  const currentUser = "<%= currentUser %>";
-</script>

@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
-
+const morgan = require("morgan");
 const chatRoutes = require("./routes/chatRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const projectRoutes = require("./routes/projectRoutes");
@@ -30,6 +30,7 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
   app.use(express.static("public"));
   app.use(expressLayouts);
   app.set("layout extractScripts", true);
+  app.use(morgan("dev"));
 
   // express session middleware
   app.use(express.urlencoded({ extended: false }));
