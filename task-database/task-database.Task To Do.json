@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "66080445fb99b19e50b5228d"
   },
-  "title": "Task To Do",
+  "title": "Task To Do 📝",
   "tag": "Maintenance",
   "description": "Peningkatan fitur berdasarkan umpan balik pengguna dan evaluasi kinerja.",
   "date": "Feb 27",
@@ -13,7 +13,7 @@
   "_id": {
     "$oid": "66080445fb99b19e50b5228e"
   },
-  "title": "Task To Do",
+  "title": "Task To Do 📝",
   "tag": "Deployment",
   "description": "Peluncuran aplikasi ke lingkungan produksi dengan pemantauan stabilitas setelah peluncuran.",
   "date": "Feb 29",
@@ -24,7 +24,7 @@
   "_id": {
     "$oid": "66080445fb99b19e50b5228f"
   },
-  "title": "Task To Do",
+  "title": "Task To Do 📝",
   "tag": "Backend",
   "description": "Menentukan teknologi backend yang tepat berdasarkan skala dan kompleksitas proyek.",
   "date": "Feb 23",
@@ -35,7 +35,7 @@
   "_id": {
     "$oid": "66080445fb99b19e50b52290"
   },
-  "title": "Task To Do",
+  "title": "Task To Do 📝",
   "tag": "Maintenance",
   "description": "Perbaikan bug dan masalah yang terdeteksi setelah peluncuran.",
   "date": "March 1",

@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "660929017e0be20a152047a0"
   },
-  "title": "Needs Review",
+  "title": "Needs Review 🔎",
   "tag": "Testing",
   "description": "Pengujian fungsionalitas aplikasi untuk memastikan bahwa semua fitur berjalan dengan baik.",
   "date": "Feb 5",
@@ -13,7 +13,7 @@
   "_id": {
     "$oid": "660929017e0be20a152047a1"
   },
-  "title": "Needs Review",
+  "title": "Needs Review 🔎",
   "tag": "Testing",
   "description": "Pengujian integrasi untuk memverifikasi koneksi antara komponen backend dan frontend.",
   "date": "Feb 9",
@@ -24,7 +24,7 @@
   "_id": {
     "$oid": "660929017e0be20a152047a2"
   },
-  "title": "Needs Review",
+  "title": "Needs Review 🔎",
   "tag": "Deployment",
   "description": "Persiapan infrastruktur untuk hosting aplikasi.",
   "date": "March 21",
@@ -35,7 +35,7 @@
   "_id": {
     "$oid": "660929017e0be20a152047a3"
   },
-  "title": "Needs Review",
+  "title": "Needs Review 🔎",
   "tag": "Backend",
   "description": "Pengembangan logika bisnis dan fungsi server-side.",
   "date": "Feb 15",

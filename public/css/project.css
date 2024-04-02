@@ -273,12 +273,12 @@ a {
   background-color: #e5f1fe;
 }
 
+/* Dropdown Styles */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #ffffff;
-  border-radius: 6px;
-  min-width: 120px;
+  background-color: #ffffff; /* Background color changed to white */
+  border-radius: 8px;
   box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -292,12 +292,26 @@ a {
   font-size: small;
 }
 
-.delete-option {
-  color: red !important;
+.delete-option,
+.edit-option {
+  background-color: #ffffff; /* Background color changed to white */
+  color: #007bff;
+  border-radius: 8px;
+  border: none;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: left;
 }
 
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
+.delete-option:hover,
+.edit-option:hover {
+  background-color: #f1f1f1; /* Background color on hover */
+}
+
+.delete-option {
+  color: red !important;
 }
 
 .task-options:hover .dropdown-content {

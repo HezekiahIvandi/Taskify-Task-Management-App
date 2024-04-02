@@ -1,8 +1,11 @@
 // Import modul yang dibutuhkan
 const express = require("express");
 const mongoose = require("mongoose");
-const Task = require("../models/Task");
-
+const TaskToDo = require("../models/TaskToDo");
+const OnGoing = require("../models/OnGoing");
+const NeedsReview = require("../models/NeedsReview");
+const Done = require("../models/Done");
+ 
 // Membuat objek router menggunakan Router()
 const router = express.Router();
 
@@ -14,18 +17,12 @@ router.get("/project", async (req, res) => {
     // Mengakses objek database MongoDB
     const db = mongoose.connection.db;
 
-    // Mengakses collection dari database
-    const tasksToDoCollection = db.collection("Task To Do");
-    const onGoingCollection = db.collection("On Going");
-    const needsReviewCollection = db.collection("Needs Review");
-    const doneCollection = db.collection("Done");
-
-    // Mengambil data (task card) dari masing-masing collection menggunakan metode find({})
-    const tasksToDo = await tasksToDoCollection.find({}).toArray();
-    const onGoing = await onGoingCollection.find({}).toArray();
-    const needsReview = await needsReviewCollection.find({}).toArray();
-    const done = await doneCollection.find({}).toArray();
-
+    // Mengambil data dari model-model yang sesuai
+    const tasksToDo = await TaskToDo.find({});
+    const onGoing = await OnGoing.find({});
+    const needsReview = await NeedsReview.find({});
+    const done = await Done.find({});
+    
     // Data yang telah diambil dari MongoDB dikemas untuk dikirimkan sebagai respons
     const columns = [
       { title: "Task To Do 📝", tasks: tasksToDo },
@@ -71,7 +68,7 @@ router.post("/project", async (req, res) => {
 
     // Mengambil nilai-nilai yang dimasukkan client melalui form dengan method POST menggunakan objek req.body
     const { title, tag, description, date, comments, owner } = req.body;
-    console.log(title);
+
     // Menentukan nama collection berdasarkan title yang dimasukkan client
     let collectionName;
     switch (title) {

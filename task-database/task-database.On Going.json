@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "660928f17e0be20a15204799"
   },
-  "title": "On Going",
+  "title": "On Going ⏳",
   "tag": "Desain UI/UX",
   "description": "Pembuatan wireframe dan mockup untuk merencanakan tata letak dan navigasi.",
   "date": "Feb 25",
@@ -13,7 +13,7 @@
   "_id": {
     "$oid": "660928f17e0be20a1520479a"
   },
-  "title": "On Going",
+  "title": "On Going ⏳",
   "tag": "Desain UI/UX",
   "description": "Desain antarmuka pengguna (UI) termasuk warna, tipografi, ikon, dan elemen grafis lainnya.",
   "date": "Feb 27",
@@ -24,7 +24,7 @@
   "_id": {
     "$oid": "660928f17e0be20a1520479b"
   },
-  "title": "On Going",
+  "title": "On Going ⏳",
   "tag": "Perencanaan",
   "description": "Analisis pesaing dan pasar untuk memahami tren dan kebutuhan pengguna.",
   "date": "Feb 12",
@@ -35,7 +35,7 @@
   "_id": {
     "$oid": "660928f17e0be20a1520479c"
   },
-  "title": "On Going",
+  "title": "On Going ⏳",
   "tag": "Backend",
   "description": "Implementasi API untuk interaksi antara frontend dan backend.",
   "date": "Feb 21",
@@ -46,7 +46,7 @@
   "_id": {
     "$oid": "660928f17e0be20a1520479d"
   },
-  "title": "On Going",
+  "title": "On Going ⏳",
   "tag": "Frontend",
   "description": "Implementasi desain UI/UX menggunakan HTML, CSS, dan JavaScript.",
   "date": "Mar 8",
