@@ -367,10 +367,16 @@ form {
   gap: 10px;
 }
 
+h2 {
+  text-align: center;
+  color: #000000;
+}
+
 label {
   font-size: 16px;
   font-weight: bold;
   text-align: left;
+  color: #000000;
 }
 
 input[type="text"],
@@ -383,7 +389,7 @@ textarea {
   box-sizing: border-box;
 }
 
-button[type="submit"] {
+button[type="submit"], button[type="editTask"] {
   background-color: #007bff;
   color: white;
   border: none;
@@ -393,6 +399,6 @@ button[type="submit"] {
   cursor: pointer;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover, button[type="editTask"] {
   background-color: #0056b3;
 }

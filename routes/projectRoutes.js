@@ -118,8 +118,8 @@ router.post("/project", async (req, res) => {
 // Client mengirimkan data ke Server untuk dihapus dari MongoDB
 router.post("/delete-task/:title/:id", async (req, res) => {
   try {
-    // Mengakses objek database MongoDB
     const title = req.params.title;
+    
     let collectionName;
     switch (title) {
       case "Task To Do 📝":
@@ -137,7 +137,7 @@ router.post("/delete-task/:title/:id", async (req, res) => {
       default:
         throw new Error("Title yang diberikan tidak valid");
     }
-    console.log(collectionName);
+    
     const db = mongoose.connection.db;
     const collection = db.collection(collectionName);
     const id = new mongoose.Types.ObjectId(req.params.id);
@@ -157,10 +157,56 @@ router.post("/delete-task/:title/:id", async (req, res) => {
   }
 });
 
-// Handling Request UPDATE pada rute "/update-task"
+// Handling Request UPDATE pada rute "/edit-task"
 // Dapat dianalogikan dengan operasi Update dalam CRUD
 // Client mengirimkan data ke Server untuk diperbaharui dari MongoDB
 // Route untuk meng-handle permintaan PUT
+router.post("/edit-task/:title/:id", async (req, res) => {
+  try {
+    const title = req.params.title;
+
+    // Mengambil data yang diperbarui dari req.body
+    const { tag, description, date, comments, owner } = req.body;
+
+    let collectionName;
+    switch (title) {
+      case "Task To Do 📝":
+        collectionName = "Task To Do";
+        break;
+      case "On Going ⏳":
+        collectionName = "On Going";
+        break;
+      case "Needs Review 🔎":
+        collectionName = "Needs Review";
+        break;
+      case "Done 💯":
+        collectionName = "Done";
+        break;
+      default:
+        throw new Error("Title yang diberikan tidak valid");
+    }
+    
+    const db = mongoose.connection.db;
+    const collection = db.collection(collectionName);
+    const id = new mongoose.Types.ObjectId(req.params.id);
+    
+    // Melakukan update data (task) dari collection berdasarkan deskripsi yang diberikan menggunakan updateOne()
+    await collection.updateOne( 
+      { _id: id }, 
+      { $set: {
+        tag,
+        description,
+        date,
+        comments,
+        owner,
+      } });
+
+    res.redirect("/project");
+  } catch (error) {
+    console.error("Error updating data in MongoDB:", error);
+    res.status(500).send("An error occurred while updating data in MongoDB");
+  }
+});
 
 // Mengekspor objek router
 module.exports = router;

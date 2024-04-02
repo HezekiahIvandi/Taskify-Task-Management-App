@@ -204,3 +204,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", async () => {
+  // Panggil fungsi untuk memuat ulang data tugas dari server saat halaman dimuat
+  await loadTasksFromServer().catch((error) => {
+    console.error("Error loading tasks:", error);
+  });
+
+  // Variabel untuk menyimpan referensi ke container kolom
+  columnsContainer = document.querySelector(".taskify-tasks");
+
+  // Pilih tombol untuk menampilkan form
+  const addTaskButtons = document.querySelectorAll(".add-task-button");
+
+  addTaskButtons.forEach((addTaskButton) => {
+    addTaskButton.addEventListener("click", () => {
+      const modal = document.getElementById("taskFormModal");
+      modal.style.display = "block";
+    });
+  });
+
+  // Pilih modal form
+  const modal = document.getElementById("taskFormModal");
+  // Pilih tombol close dalam modal
+  const closeButton = document.querySelector("#taskFormModal .close");
+
+  // Tambahkan event listener untuk tombol close di dalam form
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Tambahkan event listener untuk menutup form jika area di luar form diklik
+  window.addEventListener("click", (event) => {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+});
