@@ -21,7 +21,12 @@
               <h2>Add New Task</h2>
               <form action="/project" method="POST" id="taskForm">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required />
+                <select name="title" id="title" required>
+                  <option value="Task To Do 📝">Task To Do 📝</option>
+                  <option value="On Going ⏳">On Going ⏳</option>
+                  <option value="Needs Review 🔎">Needs Review 🔎</option>
+                  <option value="Done 💯">Done 💯</option>
+                </select>
                 <label for="tag">Tag:</label>
                 <input type="text" id="tag" name="tag" required />
                 <label for="description">Description:</label>

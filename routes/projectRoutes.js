@@ -71,7 +71,7 @@ router.post("/project", async (req, res) => {
 
     // Mengambil nilai-nilai yang dimasukkan client melalui form dengan method POST menggunakan objek req.body
     const { title, tag, description, date, comments, owner } = req.body;
-
+    console.log(title);
     // Menentukan nama collection berdasarkan title yang dimasukkan client
     let collectionName;
     switch (title) {
@@ -103,19 +103,18 @@ router.post("/project", async (req, res) => {
       comments,
       owner,
     });
+    
+    // Redirect ke '/project/' setelah berhasil menambahkan data
+    res.redirect('/project/');
 
-    // Server mengirimkan respons HTTP dengan status code 201, yang menunjukkan bahwa permintaan telah berhasil dilakukan
-    res
-      .status(201)
-      .send(`Data berhasil ditambahkan ke dalam koleksi '${collectionName}'`);
-
-    // Error handling untuk mencetak pesan kesalahan dan detailnya ke konsol
-    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
   } catch (error) {
+    // Error handling untuk mencetak pesan kesalahan dan detailnya ke konsol
     console.error("Error saat menambahkan data ke MongoDB:", error);
+    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     res.status(500).send("Terjadi kesalahan saat menambahkan data ke MongoDB");
   }
 });
+
 
 // Handling Request DELETE pada rute "/delete-task"
 // Dapat dianalogikan dengan operasi Delete dalam CRUD

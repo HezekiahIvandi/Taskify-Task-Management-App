@@ -30,13 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Event listener untuk setiap task dalam draggableTasks
-  draggableTasks.forEach(task => {
+  draggableTasks.forEach((task) => {
     task.addEventListener("dragstart", startDrag);
     task.addEventListener("dragend", endDrag);
   });
 
   // Event listener untuk setiap area dalam dropAreas
-  dropAreas.forEach(area => {
+  dropAreas.forEach((area) => {
     area.addEventListener("dragover", overArea); // Task di atas area
     area.addEventListener("dragenter", enterArea); // Task masuk ke dalam area
     area.addEventListener("drop", dropArea); // Task dilepas di dalam area
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const dropdownButtons = document.querySelectorAll(".dropdown-button");
 
-  dropdownButtons.forEach(button => {
+  dropdownButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const dropdownContent = button.nextElementSibling;
       dropdownContent.classList.toggle("show");
@@ -55,11 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Close the dropdown menu if the user clicks outside of it
   window.addEventListener("click", (event) => {
-    if (!event.target.matches('.dropdown-button')) {
+    if (!event.target.matches(".dropdown-button")) {
       const dropdowns = document.getElementsByClassName("dropdown-content");
       for (let dropdown of dropdowns) {
-        if (dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
+        if (dropdown.classList.contains("show")) {
+          dropdown.classList.remove("show");
         }
       }
     }
@@ -80,14 +80,13 @@ async function loadTasksFromServer() {
     columnsContainer.innerHTML = "";
 
     // Iterasi melalui setiap kolom dan setiap task di dalamnya
-    columns.forEach(column => {
+    columns.forEach((column) => {
       const columnElement = document.createElement("div");
       columnElement.classList.add("column");
 
       const columnTitle = document.createElement("h2");
       columnTitle.textContent = column.title;
       columnElement.appendChild(columnTitle);
-
 
       columnsContainer.appendChild(columnElement);
     });
@@ -100,7 +99,7 @@ let columnsContainer; // Variabel untuk menyimpan referensi ke container kolom
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Panggil fungsi untuk memuat ulang data tugas dari server saat halaman dimuat
-  await loadTasksFromServer().catch(error => {
+  await loadTasksFromServer().catch((error) => {
     console.error("Error loading tasks:", error);
   });
 
@@ -110,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Pilih tombol untuk menampilkan form
   const addTaskButtons = document.querySelectorAll(".add-task-button");
 
-  addTaskButtons.forEach(addTaskButton => {
+  addTaskButtons.forEach((addTaskButton) => {
     addTaskButton.addEventListener("click", () => {
       const modal = document.getElementById("taskFormModal");
       modal.style.display = "block";
@@ -137,13 +136,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const taskForm = document.getElementById("taskForm");
+  const modal = document.getElementById("taskForModal");
 
   // Event listener untuk submit form
   taskForm.addEventListener("submit", async (event) => {
     event.preventDefault(); // Mencegah pengiriman default form
 
-    // Ambil nilai dari setiap input
-    const title = document.getElementById("title").value;
+    // Ambil nilai dari dropdown title
+    const titleDropdown = document.getElementById("title");
+    const title = titleDropdown.value;
+
+    // Ambil nilai dari input lainnya
     const tag = document.getElementById("tag").value;
     const description = document.getElementById("description").value;
     const date = document.getElementById("date").value;
@@ -157,70 +160,47 @@ document.addEventListener("DOMContentLoaded", () => {
       description,
       date,
       comments,
-      owner
+      owner,
     };
 
     try {
       // Kirim data ke server
+      console.log(JSON.stringify(newTask));
       const response = await fetch("/project", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(newTask)
-      });
-      Swal.fire({
-        title: "Success!",
-        text: "Data berhasil ditambahkan",
-        icon: "success",
-        confirmButtonText: "OK"
+        body: JSON.stringify(newTask),
       });
 
+      if (response.ok) {
+        // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
+        Swal.fire({
+          title: "Success!",
+          text: "Data berhasil ditambahkan",
+          icon: "success",
+          confirmButtonText: "OK",
+          timer: 2000 
+        }).then(() => {
+          // Setelah jeda waktu selesai, reset form dan redirect
+          taskForm.reset();
+          window.location.href = '/project';
+        });
+       
+      } else {
+        // Tampilkan pesan kesalahan jika request gagal
+        throw new Error("Failed to add task");
+      }
     } catch (error) {
       console.error("Error adding task:", error);
-      // Tampilkan popup SweetAlert2 jika terjadi kesalahan
+      // Tampilkan pesan kesalahan jika terjadi kesalahan saat mengirim data ke server
       Swal.fire({
         title: "Error!",
         text: "Terjadi kesalahan saat menambahkan data",
         icon: "error",
-        confirmButtonText: "OK"
+        confirmButtonText: "OK",
       });
     }
-    modal.style.display = "none"; // Pastikan variabel modal didefinisikan sebelum digunakan
   });
 });
-
-// Menambahkan event listener untuk tombol delete pada setiap tugas
-// document.querySelectorAll('.delete-option').forEach(button => {
-//   button.addEventListener('click', function(event) {
-//     event.preventDefault();
-
-//     // Mengambil nama koleksi dari atribut title pada elemen <h1> yang sesuai
-//     var taskElement = button.closest('.taskify-col');
-//     var title = taskElement.querySelector('.taskify-col-header-title').getAttribute('title');
-
-//     // Mengirim permintaan penghapusan ke backend
-//     fetch(`/delete-task/:title`, {
-//       method: 'POST'
-//     })
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error('Failed to delete task');
-//       }
-//       // Jika berhasil, perbarui tampilan frontend atau lakukan tindakan lain yang sesuai
-//       console.log('Task deleted successfully');
-//       // Menampilkan SweetAlert untuk memberi umpan balik visual
-//       Swal.fire({
-//         title: 'Success!',
-//         text: 'Task berhasil dihapus',
-//         icon: 'success',
-//         confirmButtonText: 'OK'
-//       });
-//     })
-//     .catch(error => {
-//       console.error('Error deleting task:', error);
-//     });
-//   });
-// });
-
-
