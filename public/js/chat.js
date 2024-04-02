@@ -276,20 +276,38 @@ document
 
     const responseData = await response.json();
     if (response.ok) {
-      alert(responseData.msg);
-      this.reset();
-      //close popup
-      const container = document.getElementById("blur");
-      container.classList.toggle("active");
-      const popup = document.getElementById("popup");
-      popup.classList.toggle("active");
-      //update ui
-      console.log(jsonData.name);
-      updateCurrentContact(jsonData.name);
-      //update contact ui
-      UpdateContactListUI();
+      // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
+      Swal.fire({
+        title: "Success!",
+        text: "Data berhasil ditambahkan",
+        icon: "success",
+        confirmButtonText: "OK",
+        timer: 2000,
+      }).then(() => {
+        // Setelah jeda waktu selesai, reset form
+        this.reset();
+        setTimeout(() => {
+          //close form popup
+          const container = document.getElementById("blur");
+          container.classList.toggle("active");
+          const popup = document.getElementById("popup");
+          popup.classList.toggle("active");
+
+          //update the contact's chats UI
+          console.log(jsonData.name);
+          updateCurrentContact(jsonData.name);
+
+          //update contact ui
+          UpdateContactListUI();
+        }, 340);
+      });
     } else {
-      alert("Error: " + responseData.msg);
+      Swal.fire({
+        title: "Error!",
+        text: "Kontak dengan user ini sudah ada!",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   });
 

@@ -318,7 +318,7 @@ input:focus,
   cursor: pointer;
   margin-top: 20px;
   border-radius: 8px;
-  background: orange;
+  background: #007bff;
 }
 
 /* chat section*/
