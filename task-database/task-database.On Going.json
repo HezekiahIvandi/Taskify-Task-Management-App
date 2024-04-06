@@ -1,55 +1,55 @@
 [{
   "_id": {
-    "$oid": "660928f17e0be20a15204799"
+    "$oid": "6611733e51ce2fb6ba2fd9e1"
   },
   "title": "On Going ⏳",
   "tag": "Desain UI/UX",
   "description": "Pembuatan wireframe dan mockup untuk merencanakan tata letak dan navigasi.",
-  "date": "Feb 25",
-  "comments": 3,
+  "date": "25 Feb 2024",
+  "collaborators": 3,
   "owner": "M"
 },
 {
   "_id": {
-    "$oid": "660928f17e0be20a1520479a"
+    "$oid": "6611733e51ce2fb6ba2fd9e2"
   },
   "title": "On Going ⏳",
   "tag": "Desain UI/UX",
   "description": "Desain antarmuka pengguna (UI) termasuk warna, tipografi, ikon, dan elemen grafis lainnya.",
-  "date": "Feb 27",
-  "comments": 6,
+  "date": "27 Feb 2024",
+  "collaborators": 6,
   "owner": "H"
 },
 {
   "_id": {
-    "$oid": "660928f17e0be20a1520479b"
+    "$oid": "6611733e51ce2fb6ba2fd9e3"
   },
   "title": "On Going ⏳",
   "tag": "Perencanaan",
   "description": "Analisis pesaing dan pasar untuk memahami tren dan kebutuhan pengguna.",
-  "date": "Feb 12",
-  "comments": 17,
+  "date": "12 Feb 2024",
+  "collaborators": 17,
   "owner": "V"
 },
 {
   "_id": {
-    "$oid": "660928f17e0be20a1520479c"
+    "$oid": "6611733e51ce2fb6ba2fd9e4"
   },
   "title": "On Going ⏳",
   "tag": "Backend",
   "description": "Implementasi API untuk interaksi antara frontend dan backend.",
-  "date": "Feb 21",
-  "comments": 4,
+  "date": "21 Feb 2024",
+  "collaborators": 4,
   "owner": "H"
 },
 {
   "_id": {
-    "$oid": "660928f17e0be20a1520479d"
+    "$oid": "6611733e51ce2fb6ba2fd9e5"
   },
   "title": "On Going ⏳",
   "tag": "Frontend",
   "description": "Implementasi desain UI/UX menggunakan HTML, CSS, dan JavaScript.",
-  "date": "Mar 8",
-  "comments": 8,
+  "date": "08 Mar 2024",
+  "collaborators": 8,
   "owner": "M"
 }]

@@ -1,44 +1,44 @@
 [{
   "_id": {
-    "$oid": "660929017e0be20a152047a0"
+    "$oid": "6611732b51ce2fb6ba2fd9db"
   },
   "title": "Needs Review 🔎",
   "tag": "Testing",
   "description": "Pengujian fungsionalitas aplikasi untuk memastikan bahwa semua fitur berjalan dengan baik.",
-  "date": "Feb 5",
-  "comments": 3,
+  "date": "05 Feb 2024",
+  "collaborators": 3,
   "owner": "H"
 },
 {
   "_id": {
-    "$oid": "660929017e0be20a152047a1"
+    "$oid": "6611732b51ce2fb6ba2fd9dc"
   },
   "title": "Needs Review 🔎",
   "tag": "Testing",
   "description": "Pengujian integrasi untuk memverifikasi koneksi antara komponen backend dan frontend.",
-  "date": "Feb 9",
-  "comments": 6,
+  "date": "09 Feb 2024",
+  "collaborators": 6,
   "owner": "M"
 },
 {
   "_id": {
-    "$oid": "660929017e0be20a152047a2"
+    "$oid": "6611732b51ce2fb6ba2fd9dd"
   },
   "title": "Needs Review 🔎",
   "tag": "Deployment",
   "description": "Persiapan infrastruktur untuk hosting aplikasi.",
-  "date": "March 21",
-  "comments": 13,
+  "date": "21 Mar 2024",
+  "collaborators": 13,
   "owner": "H"
 },
 {
   "_id": {
-    "$oid": "660929017e0be20a152047a3"
+    "$oid": "6611732b51ce2fb6ba2fd9de"
   },
   "title": "Needs Review 🔎",
   "tag": "Backend",
   "description": "Pengembangan logika bisnis dan fungsi server-side.",
-  "date": "Feb 15",
-  "comments": 4,
+  "date": "15 Feb 2024",
+  "collaborators": 4,
   "owner": "V"
 }]

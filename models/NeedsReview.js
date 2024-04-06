@@ -15,9 +15,9 @@ const needsReviewSchema = new mongoose.Schema({
         required: true
     },
     date: {
-        type: String,
+        type: Date,
     },
-    comments: {
+    collaborators: {
         type: String,
         default: ''
     },

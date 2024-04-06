@@ -1,55 +1,55 @@
 [{
   "_id": {
-    "$oid": "660929277e0be20a152047a7"
+    "$oid": "661172ec51ce2fb6ba2fd9d0"
   },
   "title": "Done 💯",
   "tag": "Perencanaan",
   "description": "Identifikasi kebutuhan pengguna dan tujuan aplikasi.",
-  "date": "Jan 27",
-  "comments": 10,
+  "date": "24 Jan 2024",
+  "collaborators": 10,
   "owner": "V"
 },
 {
   "_id": {
-    "$oid": "660929277e0be20a152047a8"
+    "$oid": "661172ec51ce2fb6ba2fd9d1"
   },
   "title": "Done 💯",
   "tag": "Perencanaan",
   "description": "Membuat rencana proyek dan jadwal waktu.",
-  "date": "Jan 19",
-  "comments": 13,
+  "date": "19 Jan 2024",
+  "collaborators": 13,
   "owner": "H"
 },
 {
   "_id": {
-    "$oid": "660929277e0be20a152047a9"
+    "$oid": "661172ec51ce2fb6ba2fd9d2"
   },
   "title": "Done 💯",
   "tag": "Perencanaan",
   "description": "Identifikasi kebutuhan pengguna dan tujuan aplikasi.",
-  "date": "Feb 2",
-  "comments": 4,
+  "date": "02 Feb 2024",
+  "collaborators": 4,
   "owner": "M"
 },
 {
   "_id": {
-    "$oid": "660929277e0be20a152047aa"
+    "$oid": "661172ec51ce2fb6ba2fd9d3"
   },
   "title": "Done 💯",
   "tag": "Desain UI/UX",
   "description": "Pengujian prototipe untuk mengumpulkan umpan balik pengguna.",
-  "date": "Jan 12",
-  "comments": 7,
+  "date": "12 Jan 2024",
+  "collaborators": 7,
   "owner": "V"
 },
 {
   "_id": {
-    "$oid": "660929277e0be20a152047ab"
+    "$oid": "661172ec51ce2fb6ba2fd9d4"
   },
   "title": "Done 💯",
   "tag": "Frontend",
   "description": "Pengujian antarmuka pengguna untuk memastikan kinerja dan kegunaan yang baik.",
-  "date": "Jan 24",
-  "comments": 9,
+  "date": "24 Jan 2024",
+  "collaborators": 9,
   "owner": "M"
 }]

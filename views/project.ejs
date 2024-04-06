@@ -1,11 +1,15 @@
 <div class="app">
+  <!-- Bagian utama aplikasi -->
   <main class="taskify">
+    <!-- Kontainer untuk daftar tugas -->
     <div class="taskify-tasks">
       <!-- Mulai iterasi untuk setiap kolom -->
       <% for (let column of columns) { %>
-
+      <!-- Kolom untuk tugas -->
       <div class="taskify-col">
+        <!-- Header kolom tugas -->
         <div class="taskify-col-header">
+          <!-- Judul kolom tugas -->
           <h1 class="taskify-col-header-title" title="<%= column.title %>">
             <%= column.title %>
           </h1>
@@ -15,28 +19,34 @@
         <div class="add-task-card">
           <button class="add-task-button">+ Add Task Card</button>
 
-          <div class="modal">
+          <!-- Modal untuk menambahkan tugas -->
+          <div id="taskFormModal" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
               <h2>Add New Task</h2>
-              <form action="/project" method="POST" class="taskForm">
+              <!-- Form untuk menambahkan tugas -->
+              <form action="/project" method="POST" id="taskForm">
                 <label for="title">Title:</label>
-                <select name="title" required>
+                <select name="title" id="title" required>
                   <option value="Task To Do 📝">Task To Do 📝</option>
                   <option value="On Going ⏳">On Going ⏳</option>
                   <option value="Needs Review 🔎">Needs Review 🔎</option>
                   <option value="Done 💯">Done 💯</option>
                 </select>
                 <label for="tag">Tag:</label>
-                <input type="text" name="tag" required />
+                <input type="text" id="tag" name="tag" required />
                 <label for="description">Description:</label>
-                <textarea name="description" required></textarea>
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                ></textarea>
                 <label for="date">Date:</label>
-                <input type="text" name="date" required />
-                <label for="comments">Comments:</label>
-                <input type="text" name="comments" />
+                <input type="text" id="date" name="date" required />
+                <label for="collaborators">Number of Collaborators:</label>
+                <input type="text" id="collaborators" name="collaborators" />
                 <label for="owner">Owner:</label>
-                <input type="text" name="owner" required />
+                <input type="text" id="owner" name="owner" required />
                 <button type="submit">Add Task</button>
               </form>
             </div>
@@ -45,23 +55,29 @@
 
         <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
         <% for (let task of column.tasks) { %>
+        <!-- Kartu tugas -->
         <div class="task" draggable="true">
+          <!-- Tag dan opsi untuk setiap tugas -->
           <div class="task-tags">
             <span class="task-tag"><%= task.tag %></span>
 
+            <!-- Dropdown untuk opsi tugas -->
             <div class="task-options">
               <button class="dropdown-button">
                 <i class="fas fa-bars"></i>
               </button>
               <div class="dropdown-content">
+                <!-- Tombol untuk mengedit tugas -->
                 <button class="edit-option" onclick="openModal('editTaskFormModal_<%= task._id %>')">
                   <i class="fas fa-edit"></i> Edit
                 </button>
-                
+
+                <!-- Modal untuk mengedit tugas -->
                 <div id="editTaskFormModal_<%= task._id %>" class="modal">
                   <div class="modal-content">
                     <span class="close" onclick="closeModal('editTaskFormModal_<%= task._id %>')">&times;</span>
                     <h2>Edit Current Task</h2>
+                    <!-- Form untuk mengedit tugas -->
                     <form action="/edit-task/<%= task.title %>/<%= task._id %>" method="POST">
                       <label for="tag">Tag:</label>
                       <input type="text" id="tag" name="tag" value="<%= task.tag %>" required />
@@ -69,15 +85,16 @@
                       <textarea id="description" name="description" required><%= task.description %></textarea>
                       <label for="date">Date:</label>
                       <input type="text" id="date" name="date" value="<%= task.date %>" required />
-                      <label for="comments">Comments:</label>
-                      <input type="text" id="comments" name="comments" value="<%= task.comments %>" />
+                      <label for="collaborators">Number of Collaborators</label>
+                      <input type="text" id="collaborators" name="collaborators" value="<%= task.collaborators %>" />
                       <label for="owner">Owner:</label>
                       <input type="text" id="owner" name="owner" value="<%= task.owner %>" required />
-                      <button type="editTask">Edit Task</button>
+                      <button type="editTask" onclick="notifySuccess('Task edited successfully')">Edit Task</button>
                     </form>
                   </div>
                 </div>
-              
+
+                <!-- Form untuk menghapus tugas -->
                 <form id="<%= task.owner %>" action="/delete-task/<%= task.title %>/<%= task._id %>" method="POST">
                   <button class="delete-option">
                     <i class="fas fa-trash-alt"></i> Delete
@@ -87,13 +104,14 @@
             </div>
           </div>
 
-          <!-- Menampilkan deskripsi tugas -->
+          <!-- Deskripsi tugas -->
           <p description="<%= task.description %>"><%= task.description %></p>
 
+          <!-- Info tambahan tugas -->
           <div class="task-desc">
             <span><i class="fas fa-calendar"></i> <%= task.date %></span>
-            <button class="comments">
-              <span><i class="fas fa-comments"></i> <%= task.comments %></span>
+            <button class="collaborators">
+              <span><i class="fas fa-user-friends"></i> <%= task.collaborators %></span>
             </button>
             <span class="task-owner"><%= task.owner %></span>
           </div>
@@ -103,17 +121,21 @@
       <% } %>
     </div>
   </main>
+
+  <!-- Sidebar untuk progres tugas -->
   <aside class="taskify-progress">
     <div class="tag-progress">
       <h1>Task Progress 💯🚀🎯</h1>
 
       <!-- Mulai iterasi untuk setiap data progres -->
       <% for (let progress of progressData) { %>
+      <!-- Kontainer untuk progres -->
       <div class="tag-progress">
         <!-- Menampilkan tag progres -->
         <p>
           <%= progress.tag %><span><%= progress.current %>/<%= progress.total %></span>
         </p>
+        <!-- Progres bar -->
         <progress class="progress" value="<%= progress.current %>" max="<%= progress.total %>"></progress>
       </div>
       <% } %>
@@ -121,6 +143,7 @@
   </aside>
 </div>
 
+<!-- Tombol untuk chat -->
 <a href="/chat" class="chat-button">
   <img src="assets/conversation.png" alt="Chat Icon" />
 </a>
