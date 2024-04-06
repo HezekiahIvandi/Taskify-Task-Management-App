@@ -3,7 +3,7 @@ module.exports = {
       if (req.isAuthenticated()) {
         return next();
       }
-      req.flash("error_msg", "harap login untuk melihat halaman ini");
+      req.flash("error_msg", "Please Login To Access This Page");
       res.redirect("/login");
     },
   };

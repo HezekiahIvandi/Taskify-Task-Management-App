@@ -30,12 +30,12 @@ router.post("/register", (req, res) => {
 
   //cek required
   if (!name || !email || !password || !password2) {
-    errors.push({ msg: "harap data di input semua" });
+    errors.push({ msg: "Please Input All The Data" });
   }
 
   //password
   if (password !== password2) {
-    errors.push({ msg: "password tidak sama" });
+    errors.push({ msg: "Password Is Different" });
   }
 
   if (errors.length > 0) {
@@ -55,7 +55,7 @@ router.post("/register", (req, res) => {
     User.findOne({ email: email }).then((user) => {
       if (user) {
         //usernya ada
-        errors.push({ msg: "Email sudah terdaftar" });
+        errors.push({ msg: "Email Already Registered" });
         res.render("register", {
           errors,
           name,
@@ -86,7 +86,7 @@ router.post("/register", (req, res) => {
               .then((user) => {
                 req.flash(
                   "success_msg",
-                  "Anda berhasil registrasi, Silahkan Login"
+                  "Register Successful, Please Login"
                 );
 
                 res.redirect("/login");
@@ -111,7 +111,7 @@ router.post("/login", async (req, res, next) => {
 //logout handle
 router.get("/logout", (req, res) => {
   req.logout();
-  req.flash("success_msg", "Anda berhasil Log out");
+  req.flash("success_msg", "Log Out Successful!");
   res.redirect("/login");
 });
 module.exports = router;

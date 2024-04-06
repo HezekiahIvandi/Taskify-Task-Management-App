@@ -1,4 +1,5 @@
 const express = require("express");
+const { ensureAuthenticated } = require("../config/auth");
 const { getAllTaskData, createNewTask, deleteTask, updateTask } = require("../controller/projectController");
 
 // Membuat objek router menggunakan Router()
@@ -7,7 +8,7 @@ const router = express.Router();
 // Handling Request GET pada rute "/project"
 // Dapat dianalogikan dengan operasi Read dalam CRUD
 // Server meminta data dari MongoDB untuk disajikan di sisi client
-router.get("/project", getAllTaskData);
+router.get("/project",ensureAuthenticated, getAllTaskData);
 
 // Handling Request POST pada rute "/project"
 // Dapat dianalogikan dengan operasi Create dalam CRUD

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { ensureAuthenticated } = require("../config/auth");
 const ContactSchema = require("../models/contactModel");
 const {
   renderChatPage,
@@ -11,7 +12,7 @@ const {
 } = require("../controller/chatController");
 
 //inisialisasi page chat
-router.get("/chat", renderChatPage);
+router.get("/chat", ensureAuthenticated, renderChatPage);
 //read all contacts
 router.get("/chat/get", getAllChatData);
 //read single contact

@@ -14,7 +14,7 @@ module.exports = function (passport) {
       User.findOne({ email: email })
         .then((user) => {
           if (!user) {
-            return done(null, false, { message: "email tidak terdaftar" });
+            return done(null, false, { message: "Email Not Registered" });
           }
 
           //cek password
@@ -24,7 +24,7 @@ module.exports = function (passport) {
             if (isMatch) {
               return done(null, user);
             } else {
-              return done(null, false, { message: "password salah" });
+              return done(null, false, { message: "Wrong Password" });
             }
           });
         })
