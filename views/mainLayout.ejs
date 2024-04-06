@@ -10,21 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       // Fungsi untuk membuka modal
-      function openModal(task) {
-        document.getElementById("editTaskFormModal").style.display = "block";
-        console.log(task);
+      function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
       }
       
       // Fungsi untuk menutup modal
-      function closeModal() {
-        document.getElementById("editTaskFormModal").style.display = "none";
+      function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
       }
-    
+
       // Menutup modal jika klik dilakukan di luar area modal
       window.onclick = function(event) {
-        var modal = document.getElementById("editTaskFormModal");
-        if (event.target == modal) {
-          closeModal();
+        if (event.target.classList.contains("modal")) {
+          event.target.style.display = "none";
         }
       }
     </script>
