@@ -10,8 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       // Fungsi untuk membuka modal
-      function openModal() {
+      function openModal(task) {
         document.getElementById("editTaskFormModal").style.display = "block";
+        console.log(task);
       }
       
       // Fungsi untuk menutup modal

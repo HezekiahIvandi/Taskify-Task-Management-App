@@ -58,7 +58,7 @@
                 <i class="fas fa-bars"></i>
               </button>
               <div class="dropdown-content">
-                <button class="edit-option" onclick="openModal()">
+                <button class="edit-option" onclick="openModal(`<%= JSON.stringify(task) %>`)">
                   <i class="fas fa-edit"></i> Edit
                 </button>
                 
@@ -68,19 +68,19 @@
                     <h2>Edit Current Task</h2>
                     <form action="/edit-task/<%= task.title %>/<%= task._id %>" method="POST">
                       <label for="tag">Tag:</label>
-                      <input type="text" id="tag" name="tag" required />
+                      <input type="text" id="tag" name="tag" value="<%= task.tag %>" required />
                       <label for="description">Description:</label>
                       <textarea
                         id="description"
                         name="description"
                         required
-                      ></textarea>
+                      ><%= task.description %></textarea>
                       <label for="date">Date:</label>
-                      <input type="text" id="date" name="date" required />
+                      <input type="text" id="date" name="date" value="<%= task.date %>" required />
                       <label for="comments">Comments:</label>
-                      <input type="text" id="comments" name="comments" />
+                      <input type="text" id="comments" name="comments" value=<%= task.comments %> />
                       <label for="owner">Owner:</label>
-                      <input type="text" id="owner" name="owner" required />
+                      <input type="text" id="owner" name="owner" value=<%= task.owner %> required />
                       <button type="editTask">Edit Task</button>
                     </form>
                   </div>
