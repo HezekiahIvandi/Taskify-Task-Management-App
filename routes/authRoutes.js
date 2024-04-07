@@ -3,8 +3,9 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const User = require("../models/User");
+const { ensureNotAuthenticated } = require("../config/auth");
 
-router.get("/login", (req, res) => {
+router.get("/login", ensureNotAuthenticated, (req, res) => {
   res.render("login.ejs", {
     title: "Login",
     css: "css/login.css",
@@ -13,7 +14,7 @@ router.get("/login", (req, res) => {
   });
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", ensureNotAuthenticated, (req, res) => {
   res.render("register.ejs", {
     title: "Register",
     css: "css/register.css",
@@ -22,7 +23,7 @@ router.get("/register", (req, res) => {
   });
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", ensureNotAuthenticated, (req, res) => {
   const { name, email, password, password2 } = req.body;
   // console.log(req.body);
   // res.send("hello");
@@ -100,7 +101,7 @@ router.post("/register", (req, res) => {
 });
 
 //login handle
-router.post("/login", async (req, res, next) => {
+router.post("/login", ensureNotAuthenticated, async (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/project",
     failureRedirect: "/login",

@@ -6,18 +6,19 @@
         <a class="<%= currentPage === '/' ? 'active' : '' %>" href="/">Home</a>
       </li>
       <li>
-        <a
-          href="/project"
-          class="<%= currentPage === '/project' ? 'active' : '' %>"
-          >Projects</a
-        >
+        <a href="/project" class="<%= currentPage === '/project' ? 'active' : '' %>">Projects</a>
       </li>
       <li>
-        <a href="/chat" class="<%= currentPage === '/chat' ? 'active' : '' %>"
-          >Conversation</a
-        >
+        <a href="/chat" class="<%= currentPage === '/chat' ? 'active' : '' %>">Conversation</a>
       </li>
     </ul>
   </nav>
-  <a class="login" href="/login"><button class="login-button">Login</button></a>
+  <% if (isAuthenticated===false) { %>
+    <a class="login" href="/login"><button class="login-button">Login</button></a>
+    <% } else { %>
+      <div class="profile">
+        <img src="assets/Pfp.png" class="userPfp">
+        <h1 class="userName">Username</h1>
+      </div>
+      <% } %>
 </header>

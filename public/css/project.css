@@ -19,7 +19,7 @@ a {
 /* Application Styles */
 .app {
   width: 100%;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 100px);
   margin-top: 70px;
   padding-top: 20px;
   background-image: linear-gradient(

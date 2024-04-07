@@ -55,11 +55,17 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
     next();
   });
 
-  // global var
+  // Global variable untuk error message
   app.use((req, res, next) => {
     res.locals.success_msg = req.flash("success_msg");
     res.locals.error_msg = req.flash("error_msg");
     res.locals.error = req.flash("error");
+    next();
+  });
+
+  // Autentikasi untuk menampilkan profile user pada navbar
+  app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated();
     next();
   });
 
