@@ -58,11 +58,18 @@ header {
   border-radius: 8px;
 }
 
-.profile {
+.login-button:hover {
+  background-color: #01377e;
+}
+
+.user {
   width: 100px;
   margin-top: 8px;
   margin-left: 60px;
   text-align: center;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
 }
 
 .userPfp {
@@ -80,6 +87,31 @@ header {
   font-weight: 500;
 }
 
-header button:hover {
-  background-color: #01377e;
+.settings {
+  position: absolute;
+  top: 60px;
+  right: 0px;
+  z-index: 1000;
+  background-color: #ffffff;
+  border: #a1a1a1 solid 2px;
+  border-radius: 12px;
+  padding: 12px;
+  display: none;
+}
+
+.logout-button {
+  width: 80px;
+  height: 30px;
+  font-weight: bold;
+  font-size: 16;
+  color: #ffffff;
+  background-color: rgb(223, 31, 31);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  border-radius: 8px;
+}
+
+.user:hover .settings {
+  display: block;
 }

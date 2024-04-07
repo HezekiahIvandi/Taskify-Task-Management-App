@@ -111,8 +111,10 @@ router.post("/login", ensureNotAuthenticated, async (req, res, next) => {
 
 //logout handle
 router.get("/logout", (req, res) => {
-  req.logout();
-  req.flash("success_msg", "Log Out Successful!");
-  res.redirect("/login");
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    req.flash("success_msg", "Log Out Successful!");
+    res.redirect('/login');
+  });
 });
 module.exports = router;

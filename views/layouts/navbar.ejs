@@ -16,9 +16,15 @@
   <% if (isAuthenticated===false) { %>
     <a class="login" href="/login"><button class="login-button">Login</button></a>
     <% } else { %>
-      <div class="profile">
-        <img src="assets/Pfp.png" class="userPfp">
-        <h1 class="userName">Username</h1>
+      <div class="user">
+        <div class="profile">
+          <img src="assets/Pfp.png" class="userPfp">
+          <h1 class="userName">Username</h1>
+        </div>
+        <div class="settings">
+          <a href="/logout"><button class="logout-button">Logout</button></a>
+        </div>
       </div>
+
       <% } %>
 </header>
