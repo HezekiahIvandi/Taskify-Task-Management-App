@@ -31,6 +31,7 @@ const getContacts = async (callback = null) => {
       // Handle the data received from the server
       contacts = data.contacts;
       try {
+        //lakukan callback (jika ada)
         callback(contacts);
       } catch {
         console.log("No callback is called after reading datas from the DB");
@@ -43,7 +44,8 @@ const getContacts = async (callback = null) => {
 };
 //inisialisasi read data contacts dari database
 getContacts((contacts) => {
-  console.log("Inisialisasi read: ", contacts);
+  console.log("Nama current user: ", currentUser);
+  console.log("Inisialisasi data contacts (read): ", contacts);
   //inisialisasi currentContacts = contact paling atas
   currentContact = contacts[0].name;
   console.log("Inisialisasi, Current contact: ", currentContact);
@@ -125,7 +127,7 @@ const deleteContactRequest = async (name) => {
     }
     console.log("Contact deleted successfully");
     //reload UI
-    updateCurrentContact(currentContact);
+    updateCurrentContact(contacts[0].name);
     UpdateContactListUI();
   } catch (err) {
     console.log("Delete contact:", err);
@@ -204,7 +206,6 @@ const ContactLists = (contact) => {
 };
 const UpdateContactListUI = () => {
   getContacts((contacts) => {
-    console.log(contacts);
     const con = document.getElementById("contacts-container");
     con.innerHTML = "";
     contacts.forEach((contact) => {
@@ -250,8 +251,6 @@ const clearChats = async () => {
     UpdateContactListUI();
     //update ui
     chatMessages.innerHTML = "";
-    contacts[chatHeader.innerText].chats.length = 0;
-    contacts[chatHeader.innerText].lastChat = "";
   } catch (error) {
     console.error("Error updating chat:", error.message);
   }
@@ -270,7 +269,6 @@ const updateChat = async (event) => {
   //Find the contact object with the matching name
   currentContact = chatHeader.innerText;
   console.log("Update chat, Current contact: ", currentContact);
-  console.log("Current user: ", currentUser);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
     console.error("Contact not found");
@@ -357,11 +355,13 @@ document
           popup.classList.toggle("active");
 
           //update the contact's chats UI
-          console.log(jsonData.name);
-          updateCurrentContact(jsonData.name);
-
-          //update contact ui
-          UpdateContactListUI();
+          console.log("Contact added: ", jsonData.name);
+          //Read data
+          getContacts(() => {
+            //update contact ui
+            updateCurrentContact(jsonData.name);
+            UpdateContactListUI();
+          });
         }, 340);
       });
     } else {
