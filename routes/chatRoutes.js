@@ -8,6 +8,7 @@ const {
   createNewContact,
   searchContact,
   updateChats,
+  deleteContact,
 } = require("../controller/chatController");
 
 //inisialisasi page chat
@@ -22,4 +23,6 @@ router.get("/search", searchContact);
 router.post("/chat/add", createNewContact);
 //update
 router.put("/chat/update/:id", updateChats);
+//delete
+router.delete("/chat/delete/:id", deleteContact);
 module.exports = router;

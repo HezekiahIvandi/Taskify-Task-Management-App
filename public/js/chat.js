@@ -41,8 +41,13 @@ const getContacts = async (callback = null) => {
       console.error("There was a problem with the fetch operation:", error);
     });
 };
-getContacts((contacts) => console.log(contacts));
-
+//inisialisasi read data contacts dari database
+getContacts((contacts) => {
+  console.log("Inisialisasi read: ", contacts);
+  //inisialisasi currentContacts = contact paling atas
+  currentContact = contacts[0].name;
+  console.log("Inisialisasi, Current contact: ", currentContact);
+});
 //create my chat bubble
 const createMyChatBubble = (text) => `
 <div class="my-chat-bubble">
@@ -73,6 +78,7 @@ const createChatBubble = (prop) => `
 //Update current contact UI
 const updateCurrentContact = async (nameHeader) => {
   currentContact = nameHeader;
+  console.log("updateCurrentContact, Current contact: ", currentContact);
   chatMessages.innerHTML = "";
   chatHeader.innerText = currentContact;
 
@@ -97,10 +103,42 @@ const updateCurrentContact = async (nameHeader) => {
   });
 };
 
+//delete contact request function
+const deleteContactRequest = async (name) => {
+  console.log("Delete button is pressed for ", name);
+  //cari id contact
+  const contact = contacts.find((contact) => contact.name == name);
+  if (!contact) {
+    console.log("Does not find matching name in contacts");
+    return;
+  }
+  const id = contact._id;
+  try {
+    const response = await fetch(`/chat/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete contact");
+    }
+    console.log("Contact deleted successfully");
+    //reload UI
+    updateCurrentContact(currentContact);
+    UpdateContactListUI();
+  } catch (err) {
+    console.log("Delete contact:", err);
+  }
+};
+
 //addevent listener for contacts
 const addEventListenerForContacts = () => {
   const contactLists = document.querySelectorAll(".contact");
-  contactLists.forEach((contact) => {
+  const deleteContactButtons = document.querySelectorAll(
+    ".popup-delete-contact"
+  );
+  contactLists.forEach((contact, index) => {
     //current contact's name
     const name = contact.querySelector(".name").textContent;
 
@@ -115,6 +153,28 @@ const addEventListenerForContacts = () => {
 
       updateCurrentContact(name);
     });
+
+    //click event fot delete contact button
+    deleteContactButtons[index].addEventListener(
+      "click",
+      async function deleteContact() {
+        await Swal.fire({
+          title: "Are you sure?",
+          text: `Do you want to delete the contact "${name}"?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteContactRequest(name);
+          } else {
+            Swal.fire("Cancelled", "Contact deletion cancelled", "info");
+          }
+        });
+      }
+    );
   });
 };
 
@@ -128,13 +188,16 @@ const ContactLists = (contact) => {
   }
   return `
   <div
-    class="${className}"
+    class="${className} relative"
     id="${contact.id}"
   >
     <img src="${contact.imageUrl}" alt="" />
     <div>
       <p class="name" >${contact.name}</p>
       <p class="latest-chat">${contact.latestChat}</p>
+    </div>
+    <div class="popup-delete-contact">
+      <i class="fa-solid fa-user-minus delete-contact-icon"></i>
     </div>
   </div>
 `;
@@ -156,6 +219,7 @@ const UpdateContactListUI = () => {
 //Update chat content to nothing (deletion)
 const clearChats = async () => {
   currentContact = chatHeader.innerText;
+  console.log("Clear chats, Current contact: ", currentContact);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
     console.error("Contact not found");
@@ -205,7 +269,7 @@ const updateChat = async (event) => {
 
   //Find the contact object with the matching name
   currentContact = chatHeader.innerText;
-  console.log("Current contact: ", currentContact);
+  console.log("Update chat, Current contact: ", currentContact);
   console.log("Current user: ", currentUser);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
@@ -224,7 +288,6 @@ const updateChat = async (event) => {
   const chatId = contact._id;
 
   try {
-    // Send an HTTP PUT request to update the chat with the new message
     const response = await fetch(`/chat/update/${chatId}`, {
       method: "PUT",
       headers: {
@@ -307,6 +370,8 @@ document
         text: "Kontak dengan user ini sudah ada!",
         icon: "error",
         confirmButtonText: "OK",
+      }).then(() => {
+        this.reset();
       });
     }
   });
