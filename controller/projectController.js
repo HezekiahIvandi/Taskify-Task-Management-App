@@ -1,34 +1,16 @@
 // Import modul yang dibutuhkan
-const express = require("express");
-const mongoose = require("mongoose");
-const TaskToDo = require("../models/TaskToDo");
-const OnGoing = require("../models/OnGoing");
-const NeedsReview = require("../models/NeedsReview");
-const Done = require("../models/Done");
+const { getCollectionByTitle, getTaskByIdAndTitle } = require("./collectionUtils");
 
-const determineCollectionName = (title) => {
-    switch (title) {
-        case "Task To Do 📝":
-            return "TaskToDo";
-        case "On Going ⏳":
-            return "OnGoing";
-        case "Needs Review 🔎":
-            return "NeedsReview";
-        case "Done 💯":
-            return "Done";
-        default:
-            throw new Error("Invalid title provided");
-    }
-};
-
+// Mendapatkan dan membaca semua data task dari semua collection
 const getAllTaskData = async (req, res) => {
     try {
-        // Fetching data from MongoDB models
-        const tasksToDo = await TaskToDo.find({});
-        const onGoing = await OnGoing.find({});
-        const needsReview = await NeedsReview.find({});
-        const done = await Done.find({});
+        // Mengambil data dari model MongoDB
+        const tasksToDo = await getCollectionByTitle("Task To Do 📝").find({}).toArray();
+        const onGoing = await getCollectionByTitle("On Going ⏳").find({}).toArray();
+        const needsReview = await getCollectionByTitle("Needs Review 🔎").find({}).toArray();
+        const done = await getCollectionByTitle("Done 💯").find({}).toArray();
 
+        // Data yang telah diambil dari MongoDB dikemas untuk dikirimkan sebagai respons
         const columns = [
             { title: "Task To Do 📝", tasks: tasksToDo },
             { title: "On Going ⏳", tasks: onGoing },
@@ -36,6 +18,7 @@ const getAllTaskData = async (req, res) => {
             { title: "Done 💯", tasks: done },
         ];
 
+        // Data untuk Task Progress (elemen aside)
         let progressData = [
             { tag: "Perencanaan", current: 3, total: 4 },
             { tag: "Desain UI/UX", current: 1, total: 3 },
@@ -46,6 +29,7 @@ const getAllTaskData = async (req, res) => {
             { tag: "Maintenance", current: 0, total: 2 },
         ];
 
+        // Mengembalikan halaman dengan data yang diperoleh
         res.render("project.ejs", {
             title: "Projects",
             css: "css/project.css",
@@ -54,65 +38,89 @@ const getAllTaskData = async (req, res) => {
             columns: columns,
             progressData: progressData,
         });
+
+
+    // Jika terjadi kesalahan saat mengambil data dari MongoDB, pesan kesalahan akan dicetak ke konsol
+    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error) 
     } catch (error) {
-        console.error("Error fetching data from MongoDB:", error);
-        res.status(500).send("An error occurred while fetching data from MongoDB");
+        console.error(`Error fetching data from MongoDB: ${error}`);
+        res.status(500).send(`An error occurred while fetching data from MongoDB: ${error.message}`);
     }
 };
 
+// Menambahkan taks baru
 const createNewTask = async (req, res) => {
     try {
-        const { title, tag, description, date, comments, owner } = req.body;
-        const collectionName = determineCollectionName(title);
-        const collection = mongoose.connection.db.collection(collectionName);
-        await collection.insertOne({ title, tag, description, date, comments, owner });
+        // Mendapatkan informasi terkait task yang ingin ditambahkan dari request
+        const { title, tag, description, date, collaborators, owner } = req.body;
+        const collection = getCollectionByTitle(title);
+        // Menyimpan task baru ke dalam collection yang sesuai
+        await collection.insertOne({ 
+            title, 
+            tag, 
+            description, 
+            date, 
+            collaborators, 
+            owner,
+        });
+        
+        // Mengarahkan kembali ke halaman project setelah menambahkan task baru
         res.redirect('/project');
+
+    // Jika terjadi kesalahan saat membuat task baru, pesan kesalahan akan dicetak ke konsol
+    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     } catch (error) {
-        console.error("Error creating new task:", error);
-        res.status(500).send("An error occurred while creating a new task");
+        console.error(`Error creating new task: ${error}`);
+        res.status(500).send(`An error occurred while creating a new task: ${error.message}`);
     }
 };
 
+// Menghapus task tertentu
 const deleteTask = async (req, res) => {
     try {
-        const title = req.params.title;
-        const collectionName = determineCollectionName(title);
-        const collection = mongoose.connection.db.collection(collectionName);
-        const id = new mongoose.Types.ObjectId(req.params.id);
-        const result = await collection.deleteOne({ _id: id });
+        // Mendapatkan title dan ID task yang ingin dihapus dari request
+        const { title, id } = req.params;
+        const collection = getCollectionByTitle(title);
+        // Menghapus task dari collection yang sesuai berdasarkan ID
+        const result = await collection.deleteOne({ _id: getTaskByIdAndTitle(id, title) });
+        // Memberikan respons jika task tidak ditemukan
         if (result.deletedCount === 0) {
-            return res.status(404).json({ message: "Document not found" });
+            return res.status(404).json({ message: "Task not found" });
         }
+        // Mengarahkan kembali ke halaman project setelah menghapus task
         res.redirect("/project");
+
+
+    // Jika terjadi kesalahan saat menghapus task, pesan kesalahan akan dicetak ke konsol
+    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     } catch (error) {
-        console.error("Error deleting task:", error);
-        res.status(500).send("An error occurred while deleting the task");
+        console.error(`Error deleting task: ${error}`);
+        res.status(500).send(`An error occurred while deleting the task: ${error.message}`);
     }
 };
 
+// Memperbaharui informasi task tertentu
 const updateTask = async (req, res) => {
     try {
-        const title = req.params.title;
-        const { tag, description, date, comments, owner } = req.body;
-        const collectionName = determineCollectionName(title);
-        const collection = mongoose.connection.db.collection(collectionName);
-        const id = new mongoose.Types.ObjectId(req.params.id);
-        await collection.updateOne({ _id: id }, { $set: { tag, description, date, comments, owner } });
+        // Mendapatkan title, informasi yang diperbaharui, dan ID task dari request
+        const { title, id } = req.params;
+        let { tag, description, date, collaborators, owner } = req.body;
+        owner = owner.charAt(0).toUpperCase();;
+        const collection = getCollectionByTitle(title);
+        // Memperbaharui task dalam collection yang sesuai berdasarkan ID
+        await collection.updateOne({ _id: getTaskByIdAndTitle(id, title) }, { $set: { tag, description, date, collaborators, owner } });
+        // Mengarahkan kembali ke halaman project setelah memperbaharui task
         res.redirect("/project");
+
+    // Jika terjadi kesalahan saat memperbarui task, pesan kesalahan akan dicetak ke konsol
+    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     } catch (error) {
-        console.error("Error updating task:", error);
-        res.status(500).send("An error occurred while updating the task");
+        console.error(`Error updating task: ${error}`);
+        res.status(500).send(`An error occurred while updating the task: ${error.message}`);
     }
 };
 
-module.exports = {
-    getAllTaskData,
-    createNewTask,
-    deleteTask,
-    updateTask,
-};
-
-
+// Eksport fungsi-fungsi untuk digunakan di modul lain
 module.exports = {
     getAllTaskData, 
     createNewTask, 

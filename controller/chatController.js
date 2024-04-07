@@ -125,6 +125,30 @@ const updateChats = async (req, res) => {
     res.status(500).json({ msg: "Unable to update the contact" });
   }
 };
+// Fungsi untuk delete contact
+const deleteContact = async (req, res) => {
+  try {
+    // Id contact yang akan di delete
+    const id = req.params.id;
+    console.log(id);
+    // Menghapus contact yang mempunyai _id = id
+    await ContactSchema.deleteOne({
+      _id: id,
+    })
+      .then(() => {
+        res.status(200).json({
+          msg: "Contact successfully deleted",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ msg: "Unable to delete the contact" });
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Unable to delete the contact" });
+  }
+};
 module.exports = {
   renderChatPage,
   getAllChatData,
@@ -132,4 +156,5 @@ module.exports = {
   createNewContact,
   searchContact,
   updateChats,
+  deleteContact,
 };

@@ -15,9 +15,9 @@ const onGoingSchema = new mongoose.Schema({
         required: true
     },
     date: {
-        type: String,
+        type: Date,
     },
-    comments: {
+    collaborators: {
         type: String,
         default: ''
     },

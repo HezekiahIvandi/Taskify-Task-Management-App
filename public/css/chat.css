@@ -93,9 +93,30 @@
   background-color: rgb(189, 188, 188);
 }
 
-#popup-delete-contact {
+.popup-delete-contact {
+  position: absolute;
+  top: 0;
+  right: -80px; /* Initially hidden */
+  width: 80px;
+  height: 100%;
+  background-color: rgb(252, 249, 249);
+  transition: opacity 1s ease, right 0.3s ease;
+  opacity: 0; /* Initially invisible */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.contact:hover .popup-delete-contact {
+  right: 0; /* Slide into view when hovering */
+  opacity: 1; /* Make visible */
+}
+
+.delete-contact-icon {
+  width: 1rem;
+  height: 1rem;
+  color: #007bff;
+}
 /* contacts section */
 
 /* chat section*/

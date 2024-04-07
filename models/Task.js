@@ -12,12 +12,12 @@ const taskSchema = new mongoose.Schema({
     },
     tag: {
         type: String,
-        default: 'General' // Anda dapat menambahkan nilai default sesuai kebutuhan
+        default: 'General'
     },
     date: {
-        type: String,
+        type: Date,
     },
-    comments: {
+    collaborators: {
         type: String,
         default: ''
     },

@@ -6,36 +6,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // Menyimpan referensi task yang sedang di drag
   let draggedTask = null;
 
+  // Function untuk memulai drag
   const startDrag = function () {
     draggedTask = this;
-    setTimeout(() => (this.style.opacity = "0.5"), 0); // Mengurangi opasitas untuk memberikan efek drag
+    // Mengatur opasitas untuk memberikan efek drag
+    setTimeout(() => (this.style.opacity = "0.5"), 0);
   };
 
+  // Function untuk mengakhiri drag
   const endDrag = function () {
-    // Menampilkan kembali task yang sedang di drag
-    draggedTask.style.opacity = "1"; // Mengembalikan opasitas ke nilai aslinya
-    draggedTask = null; // Mereset referensi
+    // Mengembalikan opasitas ke nilai aslinya
+    draggedTask.style.opacity = "1";
+    // Mereset referensi task yang sedang di drag
+    draggedTask = null;
   };
 
+  // Function untuk event saat mouse berada di atas area drop
   const overArea = function (event) {
-    event.preventDefault(); // Agar browser memperbolehkan drop task di area
+    event.preventDefault(); // Mencegah default action browser
   };
 
+  // Function untuk event saat task masuk ke dalam area drop
   const enterArea = function (event) {
-    event.preventDefault(); // Agar browser memperbolehkan drop task di area
+    event.preventDefault(); // Mencegah default action browser
   };
 
+  // Function untuk event saat task dilepas di dalam area drop
   const dropArea = function () {
-    this.appendChild(draggedTask); // Menempatkan task di dalam area
+    this.appendChild(draggedTask); // Menempatkan task di dalam area drop
   };
 
-  // Event listener untuk setiap task dalam draggableTasks
+  // Menambahkan event listener untuk setiap task yang dapat di drag
   draggableTasks.forEach((task) => {
     task.addEventListener("dragstart", startDrag);
     task.addEventListener("dragend", endDrag);
   });
 
-  // Event listener untuk setiap area dalam dropAreas
+  // Menambahkan event listener untuk setiap area yang dapat di drop
   dropAreas.forEach((area) => {
     area.addEventListener("dragover", overArea); // Task di atas area
     area.addEventListener("dragenter", enterArea); // Task masuk ke dalam area
@@ -47,13 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdownButtons = document.querySelectorAll(".dropdown-button");
 
   dropdownButtons.forEach((button) => {
+    // Menambahkan event listener untuk setiap tombol dropdown
     button.addEventListener("click", () => {
       const dropdownContent = button.nextElementSibling;
       dropdownContent.classList.toggle("show");
     });
   });
 
-  // Close the dropdown menu if the user clicks outside of it
+  // Menutup dropdown menu jika user mengklik di luar dropdown
   window.addEventListener("click", (event) => {
     if (!event.target.matches(".dropdown-button")) {
       const dropdowns = document.getElementsByClassName("dropdown-content");
@@ -69,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
 // Define loadTasksFromServer function
 async function loadTasksFromServer() {
   try {
-    // Kirim permintaan ke server untuk mendapatkan data task
+    // Mengirim permintaan ke server untuk mendapatkan data task
     const response = await fetch("/project");
     if (!response.ok) {
       throw new Error("Failed to fetch tasks");
     }
     const columns = await response.json();
 
-    // Bersihkan konten sebelum menambahkan task baru
+    // Membersihkan konten sebelum menambahkan task baru
     columnsContainer.innerHTML = "";
 
     // Iterasi melalui setiap kolom dan setiap task di dalamnya
@@ -98,15 +106,15 @@ async function loadTasksFromServer() {
 let columnsContainer; // Variabel untuk menyimpan referensi ke container kolom
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Panggil fungsi untuk memuat ulang data tugas dari server saat halaman dimuat
+  // Memuat ulang data tugas dari server saat halaman dimuat
   await loadTasksFromServer().catch((error) => {
     console.error("Error loading tasks:", error);
   });
 
-  // Variabel untuk menyimpan referensi ke container kolom
+  // Menyimpan referensi ke container kolom
   columnsContainer = document.querySelector(".taskify-tasks");
 
-  // Pilih tombol untuk menampilkan form
+  // Menambahkan event listener untuk tombol tambah task
   const addTaskButtons = document.querySelectorAll(".add-task-button");
 
   addTaskButtons.forEach((addTaskButton) => {
@@ -116,17 +124,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // Pilih modal form
+  // Menambahkan event listener untuk menutup modal saat tombol close di klik
   const modal = document.getElementById("taskFormModal");
-  // Pilih tombol close dalam modal
   const closeButton = document.querySelector("#taskFormModal .close");
 
-  // Tambahkan event listener untuk tombol close di dalam form
   closeButton.addEventListener("click", () => {
     modal.style.display = "none";
   });
 
-  // Tambahkan event listener untuk menutup form jika area di luar form diklik
+  // Menutup modal jika area di luar modal diklik
   window.addEventListener("click", (event) => {
     if (event.target == modal) {
       modal.style.display = "none";
@@ -136,36 +142,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const taskForm = document.getElementById("taskForm");
-  const modal = document.getElementById("taskForModal");
 
   // Event listener untuk submit form
   taskForm.addEventListener("submit", async (event) => {
     event.preventDefault(); // Mencegah pengiriman default form
 
-    // Ambil nilai dari dropdown title
+    // Mendapatkan nilai dari dropdown title
     const titleDropdown = document.getElementById("title");
     const title = titleDropdown.value;
 
-    // Ambil nilai dari input lainnya
+    // Mendapatkan nilai dari input lainnya
     const tag = document.getElementById("tag").value;
     const description = document.getElementById("description").value;
     const date = document.getElementById("date").value;
-    const comments = document.getElementById("comments").value;
-    const owner = document.getElementById("owner").value;
+    const collaborators = document.getElementById("collaborators").value;
+    const ownerName = document.getElementById("owner").value;
+    const owner = ownerName.charAt(0).toUpperCase();
 
-    // Buat objek data task
+    // Membuat objek data task
     const newTask = {
       title,
       tag,
       description,
       date,
-      comments,
+      collaborators,
       owner,
     };
 
     try {
-      // Kirim data ke server
-      console.log(JSON.stringify(newTask));
+      // Mengirim data ke server
       const response = await fetch("/project", {
         method: "POST",
         headers: {
@@ -175,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
+        // Menampilkan pesan sukses jika request berhasil dengan jeda waktu
         Swal.fire({
           title: "Success!",
           text: "Data berhasil ditambahkan",
@@ -189,55 +194,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
        
       } else {
-        // Tampilkan pesan kesalahan jika request gagal
+        // Menampilkan pesan kesalahan jika request gagal
         throw new Error("Failed to add task");
       }
     } catch (error) {
       console.error("Error adding task:", error);
-      // Tampilkan pesan kesalahan jika terjadi kesalahan saat mengirim data ke server
+      // Menampilkan pesan kesalahan jika terjadi kesalahan saat mengirim data ke server
       Swal.fire({
         title: "Error!",
         text: "Terjadi kesalahan saat menambahkan data",
         icon: "error",
         confirmButtonText: "OK",
       });
-    }
-  });
-});
-
-document.addEventListener("DOMContentLoaded", async () => {
-  // Panggil fungsi untuk memuat ulang data tugas dari server saat halaman dimuat
-  await loadTasksFromServer().catch((error) => {
-    console.error("Error loading tasks:", error);
-  });
-
-  // Variabel untuk menyimpan referensi ke container kolom
-  columnsContainer = document.querySelector(".taskify-tasks");
-
-  // Pilih tombol untuk menampilkan form
-  const addTaskButtons = document.querySelectorAll(".add-task-button");
-
-  addTaskButtons.forEach((addTaskButton) => {
-    addTaskButton.addEventListener("click", () => {
-      const modal = document.getElementById("taskFormModal");
-      modal.style.display = "block";
-    });
-  });
-
-  // Pilih modal form
-  const modal = document.getElementById("taskFormModal");
-  // Pilih tombol close dalam modal
-  const closeButton = document.querySelector("#taskFormModal .close");
-
-  // Tambahkan event listener untuk tombol close di dalam form
-  closeButton.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
-  // Tambahkan event listener untuk menutup form jika area di luar form diklik
-  window.addEventListener("click", (event) => {
-    if (event.target == modal) {
-      modal.style.display = "none";
     }
   });
 });
