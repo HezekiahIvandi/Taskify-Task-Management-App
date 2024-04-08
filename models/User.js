@@ -15,7 +15,7 @@ const User = mongoose.Schema({
   },
   photoUrl: {
     type: String,
-    default: "",
+    default: "assets/Pfp.png",
   },
   date: {
     type: Date,

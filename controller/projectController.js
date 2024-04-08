@@ -37,11 +37,13 @@ const getAllTaskData = async (req, res) => {
             layout: "mainLayout.ejs",
             columns: columns,
             progressData: progressData,
+            username: req.isAuthenticated() ? req.user.name : "username",
+            photoUrl: req.isAuthenticated() ? req.user.photoUrl : ""
         });
 
 
-    // Jika terjadi kesalahan saat mengambil data dari MongoDB, pesan kesalahan akan dicetak ke konsol
-    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error) 
+        // Jika terjadi kesalahan saat mengambil data dari MongoDB, pesan kesalahan akan dicetak ke konsol
+        // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error) 
     } catch (error) {
         console.error(`Error fetching data from MongoDB: ${error}`);
         res.status(500).send(`An error occurred while fetching data from MongoDB: ${error.message}`);
@@ -55,20 +57,20 @@ const createNewTask = async (req, res) => {
         const { title, tag, description, date, collaborators, owner } = req.body;
         const collection = getCollectionByTitle(title);
         // Menyimpan task baru ke dalam collection yang sesuai
-        await collection.insertOne({ 
-            title, 
-            tag, 
-            description, 
-            date, 
-            collaborators, 
+        await collection.insertOne({
+            title,
+            tag,
+            description,
+            date,
+            collaborators,
             owner,
         });
-        
+
         // Mengarahkan kembali ke halaman project setelah menambahkan task baru
         res.redirect('/project');
 
-    // Jika terjadi kesalahan saat membuat task baru, pesan kesalahan akan dicetak ke konsol
-    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
+        // Jika terjadi kesalahan saat membuat task baru, pesan kesalahan akan dicetak ke konsol
+        // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     } catch (error) {
         console.error(`Error creating new task: ${error}`);
         res.status(500).send(`An error occurred while creating a new task: ${error.message}`);
@@ -91,8 +93,8 @@ const deleteTask = async (req, res) => {
         res.redirect("/project");
 
 
-    // Jika terjadi kesalahan saat menghapus task, pesan kesalahan akan dicetak ke konsol
-    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
+        // Jika terjadi kesalahan saat menghapus task, pesan kesalahan akan dicetak ke konsol
+        // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     } catch (error) {
         console.error(`Error deleting task: ${error}`);
         res.status(500).send(`An error occurred while deleting the task: ${error.message}`);
@@ -112,8 +114,8 @@ const updateTask = async (req, res) => {
         // Mengarahkan kembali ke halaman project setelah memperbaharui task
         res.redirect("/project");
 
-    // Jika terjadi kesalahan saat memperbarui task, pesan kesalahan akan dicetak ke konsol
-    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
+        // Jika terjadi kesalahan saat memperbarui task, pesan kesalahan akan dicetak ke konsol
+        // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
     } catch (error) {
         console.error(`Error updating task: ${error}`);
         res.status(500).send(`An error occurred while updating the task: ${error.message}`);
@@ -122,8 +124,8 @@ const updateTask = async (req, res) => {
 
 // Eksport fungsi-fungsi untuk digunakan di modul lain
 module.exports = {
-    getAllTaskData, 
-    createNewTask, 
+    getAllTaskData,
+    createNewTask,
     deleteTask,
     updateTask,
 };

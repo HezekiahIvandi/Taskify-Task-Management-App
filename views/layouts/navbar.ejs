@@ -18,8 +18,8 @@
     <% } else { %>
       <div class="user">
         <div class="profile">
-          <img src="assets/Pfp.png" class="userPfp">
-          <h1 class="userName">Username</h1>
+          <img src="<%= photoUrl %>" class="userPfp">
+          <h1 class="userName"><%= username %></h1>
         </div>
         <div class="settings">
           <a href="/logout"><button class="logout-button">Logout</button></a>

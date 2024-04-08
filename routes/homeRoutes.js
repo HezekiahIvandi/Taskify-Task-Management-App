@@ -6,6 +6,8 @@ router.get("/", (req, res) => {
     css: "css/home.css",
     js: "js/home.js",
     layout: "mainLayout.ejs",
+    username: req.isAuthenticated() ? req.user.name : "username",
+    photoUrl: req.isAuthenticated() ? req.user.photoUrl : ""
   });
 });
 module.exports = router;

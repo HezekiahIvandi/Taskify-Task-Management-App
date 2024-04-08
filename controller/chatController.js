@@ -25,6 +25,8 @@ const renderChatPage = async (req, res) => {
     chatDate: chatDate,
     messagePlaceholder: messagePlaceholder,
     currentUser: currentUser,
+    username: req.isAuthenticated() ? req.user.name : "username",
+    photoUrl: req.isAuthenticated() ? req.user.photoUrl : ""
   });
 };
 

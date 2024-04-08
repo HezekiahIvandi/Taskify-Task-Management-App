@@ -4,117 +4,17 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const User = require("../models/User");
 const { ensureNotAuthenticated } = require("../config/auth");
+const { renderLogin, renderRegister, registerUser, loginUser, logoutUser } = require("../controller/authController");
 
-router.get("/login", ensureNotAuthenticated, (req, res) => {
-  res.render("login.ejs", {
-    title: "Login",
-    css: "css/login.css",
-    js: "js/login.js",
-    layout: "mainLayout.ejs",
-  });
-});
+// Menampilkan Halaman Login
+router.get("/login", ensureNotAuthenticated, renderLogin);
+// Menampilakn Halaman Register
+router.get("/register", ensureNotAuthenticated, renderRegister);
+// Handling Register User
+router.post("/register", ensureNotAuthenticated, registerUser);
+// Handling Login User
+router.post("/login", ensureNotAuthenticated, loginUser);
+// Handling Logout User
+router.get("/logout", logoutUser);
 
-router.get("/register", ensureNotAuthenticated, (req, res) => {
-  res.render("register.ejs", {
-    title: "Register",
-    css: "css/register.css",
-    js: "js/register.js",
-    layout: "mainLayout.ejs",
-  });
-});
-
-router.post("/register", ensureNotAuthenticated, (req, res) => {
-  const { name, email, password, password2 } = req.body;
-  // console.log(req.body);
-  // res.send("hello");
-  let errors = [];
-
-  //cek required
-  if (!name || !email || !password || !password2) {
-    errors.push({ msg: "Please Input All The Data" });
-  }
-
-  //password
-  if (password !== password2) {
-    errors.push({ msg: "Password Is Different" });
-  }
-
-  if (errors.length > 0) {
-    res.render("register", {
-      errors,
-      name,
-      email,
-      password,
-      password2,
-      title: "Register",
-      css: "css/register.css",
-      js: "js/register.js",
-      layout: "mainLayout.ejs",
-    });
-  } else {
-    //validasi oke lanjut database
-    User.findOne({ email: email }).then((user) => {
-      if (user) {
-        //usernya ada
-        errors.push({ msg: "Email Already Registered" });
-        res.render("register", {
-          errors,
-          name,
-          email,
-          password,
-          password2,
-          title: "Register",
-          css: "css/register.css",
-          js: "js/register.js",
-          layout: "mainLayout.ejs",
-        });
-      } else {
-        const newUser = new User({
-          name,
-          email,
-          password,
-        });
-        //hash password
-        bcrypt.genSalt(10, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            //set password jadi hash
-            newUser.password = hash;
-
-            //simpan user
-            newUser
-              .save()
-              .then((user) => {
-                req.flash(
-                  "success_msg",
-                  "Register Successful, Please Login"
-                );
-
-                res.redirect("/login");
-              })
-              .catch((err) => console.log(err));
-          })
-        );
-      }
-    });
-  }
-});
-
-//login handle
-router.post("/login", ensureNotAuthenticated, async (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/project",
-    failureRedirect: "/login",
-    failureFlash: true,
-  })(req, res, next);
-});
-
-//logout handle
-router.get("/logout", (req, res) => {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    req.flash("success_msg", "Log Out Successful!");
-    res.redirect('/login');
-  });
-});
 module.exports = router;
