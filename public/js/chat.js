@@ -86,7 +86,11 @@ const createChatBubble = (prop) => `
 const updateCurrentContact = async (nameHeader) => {
   currentContact = nameHeader;
   console.log("updateCurrentContact, Current contact: ", currentContact);
-  chatMessages.innerHTML = "";
+  try {
+    chatMessages.innerHTML = "";
+  } catch (err) {
+    console.log(err);
+  }
   chatHeader.innerText = currentContact;
 
   //currentContact data
@@ -440,6 +444,24 @@ const addUserAsContact = async (event) => {
           const popup = document.getElementById("popup");
           popup.classList.toggle("active");
 
+          //Inisialisasi header contact info
+          console.log("Contacts length, ", contacts.length);
+          if (contacts.length == 0) {
+            const chatBoxInfo = document.querySelector(".chat-box-header-info");
+            chatBoxInfo.innerHTML = `
+                <img src="assets/Pfp.png" alt="" />
+                <div>
+                  <p class="chat-header-title">${
+                    markedUsers[markedUsers.length - 1].name
+                  }</p>
+                  <p class="group-stat light-blue highlight">
+                  Online
+                  </p>
+                </div>
+            `;
+          }
+
+          //Read contacts data kemudian reload ui
           getContacts(() => {
             markedUsers.forEach((user) => {
               //update the contact's chats UI
