@@ -12,11 +12,15 @@ const contactsContainer = document.querySelector(".chat-contacts-list");
 const addContact = document.querySelector(".add-contact");
 const closePopup = document.getElementById("close-popup");
 const sendButton = document.querySelector(".send-button");
+const username = document.querySelector(".userName");
+const addContactPopup = document.getElementById("popup");
+const searchButton = document.querySelector(".search-icon");
+
 //contact lists from db
 let contacts;
 let currentContact;
 //current user sementara
-const currentUser = "Hezekiah";
+const currentUser = username.innerText;
 
 //get contacts from db
 const getContacts = async (callback = null) => {
@@ -315,66 +319,138 @@ const updateChat = async (event) => {
 };
 chatInputForm.addEventListener("click", updateChat);
 
-//insert contact to db
-document
-  .getElementById("popup")
-  .addEventListener("submit", async function (event) {
-    event.preventDefault();
+//Get check marked users
+const getMarkedUsers = async () => {
+  // Array to store data from checked user-items
+  const checkedUsers = [];
 
-    const formData = new FormData(this);
-    const jsonData = {};
-    for (const [key, value] of formData.entries()) {
-      jsonData[key] = value;
-    }
+  // Select all user-items
+  const userItems = document.querySelectorAll(".user-item");
 
-    const response = await fetch("/chat/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
-    });
+  // Iterate over each user-item
+  userItems.forEach((userItem, index) => {
+    console.log(userItem, index);
+    // Check if the checkbox inside the user-item is checked
+    const checkbox = userItem.querySelector(".add-user-checkbox");
+    if (checkbox.checked) {
+      // Extract relevant data from the checked user-item
+      const userEmail = userItem.querySelector(".user-email").textContent;
 
-    const responseData = await response.json();
-    if (response.ok) {
-      // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
-      Swal.fire({
-        title: "Success!",
-        text: "Data berhasil ditambahkan",
-        icon: "success",
-        confirmButtonText: "OK",
-        timer: 2000,
-      }).then(() => {
-        // Setelah jeda waktu selesai, reset form
-        this.reset();
-        setTimeout(() => {
-          //close form popup
-          const container = document.getElementById("blur");
-          container.classList.toggle("active");
-          const popup = document.getElementById("popup");
-          popup.classList.toggle("active");
-
-          //update the contact's chats UI
-          console.log("Contact added: ", jsonData.name);
-          //Read data
-          getContacts(() => {
-            //update contact ui
-            updateCurrentContact(jsonData.name);
-            UpdateContactListUI();
-          });
-        }, 340);
-      });
-    } else {
-      Swal.fire({
-        title: "Error!",
-        text: "Kontak dengan user ini sudah ada!",
-        icon: "error",
-        confirmButtonText: "OK",
-      }).then(() => {
-        this.reset();
-      });
+      // Push the data to the checkedUsers array
+      checkedUsers.push({ pfp: userPfp, email: userEmail });
     }
   });
+
+  // Log or process the checkedUsers array as needed
+  console.log("Checked users:", checkedUsers);
+  return checkedUsers;
+};
+//Display searched user
+const userListHtml = async (users) => {
+  const userList = document.getElementById("user-list");
+  if (users.length == 0) {
+    return (userList.innerHTML =
+      "<p style='margin-left: 8px;'> User not found</p>");
+  }
+  let userHtml = "";
+  users.forEach((user, index) => {
+    console.log(user.email, " ", index);
+    userHtml += `
+    <div class="user-item">
+    <img src="assets/Pfp.png" alt="User 1" class="user-pfp" />
+    <p class="user-email">${user.email}</p>
+    <label class="checkbox-container">
+      <input type="checkbox" class="add-user-checkbox" />
+      <span class="checkmark"></span>
+    </label>
+  </div>
+    `;
+  });
+  userList.innerHTML = userHtml;
+};
+//search user
+const searchUser = async (event) => {
+  event.preventDefault();
+  const searchInput = document.getElementById("search-email");
+  const email = searchInput.value;
+  console.log("search email: ", email);
+  const response = await fetch(`/search?searchTerm=${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const responseData = await response.json();
+  if (response.ok) {
+    //berhasil
+    console.log(responseData.users);
+    userListHtml(responseData.users);
+  } else {
+    console.log("Failed");
+  }
+};
+searchButton.addEventListener("click", searchUser);
+//insert user as contact to db
+const addUserAsContact = async (event) => {
+  event.preventDefault();
+
+  //Get marked users info
+  const markedUsers = await getMarkedUsers();
+  console.log(markedUsers);
+  if (markedUsers.length == 0) {
+    //if no user has been selected
+    return Swal.fire("Cancelled", "No user has been selected", "info");
+  }
+
+  const response = await fetch("/chat/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(jsonData),
+  });
+
+  const responseData = await response.json();
+  if (response.ok) {
+    // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
+    Swal.fire({
+      title: "Success!",
+      text: "Data berhasil ditambahkan",
+      icon: "success",
+      confirmButtonText: "OK",
+      timer: 2000,
+    }).then(() => {
+      // Setelah jeda waktu selesai, reset form
+      this.reset();
+      setTimeout(() => {
+        //close form popup
+        const container = document.getElementById("blur");
+        container.classList.toggle("active");
+        const popup = document.getElementById("popup");
+        popup.classList.toggle("active");
+
+        //update the contact's chats UI
+        console.log("Contact added: ", jsonData.name);
+        //Read data
+        getContacts(() => {
+          //update contact ui
+          updateCurrentContact(jsonData.name);
+          UpdateContactListUI();
+        });
+      }, 340);
+    });
+  } else {
+    Swal.fire({
+      title: "Error!",
+      text: "Kontak dengan user ini sudah ada!",
+      icon: "error",
+      confirmButtonText: "OK",
+    }).then(() => {
+      this.reset();
+    });
+  }
+};
+addContactPopup.addEventListener("submit", addUserAsContact);
 
 //Add-contact eventlistener
 addContact.addEventListener("click", () => {

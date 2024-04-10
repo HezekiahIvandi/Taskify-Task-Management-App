@@ -1,6 +1,6 @@
 const express = require("express");
 const ContactSchema = require("../models/contactModel"); // Import Contact model
-
+const UserSchema = require("../models/User");
 //Fungsi untuk read data contacts di mongoDb kemudian return data
 const readContactsData = async (req, res) => {
   try {
@@ -12,7 +12,9 @@ const readContactsData = async (req, res) => {
 
 //Fungsi untuk get method pada /chat
 const renderChatPage = async (req, res) => {
-  const currentUser = "Hezekiah";
+  const currentUser = req.isAuthenticated() ? req.user.name : "username"; //sementara
+  const currentUserPfp = req.isAuthenticated() ? req.user.photoUrl : ""; //sementara
+
   const contacts = await readContactsData();
   const chatDate = "Today";
   const messagePlaceholder = "Type message here!";
@@ -24,9 +26,8 @@ const renderChatPage = async (req, res) => {
     contacts: contacts,
     chatDate: chatDate,
     messagePlaceholder: messagePlaceholder,
-    currentUser: currentUser,
-    username: req.isAuthenticated() ? req.user.name : "username",
-    photoUrl: req.isAuthenticated() ? req.user.photoUrl : ""
+    username: currentUser,
+    photoUrl: currentUserPfp,
   });
 };
 
@@ -58,28 +59,7 @@ const getOneContactById = async (req, res) => {
     res.status(500).json({ msg: "Unable to get the contact" });
   }
 };
-//Fungsi search contact
-const searchContact = async (req, res) => {
-  try {
-    const searchTerm = req.query.searchTerm;
-    console.log(searchTerm);
-    const searchRegex = new RegExp(searchTerm, "i");
-    await ContactSchema.find({
-      $or: [{ name: searchRegex }],
-    })
-      .then((contacts) => {
-        console.log(contacts);
-        res.status(200).json({ contacts: contacts });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({ msg: "Unable to find contacts" });
-      });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: "No matching records found" });
-  }
-};
+
 //Fungsi create new contact
 const createNewContact = async (req, res) => {
   try {
@@ -151,12 +131,35 @@ const deleteContact = async (req, res) => {
     res.status(500).json({ msg: "Unable to delete the contact" });
   }
 };
+//Fungsi search User
+const searchUser = async (req, res) => {
+  try {
+    const searchTerm = req.query.searchTerm;
+    console.log(searchTerm);
+    const searchRegex = new RegExp(`^${searchTerm}`, "i"); // Match emails starting with the search term
+    await UserSchema.find({
+      email: searchRegex,
+    })
+      .then((users) => {
+        console.log(users);
+        res.status(200).json({ users: users });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ msg: "Unable to find user" });
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "No matching records found" });
+  }
+};
+
 module.exports = {
   renderChatPage,
   getAllChatData,
   getOneContactById,
   createNewContact,
-  searchContact,
+  searchUser,
   updateChats,
   deleteContact,
 };
