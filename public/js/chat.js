@@ -19,6 +19,7 @@ const searchButton = document.querySelector(".search-icon");
 //contact lists from db
 let contacts;
 let currentContact;
+let searchedUsers;
 //current user sementara
 const currentUser = username.innerText;
 
@@ -333,11 +334,8 @@ const getMarkedUsers = async () => {
     // Check if the checkbox inside the user-item is checked
     const checkbox = userItem.querySelector(".add-user-checkbox");
     if (checkbox.checked) {
-      // Extract relevant data from the checked user-item
-      const userEmail = userItem.querySelector(".user-email").textContent;
-
       // Push the data to the checkedUsers array
-      checkedUsers.push({ pfp: userPfp, email: userEmail });
+      checkedUsers.push(searchedUsers[index]);
     }
   });
 
@@ -383,8 +381,11 @@ const searchUser = async (event) => {
   const responseData = await response.json();
   if (response.ok) {
     //berhasil
-    console.log(responseData.users);
-    userListHtml(responseData.users);
+    searchedUsers = responseData.users.filter(
+      (user) => user.name !== currentUser
+    );
+    console.log(searchedUsers);
+    userListHtml(searchedUsers);
   } else {
     console.log("Failed");
   }
@@ -396,60 +397,77 @@ const addUserAsContact = async (event) => {
 
   //Get marked users info
   const markedUsers = await getMarkedUsers();
-  console.log(markedUsers);
   if (markedUsers.length == 0) {
     //if no user has been selected
     return Swal.fire("Cancelled", "No user has been selected", "info");
   }
-
-  const response = await fetch("/chat/add", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(jsonData),
-  });
-
-  const responseData = await response.json();
-  if (response.ok) {
-    // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
-    Swal.fire({
-      title: "Success!",
-      text: "Data berhasil ditambahkan",
-      icon: "success",
-      confirmButtonText: "OK",
-      timer: 2000,
-    }).then(() => {
-      // Setelah jeda waktu selesai, reset form
-      this.reset();
-      setTimeout(() => {
-        //close form popup
-        const container = document.getElementById("blur");
-        container.classList.toggle("active");
-        const popup = document.getElementById("popup");
-        popup.classList.toggle("active");
-
-        //update the contact's chats UI
-        console.log("Contact added: ", jsonData.name);
-        //Read data
-        getContacts(() => {
-          //update contact ui
-          updateCurrentContact(jsonData.name);
-          UpdateContactListUI();
-        });
-      }, 340);
+  try {
+    // Array to store all fetch promises
+    const fetchPromises = markedUsers.map(async (markedUser) => {
+      const { name, _id } = markedUser;
+      const jsonData = { name, id: _id };
+      console.log(JSON.stringify(jsonData));
+      return fetch("/chat/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
     });
-  } else {
-    Swal.fire({
-      title: "Error!",
-      text: "Kontak dengan user ini sudah ada!",
-      icon: "error",
-      confirmButtonText: "OK",
-    }).then(() => {
-      this.reset();
-    });
+
+    // Wait for all fetch requests to complete
+    const responses = await Promise.all(fetchPromises);
+
+    // Check if all responses are okay
+    const allResponsesOk = responses.every((response) => response.ok);
+    const form = document.getElementById("popup");
+    if (allResponsesOk) {
+      // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
+      Swal.fire({
+        title: "Success!",
+        text: "Data berhasil ditambahkan",
+        icon: "success",
+        confirmButtonText: "OK",
+        timer: 2000,
+      }).then(() => {
+        // Setelah jeda waktu selesai, reset form
+        form.reset();
+        setTimeout(() => {
+          //close form popup
+          const container = document.getElementById("blur");
+          container.classList.toggle("active");
+          const popup = document.getElementById("popup");
+          popup.classList.toggle("active");
+
+          getContacts(() => {
+            markedUsers.forEach((user) => {
+              //update the contact's chats UI
+              console.log("Contact added: ", user.name);
+              //Read data
+
+              //update contact ui
+              updateCurrentContact(user.name);
+              UpdateContactListUI();
+            });
+          });
+        }, 340);
+      });
+    } else {
+      Swal.fire({
+        title: "Error!",
+        text: "Kontak dengan user ini sudah ada!",
+        icon: "error",
+        confirmButtonText: "OK",
+      }).then(() => {
+        form.reset();
+      });
+    }
+  } catch {
+    console.log("Unable to add contact");
   }
 };
+
 addContactPopup.addEventListener("submit", addUserAsContact);
 
 //Add-contact eventlistener

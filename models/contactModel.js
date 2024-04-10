@@ -18,7 +18,7 @@ const chatSchema = new mongoose.Schema({
 
 const contactSchema = new mongoose.Schema({
   id: {
-    type: Number,
+    type: String,
     required: true,
   },
   isSelected: {
