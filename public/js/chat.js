@@ -83,15 +83,12 @@ const createChatBubble = (prop) => `
 `;
 
 //Update current contact UI
-const updateCurrentContact = async (nameHeader) => {
-  currentContact = nameHeader;
+const updateCurrentContact = async (nameParam) => {
+  currentContact = nameParam;
   console.log("updateCurrentContact, Current contact: ", currentContact);
-  try {
-    chatMessages.innerHTML = "";
-  } catch (err) {
-    console.log(err);
-  }
-  chatHeader.innerText = currentContact;
+
+  chatMessages.innerHTML = "";
+  document.querySelector(".chat-header-title").innerText = currentContact;
 
   //currentContact data
   let currentContactData;
@@ -228,7 +225,7 @@ const UpdateContactListUI = () => {
 
 //Update chat content to nothing (deletion)
 const clearChats = async () => {
-  currentContact = chatHeader.innerText;
+  currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Clear chats, Current contact: ", currentContact);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
@@ -276,7 +273,7 @@ const updateChat = async (event) => {
   if (!message) return; // If message is empty, do nothing
 
   //Find the contact object with the matching name
-  currentContact = chatHeader.innerText;
+  currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Update chat, Current contact: ", currentContact);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
@@ -445,34 +442,18 @@ const addUserAsContact = async (event) => {
           popup.classList.toggle("active");
 
           //Inisialisasi header contact info
-          console.log("Contacts length, ", contacts.length);
-          if (contacts.length == 0) {
-            const chatBoxInfo = document.querySelector(".chat-box-header-info");
-            chatBoxInfo.innerHTML = `
-                <img src="assets/Pfp.png" alt="" />
-                <div>
-                  <p class="chat-header-title">${
-                    markedUsers[markedUsers.length - 1].name
-                  }</p>
-                  <p class="group-stat light-blue highlight">
-                  Online
-                  </p>
-                </div>
-            `;
-          }
-
-          //Read contacts data kemudian reload ui
-          getContacts(() => {
-            markedUsers.forEach((user) => {
-              //update the contact's chats UI
-              console.log("Contact added: ", user.name);
-              //Read data
-
-              //update contact ui
-              updateCurrentContact(user.name);
-              UpdateContactListUI();
-            });
-          });
+          chatHeaderInit(markedUsers).then(
+            //Read contacts data kemudian reload ui
+            getContacts(() => {
+              markedUsers.forEach((user) => {
+                //update the contact's chats UI
+                console.log("Contact added: ", user.name);
+                //update contact ui
+                updateCurrentContact(user.name);
+                UpdateContactListUI();
+              });
+            })
+          );
         }, 340);
       });
     } else {
@@ -489,9 +470,25 @@ const addUserAsContact = async (event) => {
     console.log("Unable to add contact");
   }
 };
-
 addContactPopup.addEventListener("submit", addUserAsContact);
 
+//Inisialisasi chat header
+const chatHeaderInit = async (markedUsers) => {
+  console.log("Contacts length, ", contacts.length);
+  if (contacts.length == 0) {
+    const chatBoxInfo = document.querySelector(".chat-box-header-info");
+
+    chatBoxInfo.innerHTML = `
+        <img src="assets/Pfp.png" alt="" />
+        <div>
+          <p class="chat-header-title">test</p>
+          <p class="group-stat light-blue highlight">
+          Online
+          </p>
+        </div>
+    `;
+  }
+};
 //Add-contact eventlistener
 addContact.addEventListener("click", () => {
   const container = document.getElementById("blur");
