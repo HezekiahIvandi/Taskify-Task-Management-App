@@ -225,7 +225,7 @@ const UpdateContactListUI = () => {
 
 //Update chat content to nothing (deletion)
 const clearChats = async () => {
-  currentContact = document.querySelector(".chat-header-title").innerText;
+  //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Clear chats, Current contact: ", currentContact);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
@@ -273,7 +273,7 @@ const updateChat = async (event) => {
   if (!message) return; // If message is empty, do nothing
 
   //Find the contact object with the matching name
-  currentContact = document.querySelector(".chat-header-title").innerText;
+  //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Update chat, Current contact: ", currentContact);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
@@ -331,7 +331,6 @@ const getMarkedUsers = async () => {
 
   // Iterate over each user-item
   userItems.forEach((userItem, index) => {
-    console.log(userItem, index);
     // Check if the checkbox inside the user-item is checked
     const checkbox = userItem.querySelector(".add-user-checkbox");
     if (checkbox.checked) {
@@ -352,8 +351,7 @@ const userListHtml = async (users) => {
       "<p style='margin-left: 8px;'> User not found</p>");
   }
   let userHtml = "";
-  users.forEach((user, index) => {
-    console.log(user.email, " ", index);
+  users.forEach((user) => {
     userHtml += `
     <div class="user-item">
     <img src="assets/Pfp.png" alt="User 1" class="user-pfp" />
@@ -441,17 +439,17 @@ const addUserAsContact = async (event) => {
           const popup = document.getElementById("popup");
           popup.classList.toggle("active");
 
-          //Inisialisasi header contact info
-          chatHeaderInit(markedUsers).then(
+          //Inisialisasi header contact info jika contacts length == 0
+          chatHeaderInit().then(
             //Read contacts data kemudian reload ui
             getContacts(() => {
               markedUsers.forEach((user) => {
                 //update the contact's chats UI
                 console.log("Contact added: ", user.name);
-                //update contact ui
-                updateCurrentContact(user.name);
-                UpdateContactListUI();
               });
+              //update contact ui
+              updateCurrentContact(markedUsers[markedUsers.length - 1].name); //Update currentContact to the last user of markedUsers
+              UpdateContactListUI();
             })
           );
         }, 340);
@@ -473,7 +471,7 @@ const addUserAsContact = async (event) => {
 addContactPopup.addEventListener("submit", addUserAsContact);
 
 //Inisialisasi chat header
-const chatHeaderInit = async (markedUsers) => {
+const chatHeaderInit = async () => {
   console.log("Contacts length, ", contacts.length);
   if (contacts.length == 0) {
     const chatBoxInfo = document.querySelector(".chat-box-header-info");
