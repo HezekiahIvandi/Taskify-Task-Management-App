@@ -12,6 +12,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const homeRoutes = require("./routes/homeRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const authRoutes = require("./routes/authRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 const MongoStore = require('connect-mongo');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -76,6 +77,7 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
   app.use(projectRoutes);
   app.use(chatRoutes);
   app.use(authRoutes);
+  app.use(profileRoutes);
 
   //Memulai server
   app.listen(port, () => {

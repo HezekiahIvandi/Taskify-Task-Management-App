@@ -1,0 +1,168 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+/* Global Styles */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+/* Header Styles */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 5%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    cursor: pointer;
+    width: 200px;
+}
+
+.navbar a {
+    font-size: 16px;
+    color: #a1a1a1;
+    transition: all 0.3s ease 0s;
+    font-weight: bold;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.navbar a:hover {
+    color: #007bff;
+}
+
+.navbar a.active {
+    color: #007bff;
+}
+
+.login-button {
+    min-width: 100px;
+    min-height: 40px;
+    font-weight: bold;
+    font-size: 16;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    margin-left: 60px;
+    border-radius: 8px;
+}
+
+.login-button:hover {
+    background-color: #01377e;
+}
+
+.main {
+    background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    /* Tinggi viewport - tinggi header */
+    margin-top: 70px;
+    padding-top: 8vh;
+}
+
+.edit-profile {
+    margin: auto;
+    width: 540px;
+    padding: 36px;
+    background-color: #ffffff;
+    box-shadow: rgba(105, 104, 104, 0.1) 0px 2px 8px 0px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.userPfp {
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+    border: #7a7a7a solid 6px;
+}
+
+.edit-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: none;
+    background-color: #7a7a7a;
+    position: absolute;
+    top: 38%;
+    left: 51.8%;
+    cursor: pointer;
+}
+
+.field {
+    list-style: none;
+    margin-top: 8px;
+}
+
+.field::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.col-25 {
+    width: 25%;
+    float: left;
+    margin-top: 28px;
+    text-align: right;
+}
+
+.col-75 {
+    width: 75%;
+    float: left;
+    margin-top: 8px;
+}
+
+label {
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+input[type=text],
+input[type=email],
+input[type=password] {
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.update-profile {
+    margin-left: 66%;
+    min-width: 120px;
+    min-height: 48px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.update-profile:hover {
+    background-color: #01377e;
+}
