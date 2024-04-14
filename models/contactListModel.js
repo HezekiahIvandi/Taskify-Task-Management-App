@@ -2,10 +2,14 @@ const mongoose = require("mongoose");
 const ContactSchema = require("../models/contactModel");
 const contactListSchema = new mongoose.Schema({
   contactListOwnerid: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  contactList: [ContactSchema],
+  savedContactsId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
 });
 
 module.exports = mongoose.model("ContactList", contactListSchema);

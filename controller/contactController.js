@@ -1,10 +1,29 @@
 const express = require("express");
 const ContactSchema = require("../models/contactModel"); // Import Contact model
 const UserSchema = require("../models/User");
+const ContactListSchema = require("../models/contactListModel");
+const {
+  updateSavedContactsId,
+  deleteSavedContactId,
+} = require("../controller/contactListController");
+
 //Fungsi untuk read data contacts di mongoDb kemudian return data
-const readContactsData = async (req, res) => {
+const readContactsData = async (userId) => {
   try {
-    return await ContactSchema.find();
+    // Find the contact list for the given userId
+    const contactList = await ContactListSchema.findOne({
+      contactListOwnerid: userId,
+    });
+
+    // Get the savedContactsId from the contact list
+    const savedContactsIds = contactList.savedContactsId;
+
+    // Find all contacts whose _id is in the savedContactsIds array
+    const contacts = await ContactSchema.find({
+      _id: { $in: savedContactsIds },
+    });
+
+    return contacts;
   } catch (err) {
     throw new Error("Unable to read contacts data");
   }
@@ -12,10 +31,10 @@ const readContactsData = async (req, res) => {
 
 //Fungsi untuk get method pada /chat
 const renderChatPage = async (req, res) => {
-  const currentUser = req.isAuthenticated() ? req.user.name : "username"; //sementara
-  const currentUserPfp = req.isAuthenticated() ? req.user.photoUrl : ""; //sementara
-
-  const contacts = await readContactsData();
+  const currentUser = req.isAuthenticated() ? req.user.name : "username";
+  const currentUserPfp = req.isAuthenticated() ? req.user.photoUrl : "";
+  const currentUserId = req.user._id;
+  const contacts = await readContactsData(currentUserId);
   const chatDate = "Today";
   const messagePlaceholder = "Type message here!";
   res.render("chat.ejs", {
@@ -34,7 +53,8 @@ const renderChatPage = async (req, res) => {
 //Fungsi response untuk request get method all contact's data ke /chat/get
 const getAllChatData = async (req, res) => {
   try {
-    const contactsData = await readContactsData();
+    const currentUserId = req.user._id;
+    const contactsData = await readContactsData(currentUserId);
     res.status(200).json({ contacts: contactsData });
   } catch (err) {
     console.log(err);
@@ -62,12 +82,15 @@ const getOneContactById = async (req, res) => {
 
 //Fungsi create new contact
 const createNewContact = async (req, res) => {
+  const currentUserId = req.user._id;
   try {
     const newContact = new ContactSchema(req.body);
     await newContact
       .save()
       .then((savedContact) => {
         console.log(savedContact);
+        updateSavedContactsId(currentUserId, savedContact._id); //add savedContactId to current user's contactList
+        updateSavedContactsId(req.body.id, savedContact._id); //add savedContactId to the added user's contactList
         res.status(201).json({ msg: "Contact successfully saved" });
       })
       .catch((err) => {
@@ -109,6 +132,7 @@ const updateChats = async (req, res) => {
 };
 // Fungsi untuk delete contact
 const deleteContact = async (req, res) => {
+  const currentUserId = req.user._id;
   try {
     // Id contact yang akan di delete
     const id = req.params.id;
@@ -118,6 +142,7 @@ const deleteContact = async (req, res) => {
       _id: id,
     })
       .then(() => {
+        deleteSavedContactId(id);
         res.status(200).json({
           msg: "Contact successfully deleted",
         });

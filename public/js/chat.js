@@ -20,7 +20,7 @@ const searchButton = document.querySelector(".search-icon");
 let contacts;
 let currentContact;
 let searchedUsers;
-//current user sementara
+//current user
 const currentUser = username.innerText;
 
 //get contacts from db
@@ -406,7 +406,7 @@ const addUserAsContact = async (event) => {
       const { name, _id } = markedUser;
       const jsonData = { name, id: _id };
       console.log(JSON.stringify(jsonData));
-      return fetch("/chat/add", {
+      return fetch("/chat/add/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
