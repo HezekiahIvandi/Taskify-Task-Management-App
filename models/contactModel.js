@@ -29,14 +29,27 @@ const contactSchema = new mongoose.Schema({
     type: String,
     default: "assets/Pfp.png",
   },
-  name: {
-    type: String,
-    unique: [true, "This contact's name already exists"],
-    required: true,
-  },
+  name: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   latestChat: {
     type: String,
     default: "",
+    set: function (value) {
+      // Define the maximum length you want to allow
+      const maxLength = 30;
+
+      // Trim the value to the maximum length
+      const trimmedValue =
+        value.length > maxLength
+          ? value.substring(0, maxLength) + "..."
+          : value;
+
+      return trimmedValue;
+    },
   },
   groupStat: {
     type: String,

@@ -275,7 +275,7 @@ const updateChat = async (event) => {
   //Find the contact object with the matching name
   //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Update chat, Current contact: ", currentContact);
-  const contact = contacts.find((contact) => contact.name === currentContact);
+  const contact = contacts.find((contact) => contact.name == currentContact);
   if (!contact) {
     console.error("Contact not found");
     return;
@@ -404,7 +404,7 @@ const addUserAsContact = async (event) => {
     // Array to store all fetch promises
     const fetchPromises = markedUsers.map(async (markedUser) => {
       const { name, _id } = markedUser;
-      const jsonData = { name, id: _id };
+      const jsonData = { name: [name, currentUser], id: _id };
       console.log(JSON.stringify(jsonData));
       return fetch("/chat/add/", {
         method: "POST",

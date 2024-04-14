@@ -7,6 +7,16 @@ const {
   deleteSavedContactId,
 } = require("../controller/contactListController");
 
+const isDuplicateNameArray = async (namesArray) => {
+  // cari apakah ada contact dengan names yang sama
+  const existingDocuments = await ContactSchema.find({
+    name: namesArray,
+  });
+
+  // Jika ketemu return true (duplicate)
+  return existingDocuments.length > 0;
+};
+
 //Fungsi untuk read data contacts di mongoDb kemudian return data
 const readContactsData = async (userId) => {
   try {
@@ -29,12 +39,27 @@ const readContactsData = async (userId) => {
   }
 };
 
+//Fungsi untuk memproses data contacts yang sudah di read agar sesuai dengan kebutuhan
+const adjustContactsData = async (currentUser, datas) => {
+  try {
+    // Iterate through each contact
+    datas.forEach((contact) => {
+      // Filter out the names that are equal to currentUser
+      contact.name = contact.name.filter((name) => name !== currentUser);
+    });
+
+    return datas;
+  } catch (err) {
+    throw new Error("Unable to adjust contacts data");
+  }
+};
 //Fungsi untuk get method pada /chat
 const renderChatPage = async (req, res) => {
   const currentUser = req.isAuthenticated() ? req.user.name : "username";
   const currentUserPfp = req.isAuthenticated() ? req.user.photoUrl : "";
   const currentUserId = req.user._id;
   const contacts = await readContactsData(currentUserId);
+  const adjustedContacts = await adjustContactsData(currentUser, contacts);
   const chatDate = "Today";
   const messagePlaceholder = "Type message here!";
   res.render("chat.ejs", {
@@ -42,7 +67,7 @@ const renderChatPage = async (req, res) => {
     css: "css/chat.css",
     js: "js/chat.js",
     layout: "mainLayout.ejs",
-    contacts: contacts,
+    contacts: adjustedContacts,
     chatDate: chatDate,
     messagePlaceholder: messagePlaceholder,
     username: currentUser,
@@ -53,9 +78,14 @@ const renderChatPage = async (req, res) => {
 //Fungsi response untuk request get method all contact's data ke /chat/get
 const getAllChatData = async (req, res) => {
   try {
+    const currentUser = req.user.name;
     const currentUserId = req.user._id;
     const contactsData = await readContactsData(currentUserId);
-    res.status(200).json({ contacts: contactsData });
+    const adjustedContacts = await adjustContactsData(
+      currentUser,
+      contactsData
+    );
+    res.status(200).json({ contacts: adjustedContacts });
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: "Unable to get contacts" });
@@ -83,8 +113,19 @@ const getOneContactById = async (req, res) => {
 //Fungsi create new contact
 const createNewContact = async (req, res) => {
   const currentUserId = req.user._id;
+  const { name, id } = req.body;
+  const contactData = {
+    name: name.slice().sort(),
+    id,
+  };
   try {
-    const newContact = new ContactSchema(req.body);
+    const newContact = new ContactSchema(contactData);
+    //check apakah contact dengan name yang sama sudah ada
+    if (await isDuplicateNameArray(contactData.name)) {
+      return res
+        .status(500)
+        .json({ msg: "Contact with this user already exist" });
+    }
     await newContact
       .save()
       .then((savedContact) => {
@@ -95,11 +136,8 @@ const createNewContact = async (req, res) => {
       })
       .catch((err) => {
         console.log(err);
-        if (err.code === 11000 && err.keyPattern.name) {
-          res.status(500).json({ msg: "Contact with this user already exist" });
-        } else {
-          res.status(500).json({ msg: "Unable to add new contact" });
-        }
+
+        res.status(500).json({ msg: "Unable to add new contact" });
       });
   } catch (error) {
     console.log(error);
