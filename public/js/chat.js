@@ -12,11 +12,16 @@ const contactsContainer = document.querySelector(".chat-contacts-list");
 const addContact = document.querySelector(".add-contact");
 const closePopup = document.getElementById("close-popup");
 const sendButton = document.querySelector(".send-button");
+const username = document.querySelector(".userName");
+const addContactPopup = document.getElementById("popup");
+const searchButton = document.querySelector(".search-icon");
+
 //contact lists from db
 let contacts;
 let currentContact;
-//current user sementara
-const currentUser = "Hezekiah";
+let searchedUsers;
+//current user
+const currentUser = username.innerText;
 
 //get contacts from db
 const getContacts = async (callback = null) => {
@@ -78,11 +83,12 @@ const createChatBubble = (prop) => `
 `;
 
 //Update current contact UI
-const updateCurrentContact = async (nameHeader) => {
-  currentContact = nameHeader;
+const updateCurrentContact = async (nameParam) => {
+  currentContact = nameParam;
   console.log("updateCurrentContact, Current contact: ", currentContact);
+
   chatMessages.innerHTML = "";
-  chatHeader.innerText = currentContact;
+  document.querySelector(".chat-header-title").innerText = currentContact;
 
   //currentContact data
   let currentContactData;
@@ -219,7 +225,7 @@ const UpdateContactListUI = () => {
 
 //Update chat content to nothing (deletion)
 const clearChats = async () => {
-  currentContact = chatHeader.innerText;
+  //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Clear chats, Current contact: ", currentContact);
   const contact = contacts.find((contact) => contact.name === currentContact);
   if (!contact) {
@@ -267,9 +273,9 @@ const updateChat = async (event) => {
   if (!message) return; // If message is empty, do nothing
 
   //Find the contact object with the matching name
-  currentContact = chatHeader.innerText;
+  //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Update chat, Current contact: ", currentContact);
-  const contact = contacts.find((contact) => contact.name === currentContact);
+  const contact = contacts.find((contact) => contact.name == currentContact);
   if (!contact) {
     console.error("Contact not found");
     return;
@@ -315,28 +321,107 @@ const updateChat = async (event) => {
 };
 chatInputForm.addEventListener("click", updateChat);
 
-//insert contact to db
-document
-  .getElementById("popup")
-  .addEventListener("submit", async function (event) {
-    event.preventDefault();
+//Get check marked users
+const getMarkedUsers = async () => {
+  // Array to store data from checked user-items
+  const checkedUsers = [];
 
-    const formData = new FormData(this);
-    const jsonData = {};
-    for (const [key, value] of formData.entries()) {
-      jsonData[key] = value;
+  // Select all user-items
+  const userItems = document.querySelectorAll(".user-item");
+
+  // Iterate over each user-item
+  userItems.forEach((userItem, index) => {
+    // Check if the checkbox inside the user-item is checked
+    const checkbox = userItem.querySelector(".add-user-checkbox");
+    if (checkbox.checked) {
+      // Push the data to the checkedUsers array
+      checkedUsers.push(searchedUsers[index]);
     }
+  });
 
-    const response = await fetch("/chat/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jsonData),
+  // Log or process the checkedUsers array as needed
+  console.log("Checked users:", checkedUsers);
+  return checkedUsers;
+};
+//Display searched user
+const userListHtml = async (users) => {
+  const userList = document.getElementById("user-list");
+  if (users.length == 0) {
+    return (userList.innerHTML =
+      "<p style='margin-left: 8px;'> User not found</p>");
+  }
+  let userHtml = "";
+  users.forEach((user) => {
+    userHtml += `
+    <div class="user-item">
+    <img src="assets/Pfp.png" alt="User 1" class="user-pfp" />
+    <p class="user-email">${user.email}</p>
+    <label class="checkbox-container">
+      <input type="checkbox" class="add-user-checkbox" />
+      <span class="checkmark"></span>
+    </label>
+  </div>
+    `;
+  });
+  userList.innerHTML = userHtml;
+};
+//search user
+const searchUser = async (event) => {
+  event.preventDefault();
+  const searchInput = document.getElementById("search-email");
+  const email = searchInput.value;
+  console.log("search email: ", email);
+  const response = await fetch(`/search?searchTerm=${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const responseData = await response.json();
+  if (response.ok) {
+    //berhasil
+    searchedUsers = responseData.users.filter(
+      (user) => user.name !== currentUser
+    );
+    console.log(searchedUsers);
+    userListHtml(searchedUsers);
+  } else {
+    console.log("Failed");
+  }
+};
+searchButton.addEventListener("click", searchUser);
+//insert user as contact to db
+const addUserAsContact = async (event) => {
+  event.preventDefault();
+
+  //Get marked users info
+  const markedUsers = await getMarkedUsers();
+  if (markedUsers.length == 0) {
+    //if no user has been selected
+    return Swal.fire("Cancelled", "No user has been selected", "info");
+  }
+  try {
+    // Array to store all fetch promises
+    const fetchPromises = markedUsers.map(async (markedUser) => {
+      const { name, _id } = markedUser;
+      const jsonData = { name: [name, currentUser], id: _id };
+      console.log(JSON.stringify(jsonData));
+      return fetch("/chat/add/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
     });
 
-    const responseData = await response.json();
-    if (response.ok) {
+    // Wait for all fetch requests to complete
+    const responses = await Promise.all(fetchPromises);
+
+    // Check if all responses are okay
+    const allResponsesOk = responses.every((response) => response.ok);
+    const form = document.getElementById("popup");
+    if (allResponsesOk) {
       // Tampilkan pesan sukses jika request berhasil dengan jeda waktu
       Swal.fire({
         title: "Success!",
@@ -346,7 +431,7 @@ document
         timer: 2000,
       }).then(() => {
         // Setelah jeda waktu selesai, reset form
-        this.reset();
+        form.reset();
         setTimeout(() => {
           //close form popup
           const container = document.getElementById("blur");
@@ -354,14 +439,19 @@ document
           const popup = document.getElementById("popup");
           popup.classList.toggle("active");
 
-          //update the contact's chats UI
-          console.log("Contact added: ", jsonData.name);
-          //Read data
-          getContacts(() => {
-            //update contact ui
-            updateCurrentContact(jsonData.name);
-            UpdateContactListUI();
-          });
+          //Inisialisasi header contact info jika contacts length == 0
+          chatHeaderInit().then(
+            //Read contacts data kemudian reload ui
+            getContacts(() => {
+              markedUsers.forEach((user) => {
+                //update the contact's chats UI
+                console.log("Contact added: ", user.name);
+              });
+              //update contact ui
+              updateCurrentContact(markedUsers[markedUsers.length - 1].name); //Update currentContact to the last user of markedUsers
+              UpdateContactListUI();
+            })
+          );
         }, 340);
       });
     } else {
@@ -371,11 +461,32 @@ document
         icon: "error",
         confirmButtonText: "OK",
       }).then(() => {
-        this.reset();
+        form.reset();
       });
     }
-  });
+  } catch {
+    console.log("Unable to add contact");
+  }
+};
+addContactPopup.addEventListener("submit", addUserAsContact);
 
+//Inisialisasi chat header
+const chatHeaderInit = async () => {
+  console.log("Contacts length, ", contacts.length);
+  if (contacts.length == 0) {
+    const chatBoxInfo = document.querySelector(".chat-box-header-info");
+
+    chatBoxInfo.innerHTML = `
+        <img src="assets/Pfp.png" alt="" />
+        <div>
+          <p class="chat-header-title">test</p>
+          <p class="group-stat light-blue highlight">
+          Online
+          </p>
+        </div>
+    `;
+  }
+};
 //Add-contact eventlistener
 addContact.addEventListener("click", () => {
   const container = document.getElementById("blur");

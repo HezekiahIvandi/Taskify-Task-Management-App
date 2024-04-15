@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/auth");
-const ContactSchema = require("../models/contactModel");
 const {
   renderChatPage,
   getAllChatData,
   getOneContactById,
   createNewContact,
-  searchContact,
+  searchUser,
   updateChats,
   deleteContact,
-} = require("../controller/chatController");
+} = require("../controller/contactController");
 
 //inisialisasi page chat
 router.get("/chat", ensureAuthenticated, renderChatPage);
@@ -19,7 +18,7 @@ router.get("/chat/get", getAllChatData);
 //read single contact
 router.get("/chat/get/:id", getOneContactById);
 //search contacts
-router.get("/search", searchContact);
+router.get("/search", searchUser);
 //inserts
 router.post("/chat/add", createNewContact);
 //update
