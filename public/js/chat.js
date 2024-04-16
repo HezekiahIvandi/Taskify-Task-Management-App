@@ -12,7 +12,7 @@ const contactsContainer = document.querySelector(".chat-contacts-list");
 const addContact = document.querySelector(".add-contact");
 const closePopup = document.getElementById("close-popup");
 const sendButton = document.querySelector(".send-button");
-const username = document.querySelector(".userName");
+const username = document.querySelector(".nav-userName");
 const addContactPopup = document.getElementById("popup");
 const searchButton = document.querySelector(".search-icon");
 

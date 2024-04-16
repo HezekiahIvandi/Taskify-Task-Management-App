@@ -76,7 +76,11 @@ body {
     min-height: calc(100vh - 100px);
     /* Tinggi viewport - tinggi header */
     margin-top: 70px;
-    padding-top: 8vh;
+    padding-top: 10vh;
+}
+
+#blur.active {
+    filter: blur(20px);
 }
 
 .edit-profile {
@@ -93,7 +97,7 @@ body {
     width: 160px;
     height: 160px;
     border-radius: 100%;
-    border: #7a7a7a solid 6px;
+    border: #000000 solid 4px;
 }
 
 .edit-photo {
@@ -101,11 +105,16 @@ body {
     height: 40px;
     border-radius: 100%;
     border: none;
-    background-color: #7a7a7a;
+    background-color: #eeeeee;
     position: absolute;
     top: 38%;
     left: 51.8%;
     cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.edit-photo:hover {
+    background-color: #a1a1a1;
 }
 
 .field {
@@ -130,6 +139,18 @@ body {
     width: 75%;
     float: left;
     margin-top: 8px;
+    position: relative;
+}
+
+.edit-button {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 label {
@@ -137,23 +158,78 @@ label {
     font-weight: 700;
 }
 
-input[type=text],
-input[type=email],
-input[type=password] {
+.edit-field {
     width: 90%;
     padding: 12px 20px;
     margin: 8px 0px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     border-radius: 8px;
+    cursor: default;
+    outline: none;
 }
 
-.update-profile {
-    margin-left: 66%;
-    min-width: 120px;
-    min-height: 48px;
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.popup.active {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-header button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.edit-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px;
+    margin-top: 8px;
+}
+
+.popup input {
+    width: 100%;
+    margin: 2px;
+    border: none;
+    outline: none;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    font-size: 1em;
+}
+
+.confirm-edit-button {
+    width: 100%;
+    padding: 8px;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 16px;
     color: #ffffff;
     background-color: #007bff;
     border: none;
@@ -163,6 +239,6 @@ input[type=password] {
     margin-top: 16px;
 }
 
-.update-profile:hover {
+.confirm-edit-button:hover {
     background-color: #01377e;
 }

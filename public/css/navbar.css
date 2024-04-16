@@ -64,6 +64,7 @@ header {
 
 .nav-user {
   width: 100px;
+  height: 70px;
   margin-top: 8px;
   margin-left: 60px;
   text-align: center;
@@ -89,8 +90,7 @@ header {
 
 .settings {
   position: absolute;
-  display: flex;
-  top: 60px;
+  top: 70px;
   right: 0px;
   z-index: 1000;
   background-color: #ffffff;

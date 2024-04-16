@@ -7,21 +7,22 @@
     <div class="chat-contacts-list">
       <div id="contacts-container">
         <% contacts.forEach(function(contact, index) { %>
-        <div
-          class="contact <%= index == 0 ? 'contact-selected' : 'not-selected' %> relative"
-          id="<%= contact.id %>"
-        >
-          <img src="<%= contact.imageUrl %>" alt="" />
-          <div>
-            <p class="name"><%= contact.name %></p>
-            <p class="latest-chat"><%= contact.latestChat %></p>
+          <div class="contact <%= index == 0 ? 'contact-selected' : 'not-selected' %> relative" id="<%= contact.id %>">
+            <img src="<%= contact.imageUrl %>" alt="" />
+            <div>
+              <p class="name">
+                <%= contact.name %>
+              </p>
+              <p class="latest-chat">
+                <%= contact.latestChat %>
+              </p>
+            </div>
+            <!-- Popup delete contact-->
+            <div class="popup-delete-contact">
+              <i class="fa-solid fa-user-minus delete-contact-icon"></i>
+            </div>
           </div>
-          <!-- Popup delete contact-->
-          <div class="popup-delete-contact">
-            <i class="fa-solid fa-user-minus delete-contact-icon"></i>
-          </div>
-        </div>
-        <% }); %>
+          <% }); %>
       </div>
 
       <div class="add-contact">
@@ -32,89 +33,88 @@
   <div class="chat-box">
     <div class="chat-box-header">
       <div class="chat-box-header-info">
-        <% if (contacts && contacts.length > 0) { %>
-        <img src="<%= contacts[0].imageUrl %>" alt="" />
-        <div>
-          <p class="chat-header-title"><%= contacts[0].name %></p>
-          <p class="group-stat light-blue highlight">
-            <%= contacts[0].groupStat %>
-          </p>
-        </div>
-        <% } else { %>
+        <% if (contacts && contacts.length> 0) { %>
+          <img src="<%= contacts[0].imageUrl %>" alt="" />
+          <div>
+            <p class="chat-header-title">
+              <%= contacts[0].name %>
+            </p>
+            <p class="group-stat light-blue highlight">
+              <%= contacts[0].groupStat %>
+            </p>
+          </div>
+          <% } else { %>
 
-        <div class="no-contacts">
-          <p class="no-contacts-message">No contacts available</p>
-        </div>
-        <% } %>
+            <div class="no-contacts">
+              <p class="no-contacts-message">No contacts available</p>
+            </div>
+            <% } %>
       </div>
       <button class="clear-button">
         <i class="fa-regular fa-trash-can fa-xl"></i>
       </button>
     </div>
     <div class="chats">
-      <% if (contacts && contacts.length > 0) { %>
-      <p class="chat-date"><%= chatDate %></p>
-      <div class="chat-bubble-container">
-        <% contacts[0].chats.forEach(function(chat) { %> <% if (chat.sender.name
-        === username) { %>
-        <div class="my-chat-bubble">
-          <div class="my-chat-bubble-text">
-            <p>You</p>
-            <div class="my-bubble">
-              <p class="last-chat"><%= chat.message %></p>
-            </div>
-          </div>
-          <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
+      <% if (contacts && contacts.length> 0) { %>
+        <p class="chat-date">
+          <%= chatDate %>
+        </p>
+        <div class="chat-bubble-container">
+          <% contacts[0].chats.forEach(function(chat) { %>
+            <% if (chat.sender.name===username) { %>
+              <div class="my-chat-bubble">
+                <div class="my-chat-bubble-text">
+                  <p>You</p>
+                  <div class="my-bubble">
+                    <p class="last-chat">
+                      <%= chat.message %>
+                    </p>
+                  </div>
+                </div>
+                <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
+              </div>
+              <% } else { %>
+                <div class="chat-bubble">
+                  <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
+                  <div>
+                    <p class="chat-current-contact-name">
+                      <%= chat.sender.name %>
+                    </p>
+                    <div class="bubble">
+                      <p>
+                        <%= chat.message %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+                  <% }); %>
         </div>
         <% } else { %>
-        <div class="chat-bubble">
-          <div><img src="<%= chat.sender.imageUrl %>" alt="" /></div>
-          <div>
-            <p class="chat-current-contact-name"><%= chat.sender.name %></p>
-            <div class="bubble">
-              <p><%= chat.message %></p>
-            </div>
-          </div>
-        </div>
-        <% } %> <% }); %>
-      </div>
-      <% } else { %>
-      <p class="chat-date"></p>
-      <div class="chat-bubble-container"></div>
-      <% } %>
+          <p class="chat-date"></p>
+          <div class="chat-bubble-container"></div>
+          <% } %>
     </div>
   </div>
 </div>
 <div class="footer">
   <div class="chat-input-form" id="message-form">
     <i class="fa-solid fa-plus plus-button"></i>
-    <input
-      id="message"
-      name="message"
-      class="text-area"
-      type="text"
-      placeholder="<%= messagePlaceholder %>"
-    />
+    <input id="message" name="message" class="text-area" type="text" placeholder="<%= messagePlaceholder %>" />
     <button class="send-button" type="submit">
       <i class="fa-regular fa-paper-plane fa-xl attach-button"></i>
     </button>
   </div>
 </div>
 
-<!-- 
-  popup -->
+<!-- popup -->
 <form id="popup">
   <div id="add-contact-header">
     <h2>Add contact</h2>
     <button id="close-popup"><i class="fa-solid fa-x"></i></button>
   </div>
   <div class="search-container relative">
-    <input
-      type="text"
-      placeholder="Search user by email"
-      id="search-email"
-      name="search-email"
-    />
+    <input type="text" placeholder="Search user by email" id="search-email" name="search-email" />
     <i class="fa-solid fa-search search-icon"></i>
   </div>
   <div id="user-list"></div>
