@@ -1,6 +1,7 @@
 <div class="main" id="blur">
+  <h1 class="profile-title">Edit User Profile</h1>
   <div class="edit-profile">
-    <div>
+    <div class="user-profile-edit">
       <img src="<%= photoUrl %>" class="userPfp">
       <img src="assets/edit_userPfp.png" class="edit-photo" id="edit-photo">
     </div>
@@ -45,35 +46,41 @@
   </div>
 </div>
 <!-- popup -->
-<form class="popup" id="username-popup">
+<div class="popup" id="username-popup">
   <div class="popup-header" id="username-popup-header">
     <h2>Edit Username</h2>
-    <button id="close-popup"><i class="fa-solid fa-x"></i></button>
+    <button id="close-popup-username"><i class="fa-solid fa-x"></i></button>
   </div>
-  <div class="edit-container">
-    <input type="text" placeholder="Input New Username" name="edit-username-popup" id="edit-username-popup">
-  </div>
-  <button class="confirm-edit-button" id="confirm-username" type="submit">Confirm</button>
-</form>
+  <form action="/edit-username" method="POST">
+    <div class="edit-container">
+      <input type="text" placeholder="Input New Username" name="name" id="edit-username-popup" required>
+    </div>
+    <button class="confirm-edit-button" id="confirm-username" type="submit">Confirm</button>
+  </form>
+</div>
 
-<form class="popup" id="email-popup">
+<div class="popup" id="email-popup">
   <div class="popup-header" id="email-popup-header">
     <h2>Edit Email</h2>
-    <button id="close-popup"><i class="fa-solid fa-x"></i></button>
+    <button id="close-popup-email"><i class="fa-solid fa-x"></i></button>
   </div>
-  <div class="edit-container">
-    <input type="email" placeholder="Input New Email" name="edit-email-popup" id="edit-email-popup">
-  </div>
-  <button class="confirm-edit-button" id="confirm-email" type="submit">Confirm</button>
-</form>
+  <form action="/edit-email" method="POST">
+    <div class="edit-container">
+      <input type="text" placeholder="Input New Email Address" name="email" id="edit-email-popup">
+    </div>
+    <button class="confirm-edit-button" id="confirm-email" type="submit">Confirm</button>
+  </form>
+</div>
 
-<form class="popup" id="password-popup">
+<div class="popup" id="password-popup">
   <div class="popup-header" id="password-popup-header">
     <h2>Edit Password</h2>
-    <button id="close-popup"><i class="fa-solid fa-x"></i></button>
+    <button id="close-popup-password"><i class="fa-solid fa-x"></i></button>
   </div>
-  <div class="edit-container">
-    <input type="text" placeholder="Input New Password" name="edit-password-popup" id="edit-password-popup">
-  </div>
-  <button class="confirm-edit-button" id="confirm-password" type="submit">Confirm</button>
-</form>
+  <form action="edit-password" method="POST">
+    <div class="edit-container">
+      <input type="text" placeholder="Input New Password" name="password" id="edit-password-popup">
+    </div>
+    <button class="confirm-edit-button" id="confirm-password" type="submit">Confirm</button>
+  </form>
+</div>

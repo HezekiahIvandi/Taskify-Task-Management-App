@@ -54,10 +54,10 @@ const registerUser = async (req, res) => {
       layout: "mainLayout.ejs",
     });
   } else {
-    //validasi oke lanjut database
+    // Validasi user pada database
     User.findOne({ email: email }).then((user) => {
       if (user) {
-        //usernya ada
+        // Apabila user dengan email sama sudah ada
         errors.push({ msg: "Email Already Registered" });
         res.render("register", {
           errors,
@@ -71,36 +71,54 @@ const registerUser = async (req, res) => {
           layout: "mainLayout.ejs",
         });
       } else {
-        const newUser = new User({
-          name,
-          email,
-          password,
-        });
-        //hash password
-        bcrypt.genSalt(10, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            //set password jadi hash
-            newUser.password = hash;
+        User.findOne({ name: name }).then((user) => {
+          if (user) {
+            // Apabila user dengan username sama sudah ada
+            errors.push({ msg: "Username Has Been Used" });
+            res.render("register", {
+              errors,
+              name,
+              email,
+              password,
+              password2,
+              title: "Register",
+              css: "css/register.css",
+              js: "js/register.js",
+              layout: "mainLayout.ejs",
+            });
+          } else {
+            const newUser = new User({
+              name,
+              email,
+              password,
+            });
+            //hash password
+            bcrypt.genSalt(10, (err, salt) =>
+              bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) throw err;
+                //set password jadi hash
+                newUser.password = hash;
 
-            //simpan user
-            newUser
-              .save()
-              .then((user) => {
-                req.flash("success_msg", "Register Successful, Please Login");
+                //simpan user
+                newUser
+                  .save()
+                  .then((user) => {
+                    req.flash("success_msg", "Register Successful, Please Login");
 
-                //inisialisasi contact list
-                const userData = {
-                  contactListOwnerid: user._id,
-                  savedContactsId: [],
-                };
-                contactListInit(userData, res);
+                    //inisialisasi contact list
+                    const userData = {
+                      contactListOwnerid: user._id,
+                      savedContactsId: [],
+                    };
+                    contactListInit(userData, res);
 
-                res.redirect("/login");
+                    res.redirect("/login");
+                  })
+                  .catch((err) => console.log(err));
               })
-              .catch((err) => console.log(err));
-          })
-        );
+            );
+          }
+        })
       }
     });
   }
