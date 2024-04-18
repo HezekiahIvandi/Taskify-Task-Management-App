@@ -217,6 +217,21 @@ const searchUser = async (req, res) => {
   }
 };
 
+//Fungsi untuk update name contact
+const updateContactName = async (oldName, newName) => {
+  try {
+    const updatedContact = await ContactSchema.findOneAndUpdate(
+      { name: oldName },
+      { $set: { "name.$": newName } },
+      { new: true }
+    );
+    console.log("Contact's name is updated successfully:", updatedContact);
+  } catch (error) {
+    console.error("Error updating contact name:", error);
+    throw new Error("Unable to update name");
+  }
+};
+
 module.exports = {
   renderChatPage,
   getAllChatData,
@@ -225,4 +240,5 @@ module.exports = {
   searchUser,
   updateChats,
   deleteContact,
+  updateContactName,
 };
