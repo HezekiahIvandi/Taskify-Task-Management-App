@@ -52,7 +52,7 @@ getContacts((contacts) => {
   console.log("Nama current user: ", currentUser);
   console.log("Inisialisasi data contacts (read): ", contacts);
   //inisialisasi currentContacts = contact paling atas
-  currentContact = contacts[0].name;
+  currentContact = contacts[0].name[0];
   console.log("Inisialisasi, Current contact: ", currentContact);
 });
 //create my chat bubble
@@ -94,7 +94,7 @@ const updateCurrentContact = async (nameParam) => {
   let currentContactData;
   //Find data matching with currentContact
   contacts.forEach((con) => {
-    if (con.name == currentContact) {
+    if (con.name[0] == currentContact) {
       currentContactData = con;
     }
   });
@@ -133,8 +133,10 @@ const deleteContactRequest = async (name) => {
     }
     console.log("Contact deleted successfully");
     //reload UI
-    updateCurrentContact(contacts[0].name);
-    UpdateContactListUI();
+    getContacts(() => {
+      updateCurrentContact(contacts[0].name[0]);
+      UpdateContactListUI();
+    });
   } catch (err) {
     console.log("Delete contact:", err);
   }
@@ -148,7 +150,7 @@ const addEventListenerForContacts = () => {
   );
   contactLists.forEach((contact, index) => {
     //current contact's name
-    const name = contact.querySelector(".name").textContent;
+    const name = contact.querySelector(".name").innerText;
 
     //click event for contact lists
     contact.addEventListener("click", () => {
@@ -275,7 +277,7 @@ const updateChat = async (event) => {
   //Find the contact object with the matching name
   //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Update chat, Current contact: ", currentContact);
-  const contact = contacts.find((contact) => contact.name == currentContact);
+  const contact = contacts.find((contact) => contact.name[0] == currentContact);
   if (!contact) {
     console.error("Contact not found");
     return;

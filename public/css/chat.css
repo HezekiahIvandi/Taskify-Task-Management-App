@@ -25,7 +25,7 @@
 }
 
 .container-fitur-chat {
-  margin-top: 4rem;
+  margin-top: 4.2rem;
   display: flex;
   min-height: 80vh;
   position: relative;
@@ -169,6 +169,7 @@
   );
   width: 100%;
   min-height: 84.5%;
+  padding-bottom: 4.3rem;
 }
 
 .contact-selected {
