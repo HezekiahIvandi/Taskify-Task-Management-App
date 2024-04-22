@@ -229,7 +229,9 @@ const UpdateContactListUI = () => {
 const clearChats = async () => {
   //currentContact = document.querySelector(".chat-header-title").innerText;
   console.log("Clear chats, Current contact: ", currentContact);
-  const contact = contacts.find((contact) => contact.name === currentContact);
+  const contact = contacts.find(
+    (contact) => contact.name[0] === currentContact
+  );
   if (!contact) {
     console.error("Contact not found");
     return;
@@ -506,3 +508,29 @@ closePopup.addEventListener("click", () => {
 //Popup delete contact
 
 addEventListenerForContacts();
+
+const refreshChats = async () => {
+  getContacts(() => {
+    chatMessages.innerHTML = "";
+    //currentContact data
+    let currentContactData;
+    //Find data matching with currentContact
+    contacts.forEach((con) => {
+      if (con.name[0] == currentContact) {
+        currentContactData = con;
+      }
+    });
+    chats = currentContactData.chats;
+    chats.forEach((chat) => {
+      if (chat.sender.name == currentUser) {
+        chatMessages.innerHTML += createMyChatBubble(chat.message);
+      } else {
+        chatMessages.innerHTML += createChatBubble([
+          chat.sender.name,
+          chat.message,
+        ]);
+      }
+    });
+  });
+};
+setInterval(refreshChats, 2000);
