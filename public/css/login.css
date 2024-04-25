@@ -140,3 +140,8 @@ input[type=password] {
 .signup {
     margin-top: 40px;
 }
+
+.g-signin2 {
+    margin-left: 38px;
+    margin-top: 20px;
+}
