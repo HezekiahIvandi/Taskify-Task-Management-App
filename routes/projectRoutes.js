@@ -1,7 +1,7 @@
 // Import modul yang dibutuhkan
 const express = require("express");
 const { ensureAuthenticated } = require("../config/auth");
-const { getAllTaskData, createNewTask, deleteTask, updateTask } = require("../controller/projectController");
+const { getAllTaskData, createNewTask, deleteTask, updateTask, dragAndMoveTask } = require("../controller/projectController");
 
 // Membuat objek router menggunakan Router()
 const router = express.Router();
@@ -19,6 +19,9 @@ router.post("/delete-task/:title/:id", deleteTask);
 
 // UPDATE - Client mengirimkan data ke Server untuk diperbaharui dari MongoDB
 router.post("/edit-task/:title/:id", updateTask);
+
+// DRAG AND MOVE 
+router.post("/project/:title/:id", dragAndMoveTask);
 
 // Mengekspor objek router
 module.exports = router;

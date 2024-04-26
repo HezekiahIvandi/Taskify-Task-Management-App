@@ -32,8 +32,42 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Function untuk event saat task dilepas di dalam area drop
-  const dropArea = function () {
-    this.appendChild(draggedTask); // Menempatkan task di dalam area drop
+  const dropArea = async function () {
+    // Mendapatkan kolom tujuan
+    const destinationColumn = this.closest('.taskify-col');
+    const title = destinationColumn.querySelector('.taskify-col-header-title').innerText;
+    console.log(title);
+  
+    // Mendapatkan task ID
+    const id = draggedTask.id;
+  
+    try {
+      // Mengirim permintaan ke server untuk memperbarui task di MongoDB
+      const response = await fetch(`/project/${title}/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+        })
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update task');
+      }
+      window.location.href = 'localhost:3000/project';
+
+      // Jika permintaan berhasil, Anda mungkin ingin melakukan sesuatu, seperti menampilkan pesan atau melakukan navigasi.
+    } catch (error) {
+      console.error('Error updating task:', error);
+      // Menampilkan pesan kesalahan jika terjadi kesalahan saat memperbarui task di MongoDB
+      Swal.fire({
+        title: 'Error!',
+        text: 'Terjadi kesalahan saat memindahkan task',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
   };
 
   // Menambahkan event listener untuk setiap task yang dapat di drag
@@ -187,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then(() => {
           // Setelah jeda waktu selesai, reset form dan redirect
           taskForm.reset();
-          window.location.href = '/project';
+          window.location.href = 'localhost:3000/project';
         });
        
       } else {
