@@ -1,22 +1,6 @@
 // Import modul yang dibutuhkan
 const mongoose = require("mongoose");
 
-// Fungsi untuk menentukan nama collection berdasarkan title
-// const determineCollectionName = (title) => {
-//     switch (title) {
-//         case "Task To Do 📝":
-//             return "Task To Do";
-//         case "On Going ⏳":
-//             return "On Going";
-//         case "Needs Review 🔎":
-//             return "Needs Review";
-//         case "Done 💯":
-//             return "Done";
-//         default:
-//             throw new Error(`Invalid title provided: ${title}`);
-//     }
-// };
-
 // Fungsi untuk mendapatkan collection berdasarkan title
 const getCollectionByTitle = (title) => {
     if (!title || typeof title !== "string") {

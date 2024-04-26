@@ -54,7 +54,7 @@
         <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
         <% for (let task of column.tasks) { %>
         <!-- Kartu tugas -->
-        <div class="task" draggable="true" id="<%=task._id%>">
+        <div class="task" draggable="true" id="<%= task._id %>">
           <!-- Tag dan opsi untuk setiap tugas -->
           <div class="task-tags">
             <span class="task-tag"><%= task.tag %></span>

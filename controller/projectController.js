@@ -80,7 +80,6 @@ const createNewTask = async (req, res) => {
         console.log(savedTask);
         // Mengarahkan kembali ke halaman project setelah menambahkan task baru
         res.redirect("/project");
-        res.status(201).json({ msg: "Contact successfully saved" });
       })
       .catch((err) => console.log(err));
 
@@ -176,6 +175,46 @@ const dragAndMoveTask = async (req, res) => {
       .send(`An error occurred while updating the task: ${error.message}`);
   }
 };
+
+const dragAndMoveTask = async (req, res) => {
+  try {
+    const { title, id } = req.params;
+    await Task.updateOne(
+      { _id: getTaskByIdAndTitle(id, title) },
+      { $set: { title } }
+    );
+    res.redirect("/project");
+  } catch (error) {
+    console.error(`Error moving task: ${error}`);
+    res
+      .status(500)
+      .send(`An error occurred while moving the task: ${error.message}`);
+  }
+};
+
+// const dragAndMoveTask = async (req, res) => {
+//   try {
+//     const { title, id } = req.params;
+
+//     // Find the task instance from Task collection with matching taskId
+//     const task = await Task.findById(id);
+
+//     if (!task) {
+//       return res.status(404).json({ message: 'Task not found' });
+//     }
+
+//     // Update its title to destination title
+//     task.title = title;
+
+//     // Save the updated task
+//     await task.save();
+
+//     return res.status(200).json({ message: 'Task title updated successfully' });
+//   } catch (error) {
+//     console.error('Error updating task title:', error);
+//     return res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
 
 // Eksport fungsi-fungsi untuk digunakan di modul lain
 module.exports = {

@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Function untuk event saat task dilepas di dalam area drop
-  // Function untuk event saat task dilepas di dalam area drop
   const dropArea = async function () {
     // Mendapatkan kolom tujuan
     const destinationColumn = this.closest(".taskify-col");
@@ -44,19 +43,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Mendapatkan task ID
     const id = draggedTask.id;
-    console.log(id);
+
     try {
       // Mengirim permintaan ke server untuk memperbarui task di MongoDB
-      const response = await fetch(`/project/${title}/${JSON.stringify(id)}`, {
+      const response = await fetch(`/project/${title}/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({}),
       });
 
       if (!response.ok) {
         throw new Error("Failed to update task");
       }
+      window.location.href = "localhost:3000/project";
 
       // Jika permintaan berhasil, Anda mungkin ingin melakukan sesuatu, seperti menampilkan pesan atau melakukan navigasi.
     } catch (error) {
@@ -70,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   };
+
   // Menambahkan event listener untuk setiap task yang dapat di drag
   draggableTasks.forEach((task) => {
     task.addEventListener("dragstart", startDrag);

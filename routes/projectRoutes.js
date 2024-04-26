@@ -25,7 +25,9 @@ router.post("/delete-task/:title/:id", deleteTask);
 
 // UPDATE - Client mengirimkan data ke Server untuk diperbaharui dari MongoDB
 router.post("/edit-task/:title/:id", updateTask);
-router.post("/project/:destinationTitle/:id", dragAndMoveTask);
+
+// DRAG AND MOVE
+router.post("/project/:title/:id", dragAndMoveTask);
 
 // Mengekspor objek router
 module.exports = router;
