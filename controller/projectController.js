@@ -75,13 +75,15 @@ const createNewTask = async (req, res) => {
       owner,
     });
 
-    await newTask.save().then((savedTask) => {
-      console.log(savedTask);
-      res.status(201).json({ msg: "Contact successfully saved" });
-    });
-
-    // Mengarahkan kembali ke halaman project setelah menambahkan task baru
-    res.redirect("/project");
+    await newTask
+      .save()
+      .then((savedTask) => {
+        console.log(savedTask);
+        // Mengarahkan kembali ke halaman project setelah menambahkan task baru
+        res.redirect("/project");
+        res.status(201).json({ msg: "Contact successfully saved" });
+      })
+      .catch((err) => console.log(err));
 
     // Jika terjadi kesalahan saat membuat task baru, pesan kesalahan akan dicetak ke konsol
     // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
