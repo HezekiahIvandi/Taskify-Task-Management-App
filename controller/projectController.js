@@ -10,8 +10,10 @@ const getAllTaskData = async (req, res) => {
         // const needsReview = await getCollectionByTitle("Needs Review 🔎").find({}).toArray();
         // const done = await getCollectionByTitle("Done 💯").find({}).toArray();
         const db = await getCollectionByTitle("tasks");
+        const currentOwnerId = String(req.user.id);
 
-        const tasksToDo = await db.find({ title: "Task To Do 📝" }).toArray();
+        const tasksToDo = await db.find({ title: "Task To Do 📝", ownerId: currentOwnerId }).toArray();
+        console.log(tasksToDo);
         const onGoing = await db.find({ title: "On Going ⏳" }).toArray();
         const needsReview = await db.find({ title: "Needs Review 🔎" }).toArray();
         const done = await db.find({ title: "Done 💯" }).toArray();
@@ -61,14 +63,17 @@ const createNewTask = async (req, res) => {
     try {
         // Mendapatkan informasi terkait task yang ingin ditambahkan dari request
         const { title, tag, description, date, collaborators, owner } = req.body;
-        const collection = getCollectionByTitle(title);
+        const db = await getCollectionByTitle("tasks");
+        const ownerId = String(req.user.id);
+        // const collection = getCollectionByTitle(title);
         // Menyimpan task baru ke dalam collection yang sesuai
-        await collection.insertOne({
+        await db.insertOne({
             title,
             tag,
             description,
             date,
             collaborators,
+            ownerId,
             owner,
         });
 
