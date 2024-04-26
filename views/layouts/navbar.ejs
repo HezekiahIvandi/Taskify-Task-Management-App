@@ -1,33 +1,47 @@
 <header>
-  <a href="/"><img alt="Logo Taskify" class="logo" src="assets/Taskify.png" /></a>
+  <a href="/"
+    ><img alt="Logo Taskify" class="logo" src="assets/Taskify.png"
+  /></a>
   <nav>
     <ul class="nav-links">
       <li>
         <a class="<%= currentPage === '/' ? 'active' : '' %>" href="/">Home</a>
       </li>
       <li>
-        <a href="/project" class="<%= currentPage === '/project' ? 'active' : '' %>">Projects</a>
+        <a
+          href="/project"
+          class="<%= currentPage === '/project' ? 'active' : '' %>"
+          >Projects</a
+        >
       </li>
       <li>
-        <a href="/chat" class="<%= currentPage === '/chat' ? 'active' : '' %>">Conversation</a>
+        <a href="/chat" class="<%= currentPage === '/chat' ? 'active' : '' %>"
+          >Conversation</a
+        >
       </li>
     </ul>
   </nav>
   <% if (isAuthenticated===false) { %>
-    <a class="login" href="/login"><button class="login-button">Login</button></a>
-    <% } else { %>
-      <div class="nav-user">
-        <div class="profile">
-          <img src="<%= photoUrl %>" class="nav-userPfp">
-          <h1 class="nav-userName"><%= username %></h1>
-        </div>
-        <div class="settings">
-          <ul class="settings-buttons">
-            <li><a href="/profile"><button class="edit-profile-button">Edit Profile</button></a></li>
-            <li><a href="/logout"><button class="logout-button">Logout</button></a></li>
-          </ul> 
-        </div>
-      </div>
+  <a class="login" href="/login"><button class="login-button">Login</button></a>
+  <% } else { %>
+  <div class="nav-user">
+    <div class="profile">
+      <img src="<%= photoUrl %>" class="nav-userPfp" />
+      <h1 class="nav-userName"><%= username %></h1>
+    </div>
+    <div class="settings">
+      <ul class="settings-buttons">
+        <li>
+          <a href="/profile"
+            ><button class="edit-profile-button">Edit Profile</button></a
+          >
+        </li>
+        <li>
+          <a href="/logout"><button class="logout-button">Logout</button></a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-      <% } %>
+  <% } %>
 </header>
