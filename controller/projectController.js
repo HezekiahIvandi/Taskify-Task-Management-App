@@ -8,10 +8,6 @@ const Task = require("../models/Task");
 const getAllTaskData = async (req, res) => {
   try {
     // Mengambil data dari model MongoDB
-    // const tasksToDo = await getCollectionByTitle("Task To Do 📝").find({}).toArray();
-    // const onGoing = await getCollectionByTitle("On Going ⏳").find({}).toArray();
-    // const needsReview = await getCollectionByTitle("Needs Review 🔎").find({}).toArray();
-    // const done = await getCollectionByTitle("Done 💯").find({}).toArray();
     const tasksToDo = await Task.find({ title: "Task To Do 📝" });
     const onGoing = await Task.find({ title: "On Going ⏳" });
     const needsReview = await Task.find({ title: "Needs Review 🔎" });
@@ -64,7 +60,9 @@ const getAllTaskData = async (req, res) => {
 const createNewTask = async (req, res) => {
   try {
     // Mendapatkan informasi terkait task yang ingin ditambahkan dari request
-    const { title, tag, description, date, collaborators, owner } = req.body;
+    const { title, tag, description, date, collaborators } = req.body;
+    ownerId = req.user.id;
+    owner = req.user.name.charAt(0).toUpperCase();
     // Menyimpan task baru ke dalam collection yang sesuai
     const newTask = new Task({
       title,
@@ -72,7 +70,8 @@ const createNewTask = async (req, res) => {
       description,
       date,
       collaborators,
-      owner,
+      ownerId,
+      owner
     });
 
     await newTask
@@ -126,12 +125,11 @@ const updateTask = async (req, res) => {
   try {
     // Mendapatkan title, informasi yang diperbaharui, dan ID task dari request
     const { title, id } = req.params;
-    let { tag, description, date, collaborators, owner } = req.body;
-    owner = owner.charAt(0).toUpperCase();
+    let { tag, description, date, collaborators } = req.body;
     // Memperbaharui task dalam collection yang sesuai berdasarkan ID
     await Task.updateOne(
       { _id: getTaskByIdAndTitle(id, title) },
-      { $set: { tag, description, date, collaborators, owner } }
+      { $set: { tag, description, date, collaborators } }
     );
     // Mengarahkan kembali ke halaman project setelah memperbaharui task
     res.redirect("/project");

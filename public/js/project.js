@@ -156,8 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.getElementById("description").value;
     const date = document.getElementById("date").value;
     const collaborators = document.getElementById("collaborators").value;
-    const ownerName = document.getElementById("owner").value;
-    const owner = ownerName.charAt(0).toUpperCase();
 
     // Membuat objek data task
     const newTask = {
@@ -165,8 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tag,
       description,
       date,
-      collaborators,
-      owner,
+      collaborators
     };
 
     try {

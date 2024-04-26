@@ -42,11 +42,9 @@
                   required
                 ></textarea>
                 <label for="date">Date:</label>
-                <input type="text" id="date" name="date" required />
+                <input type="date" id="date" name="date" required />
                 <label for="collaborators">Number of Collaborators:</label>
                 <input type="text" id="collaborators" name="collaborators" />
-                <label for="owner">Owner:</label>
-                <input type="text" id="owner" name="owner" required />
                 <button type="submit">Add Task</button>
               </form>
             </div>
@@ -87,8 +85,6 @@
                       <input type="text" id="date" name="date" value="<%= task.date %>" required />
                       <label for="collaborators">Number of Collaborators</label>
                       <input type="text" id="collaborators" name="collaborators" value="<%= task.collaborators %>" />
-                      <label for="owner">Owner:</label>
-                      <input type="text" id="owner" name="owner" value="<%= task.owner %>" required />
                       <button type="editTask" onclick="notifySuccess('Task edited successfully')">Edit Task</button>
                     </form>
                   </div>
