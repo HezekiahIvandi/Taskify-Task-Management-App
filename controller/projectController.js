@@ -5,10 +5,16 @@ const { getCollectionByTitle, getTaskByIdAndTitle } = require("./collectionUtils
 const getAllTaskData = async (req, res) => {
     try {
         // Mengambil data dari model MongoDB
-        const tasksToDo = await getCollectionByTitle("Task To Do 📝").find({}).toArray();
-        const onGoing = await getCollectionByTitle("On Going ⏳").find({}).toArray();
-        const needsReview = await getCollectionByTitle("Needs Review 🔎").find({}).toArray();
-        const done = await getCollectionByTitle("Done 💯").find({}).toArray();
+        // const tasksToDo = await getCollectionByTitle("Task To Do 📝").find({}).toArray();
+        // const onGoing = await getCollectionByTitle("On Going ⏳").find({}).toArray();
+        // const needsReview = await getCollectionByTitle("Needs Review 🔎").find({}).toArray();
+        // const done = await getCollectionByTitle("Done 💯").find({}).toArray();
+        const db = await getCollectionByTitle("tasks");
+
+        const tasksToDo = await db.find({ title: "Task To Do 📝" }).toArray();
+        const onGoing = await db.find({ title: "On Going ⏳" }).toArray();
+        const needsReview = await db.find({ title: "Needs Review 🔎" }).toArray();
+        const done = await db.find({ title: "Done 💯" }).toArray();
 
         // Data yang telah diambil dari MongoDB dikemas untuk dikirimkan sebagai respons
         const columns = [

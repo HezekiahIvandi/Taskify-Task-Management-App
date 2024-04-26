@@ -2,28 +2,28 @@
 const mongoose = require("mongoose");
 
 // Fungsi untuk menentukan nama collection berdasarkan title
-const determineCollectionName = (title) => {
-    switch (title) {
-        case "Task To Do 📝":
-            return "Task To Do";
-        case "On Going ⏳":
-            return "On Going";
-        case "Needs Review 🔎":
-            return "Needs Review";
-        case "Done 💯":
-            return "Done";
-        default:
-            throw new Error(`Invalid title provided: ${title}`);
-    }
-};
+// const determineCollectionName = (title) => {
+//     switch (title) {
+//         case "Task To Do 📝":
+//             return "Task To Do";
+//         case "On Going ⏳":
+//             return "On Going";
+//         case "Needs Review 🔎":
+//             return "Needs Review";
+//         case "Done 💯":
+//             return "Done";
+//         default:
+//             throw new Error(`Invalid title provided: ${title}`);
+//     }
+// };
 
 // Fungsi untuk mendapatkan collection berdasarkan title
 const getCollectionByTitle = (title) => {
     if (!title || typeof title !== "string") {
         throw new Error(`Title ${title} must be a non-empty string.`);
     }
-    const collectionName = determineCollectionName(title);
-    return mongoose.connection.db.collection(collectionName);
+    // const collectionName = determineCollectionName(title);
+    return mongoose.connection.db.collection(title);
 };
 
 // Fungsi untuk mendapatkan task berdasarkan ID dan title
