@@ -128,9 +128,8 @@ const updateTask = async (req, res) => {
     const { title, id } = req.params;
     let { tag, description, date, collaborators, owner } = req.body;
     owner = owner.charAt(0).toUpperCase();
-    const collection = getCollectionByTitle(title);
     // Memperbaharui task dalam collection yang sesuai berdasarkan ID
-    await collection.updateOne(
+    await Task.updateOne(
       { _id: getTaskByIdAndTitle(id, title) },
       { $set: { tag, description, date, collaborators, owner } }
     );
