@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function untuk memulai drag
   const startDrag = function () {
     draggedTask = this;
+    console.log(draggedTask);
     // Mengatur opasitas untuk memberikan efek drag
     setTimeout(() => (this.style.opacity = "0.5"), 0);
   };
@@ -32,10 +33,43 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Function untuk event saat task dilepas di dalam area drop
-  const dropArea = function () {
-    this.appendChild(draggedTask); // Menempatkan task di dalam area drop
-  };
+  // Function untuk event saat task dilepas di dalam area drop
+  const dropArea = async function () {
+    // Mendapatkan kolom tujuan
+    const destinationColumn = this.closest(".taskify-col");
+    const title = destinationColumn.querySelector(
+      ".taskify-col-header-title"
+    ).innerText;
+    console.log(title);
 
+    // Mendapatkan task ID
+    const id = draggedTask.id;
+    console.log(id);
+    try {
+      // Mengirim permintaan ke server untuk memperbarui task di MongoDB
+      const response = await fetch(`/project/${title}/${JSON.stringify(id)}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update task");
+      }
+
+      // Jika permintaan berhasil, Anda mungkin ingin melakukan sesuatu, seperti menampilkan pesan atau melakukan navigasi.
+    } catch (error) {
+      console.error("Error updating task:", error);
+      // Menampilkan pesan kesalahan jika terjadi kesalahan saat memperbarui task di MongoDB
+      Swal.fire({
+        title: "Error!",
+        text: "Terjadi kesalahan saat memindahkan task",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
   // Menambahkan event listener untuk setiap task yang dapat di drag
   draggableTasks.forEach((task) => {
     task.addEventListener("dragstart", startDrag);
@@ -163,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tag,
       description,
       date,
-      collaborators
+      collaborators,
     };
 
     try {
@@ -183,13 +217,12 @@ document.addEventListener("DOMContentLoaded", () => {
           text: "Data berhasil ditambahkan",
           icon: "success",
           confirmButtonText: "OK",
-          timer: 2000 
+          timer: 2000,
         }).then(() => {
           // Setelah jeda waktu selesai, reset form dan redirect
           taskForm.reset();
-          window.location.href = '/project';
+          window.location.href = "/project";
         });
-       
       } else {
         // Menampilkan pesan kesalahan jika request gagal
         throw new Error("Failed to add task");

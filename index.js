@@ -13,7 +13,8 @@ const homeRoutes = require("./routes/homeRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
-const MongoStore = require('connect-mongo');
+const adminRoutes = require("./routes/adminRoutes");
+const MongoStore = require("connect-mongo");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -41,7 +42,7 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
       secret: "secret",
       resave: false,
       saveUninitialized: true,
-      store: new MongoStore({ mongoUrl: process.env.MONGODB_URI })
+      store: new MongoStore({ mongoUrl: process.env.MONGODB_URI }),
     })
   );
 
@@ -78,6 +79,7 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
   app.use(chatRoutes);
   app.use(authRoutes);
   app.use(profileRoutes);
+  app.use(adminRoutes);
 
   //Memulai server
   app.listen(port, () => {

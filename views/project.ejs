@@ -54,7 +54,7 @@
         <!-- Mulai iterasi untuk setiap tugas dalam kolom -->
         <% for (let task of column.tasks) { %>
         <!-- Kartu tugas -->
-        <div class="task" draggable="true">
+        <div class="task" draggable="true" id="<%=task._id%>">
           <!-- Tag dan opsi untuk setiap tugas -->
           <div class="task-tags">
             <span class="task-tag"><%= task.tag %></span>
@@ -66,32 +66,70 @@
               </button>
               <div class="dropdown-content">
                 <!-- Tombol untuk mengedit tugas -->
-                <button class="edit-option" onclick="openModal('editTaskFormModal_<%= task._id %>')">
+                <button
+                  class="edit-option"
+                  onclick="openModal('editTaskFormModal_<%= task._id %>')"
+                >
                   <i class="fas fa-edit"></i> Edit
                 </button>
 
                 <!-- Modal untuk mengedit tugas -->
                 <div id="editTaskFormModal_<%= task._id %>" class="modal">
                   <div class="modal-content">
-                    <span class="close" onclick="closeModal('editTaskFormModal_<%= task._id %>')">&times;</span>
+                    <span
+                      class="close"
+                      onclick="closeModal('editTaskFormModal_<%= task._id %>')"
+                      >&times;</span
+                    >
                     <h2>Edit Current Task</h2>
                     <!-- Form untuk mengedit tugas -->
-                    <form action="/edit-task/<%= task.title %>/<%= task._id %>" method="POST">
+                    <form
+                      action="/edit-task/<%= task.title %>/<%= task._id %>"
+                      method="POST"
+                    >
                       <label for="tag">Tag:</label>
-                      <input type="text" id="tag" name="tag" value="<%= task.tag %>" required />
+                      <input
+                        type="text"
+                        id="tag"
+                        name="tag"
+                        value="<%= task.tag %>"
+                        required
+                      />
                       <label for="description">Description:</label>
-                      <textarea id="description" name="description" required><%= task.description %></textarea>
+                      <textarea id="description" name="description" required>
+<%= task.description %></textarea
+                      >
                       <label for="date">Date:</label>
-                      <input type="text" id="date" name="date" value="<%= task.date %>" required />
+                      <input
+                        type="text"
+                        id="date"
+                        name="date"
+                        value="<%= task.date %>"
+                        required
+                      />
                       <label for="collaborators">Number of Collaborators</label>
-                      <input type="text" id="collaborators" name="collaborators" value="<%= task.collaborators %>" />
-                      <button type="editTask" onclick="notifySuccess('Task edited successfully')">Edit Task</button>
+                      <input
+                        type="text"
+                        id="collaborators"
+                        name="collaborators"
+                        value="<%= task.collaborators %>"
+                      />
+                      <button
+                        type="editTask"
+                        onclick="notifySuccess('Task edited successfully')"
+                      >
+                        Edit Task
+                      </button>
                     </form>
                   </div>
                 </div>
 
                 <!-- Form untuk menghapus tugas -->
-                <form id="<%= task.owner %>" action="/delete-task/<%= task.title %>/<%= task._id %>" method="POST">
+                <form
+                  id="<%= task.owner %>"
+                  action="/delete-task/<%= task.title %>/<%= task._id %>"
+                  method="POST"
+                >
                   <button class="delete-option">
                     <i class="fas fa-trash-alt"></i> Delete
                   </button>
@@ -107,7 +145,10 @@
           <div class="task-desc">
             <span><i class="fas fa-calendar"></i> <%= task.date %></span>
             <button class="collaborators">
-              <span><i class="fas fa-user-friends"></i> <%= task.collaborators %></span>
+              <span
+                ><i class="fas fa-user-friends"></i> <%= task.collaborators
+                %></span
+              >
             </button>
             <span class="task-owner"><%= task.owner %></span>
           </div>
@@ -129,10 +170,16 @@
       <div class="tag-progress">
         <!-- Menampilkan tag progres -->
         <p>
-          <%= progress.tag %><span><%= progress.current %>/<%= progress.total %></span>
+          <%= progress.tag %><span
+            ><%= progress.current %>/<%= progress.total %></span
+          >
         </p>
         <!-- Progres bar -->
-        <progress class="progress" value="<%= progress.current %>" max="<%= progress.total %>"></progress>
+        <progress
+          class="progress"
+          value="<%= progress.current %>"
+          max="<%= progress.total %>"
+        ></progress>
       </div>
       <% } %>
     </div>

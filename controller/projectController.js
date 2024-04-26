@@ -71,7 +71,7 @@ const createNewTask = async (req, res) => {
       date,
       collaborators,
       ownerId,
-      owner
+      owner,
     });
 
     await newTask
@@ -131,8 +131,41 @@ const updateTask = async (req, res) => {
       { _id: getTaskByIdAndTitle(id, title) },
       { $set: { tag, description, date, collaborators } }
     );
+
     // Mengarahkan kembali ke halaman project setelah memperbaharui task
-    res.redirect("/project");
+
+    // Jika terjadi kesalahan saat memperbarui task, pesan kesalahan akan dicetak ke konsol
+    // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
+  } catch (error) {
+    console.error(`Error updating task: ${error}`);
+    res
+      .status(500)
+      .send(`An error occurred while updating the task: ${error.message}`);
+  }
+};
+
+const dragAndMoveTask = async (req, res) => {
+  try {
+    console.log("arrive");
+    const { destinationTitle, taskId } = req.params;
+    console.log(destinationTitle, taskId);
+    const title = destinationTitle;
+    await Task.updateOne(
+      { _id: getTaskByIdAndTitle(taskId, destinationTitle) },
+      { $set: { title } }
+    )
+      .then(() => {
+        res.redirect("/project");
+        res.status(200).json({
+          msg: "Task title successfully updated",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ msg: "Unable to update the task" });
+      });
+
+    // Mengarahkan kembali ke halaman project setelah memperbaharui task
 
     // Jika terjadi kesalahan saat memperbarui task, pesan kesalahan akan dicetak ke konsol
     // Server mengirimkan respons HTTP dengan status code 500 (Internal Server Error)
@@ -150,4 +183,5 @@ module.exports = {
   createNewTask,
   deleteTask,
   updateTask,
+  dragAndMoveTask,
 };
