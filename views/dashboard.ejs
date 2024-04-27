@@ -1,48 +1,105 @@
 <div class="dashboard-container">
   <div class="header-morning">
     <h1>Good Morning Admin!👋🏼</h1>
-    <input type="text" />
-  </div>
-  <div>
-    <div>
-      <img src="" alt="" />
-      <div>
-        <p></p>
-        <p></p>
-        <p></p>
-      </div>
-    </div>
-    <div>
-      <img src="" alt="" />
-      <div>
-        <p></p>
-        <p></p>
-        <p></p>
-      </div>
-    </div>
-    <div>
-      <img src="" alt="" />
-      <div>
-        <p></p>
-        <p></p>
-        <p></p>
-      </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search here..." class="search-input" />
+      <i class="fa-solid fa-search search-icon"></i>
     </div>
   </div>
-  <div>
-    <div>
-      <p>Taskify Users</p>
-      <input type="text" name="" id="" />
-      <input type="range" name="" id="" />
+  <div class="simple-stat-con">
+    <div class="simple-stat">
+      <div class="stat-icon">
+        <img src="assets/users-icon.png" alt="users's icon" />
+      </div>
+      <div class="stat-labels">
+        <p>Taskify Users</p>
+        <h2>12</h2>
+        <div>
+          <span><img src="assets/arrow-up.png" alt="" /></span>
+          <span class="percentage"> + </span>
+          <span class="percentage" id="users-growth"> 25 </span>
+          <span class="percentage"> % </span>
+          <span class="time-interval">this month</span>
+        </div>
+      </div>
     </div>
-    <div>
+    <div class="simple-stat">
+      <div class="stat-icon">
+        <img src="assets/tasks-icon.png" alt="users's icon" />
+      </div>
+      <div class="stat-labels">
+        <p>Total Tasks</p>
+        <h2>23</h2>
+        <div>
+          <span><img src="assets/arrow-up.png" alt="" /></span>
+          <span class="percentage"> + </span>
+          <span class="percentage" id="users-growth"> 25 </span>
+          <span class="percentage"> % </span>
+          <span class="time-interval">this month</span>
+        </div>
+      </div>
+    </div>
+    <div class="simple-stat">
+      <div class="stat-icon">
+        <img src="assets/chats-icon.png" alt="users's icon" />
+      </div>
+      <div class="stat-labels">
+        <p>Total Chats</p>
+        <h2>47</h2>
+        <div>
+          <span><img src="assets/arrow-up.png" alt="" /></span>
+          <span class="percentage"> + </span>
+          <span class="percentage" id="users-growth"> 25 </span>
+          <span class="percentage"> % </span>
+          <span class="time-interval">this month</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="users-pagination">
+    <div class="pagination-header">
+      <h3>Taskify Users</h3>
+      <div class="pagination-header-right">
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Search here..."
+            class="search-input"
+          />
+          <i class="fa-solid fa-search search-icon"></i>
+        </div>
+        <div class="dropdown">
+          <select class="dropdown-content">
+            <option id="sort-by-newest">
+              <span>Sort by:</span>
+              <span style="color: blue" class="sort-type">Newest</span>
+            </option>
+            <option id="sort-by-name">
+              <span>Sort by:</span>
+              <span class="sort-type">Newest</span>
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
       <p>Email</p>
       <p>Username</p>
       <p>Task</p>
       <p>Contacts</p>
       <p>Delete User?</p>
     </div>
-    <div class="user-container"></div>
-    <div class="pagination"></div>
+  </div>
+  <div class="users-pagination-2">
+    <div class="users-container">
+      <div class="user">
+        <p class="email">hezekiah@untar.com</p>
+        <p class="username">hezekiah</p>
+        <p class="see-task">See Task</p>
+        <p class="see-contacts">See Contacts</p>
+        <button class="Delete">Delete</button>
+      </div>
+    </div>
+    <div></div>
   </div>
 </div>

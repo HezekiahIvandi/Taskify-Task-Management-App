@@ -1,9 +1,149 @@
+p,
+h2 {
+  margin-bottom: 0;
+}
 .dashboard-container {
-  padding: 3.4rem 20rem 20rem 20rem;
+  padding: 5rem 13rem 20rem 13rem;
   background-image: linear-gradient(
     to top,
     rgba(210, 153, 194, 0.4) 0%,
     rgba(254, 249, 215, 0.4) 90%,
     rgba(255, 255, 255, 0.4) 100%
   );
+}
+.header-morning {
+  display: flex;
+  padding: 2rem 0;
+  justify-content: space-between;
+}
+
+.header-morning h1 {
+  font-size: 30px;
+}
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 20px; /* Adjust as needed */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.search-input {
+  border: 0px solid lightgray;
+  border-radius: 10px;
+  padding: 0 1rem;
+}
+
+.simple-stat-con {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 2rem 2rem;
+  border-radius: 2rem;
+}
+.simple-stat {
+  display: flex;
+  align-items: center;
+}
+.simple-stat .stat-icon {
+  display: flex;
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: #d0e8ff;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+.stat-icon img {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0.3rem;
+}
+
+.stat-labels {
+}
+.stat-labels div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stat-labels img {
+  width: 1.3rem;
+}
+
+.stat-labels p {
+  font-size: 13;
+  color: #acacac;
+}
+
+.stat-labels .percentage {
+  color: #00ac4f;
+  font-size: 11;
+  font-weight: bold;
+}
+.stat-labels .time-interval {
+  margin-left: 4px;
+}
+
+.users-pagination {
+  background-color: white;
+  padding: 2rem 2rem 0rem 2rem;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  margin-top: 2.5rem;
+  border-bottom: 1px lightgray solid solid;
+}
+
+.pagination-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination-header-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown {
+}
+
+.dropdown-content option:hover {
+  background-color: #f1f1f1;
+}
+
+.sort-type {
+  font-weight: bold;
+  color: blue !important;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0rem 1rem 0;
+}
+
+.columns p {
+  color: #acacac;
+}
+
+.users-pagination-2 {
+  background-color: white;
+  padding: 2rem;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  border-top: 1px solid lightgray;
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
