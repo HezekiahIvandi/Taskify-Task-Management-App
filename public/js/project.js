@@ -241,3 +241,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// Fungsi untuk menyortir tugas berdasarkan opsi yang dipilih
+async function sortTasks() {
+  var sortCriteria = document.getElementById("sortCriteria").value;
+  var sortOrder = document.getElementById("sortOrder").value;
+
+  // Lakukan sortir sesuai dengan kriteria dan urutan yang dipilih
+  console.log("Sorting tasks by " + sortCriteria + " in " + sortOrder + " order");
+
+  // Kirim data ke backend
+  try {
+    const response = await fetch(`/project/${sortCriteria}/${sortOrder}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+  } catch (error) {
+    // Tangani kesalahan jika ada kesalahan saat melakukan permintaan
+    console.error("Terjadi kesalahan:", error);
+  }
+}

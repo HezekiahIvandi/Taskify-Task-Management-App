@@ -395,3 +395,33 @@ button[type="editTask"]:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+.sort-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.sort-column {
+  margin-right: 40px;
+}
+
+.sort-column h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.sort-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  background-color: #0037ff;
+}

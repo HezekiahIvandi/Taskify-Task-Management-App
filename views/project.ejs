@@ -1,6 +1,26 @@
 <div class="app">
   <!-- Bagian utama aplikasi -->
   <main class="taskify">
+    <!-- Tombol untuk sort -->
+    <div class="sort-container">
+      <div class="sort-column">
+        <h3>Sort by:</h3>
+        <select id="sortCriteria">
+          <option value="tag">Tag</option>
+          <option value="description">Description</option>
+        </select>
+      </div>
+      <div class="sort-column">
+        <h3>Sort order:</h3>
+        <select id="sortOrder">
+          <option value="1">A-Z</option>
+          <option value="-1">Z-A</option>
+        </select>
+      </div>
+      <button class="sort-button" onclick="sortTasks()">Sort</button>
+    </div>
+    
+
     <!-- Kontainer untuk daftar tugas -->
     <div class="taskify-tasks">
       <!-- Mulai iterasi untuk setiap kolom -->

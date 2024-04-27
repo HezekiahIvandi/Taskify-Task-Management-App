@@ -4,24 +4,17 @@ const {
   getTaskByIdAndTitle,
 } = require("./collectionUtils");
 const Task = require("../models/Task");
+
 // Mendapatkan dan membaca semua data task dari semua collection
 const getAllTaskData = async (req, res) => {
-  const currentUser = req.user.name;
   try {
+    const currentOwnerId= String(req.user.id);
+
     // Mengambil data dari model MongoDB
-    const tasksToDo = await Task.find({
-      title: "Task To Do 📝",
-      owner: currentUser,
-    });
-    const onGoing = await Task.find({
-      title: "On Going ⏳",
-      owner: currentUser,
-    });
-    const needsReview = await Task.find({
-      title: "Needs Review 🔎",
-      owner: currentUser,
-    });
-    const done = await Task.find({ title: "Done 💯", owner: currentUser });
+    const tasksToDo = await Task.find({ title: "Task To Do 📝", ownerId: currentOwnerId });
+    const onGoing = await Task.find({ title: "On Going ⏳", ownerId: currentOwnerId });
+    const needsReview = await Task.find({ title: "Needs Review 🔎", ownerId: currentOwnerId });
+    const done = await Task.find({ title: "Done 💯", ownerId: currentOwnerId });
 
     // Data yang telah diambil dari MongoDB dikemas untuk dikirimkan sebagai respons
     const columns = [
@@ -71,7 +64,7 @@ const createNewTask = async (req, res) => {
   try {
     // Mendapatkan informasi terkait task yang ingin ditambahkan dari request
     const { title, tag, description, date, collaborators } = req.body;
-    ownerId = req.user.id;
+    ownerId = String(req.user.id);
     owner = req.user.name.charAt(0).toUpperCase();
     // Menyimpan task baru ke dalam collection yang sesuai
     const newTask = new Task({
@@ -153,45 +146,45 @@ const updateTask = async (req, res) => {
   }
 };
 
-const dragAndMoveTask = async (req, res) => {
-  try {
-    const { title, id } = req.params;
-    await Task.updateOne(
-      { _id: getTaskByIdAndTitle(id, title) },
-      { $set: { title } }
-    );
-    res.redirect("/project");
-  } catch (error) {
-    console.error(`Error moving task: ${error}`);
-    res
-      .status(500)
-      .send(`An error occurred while moving the task: ${error.message}`);
-  }
-};
-
 // const dragAndMoveTask = async (req, res) => {
 //   try {
 //     const { title, id } = req.params;
-
-//     // Find the task instance from Task collection with matching taskId
-//     const task = await Task.findById(id);
-
-//     if (!task) {
-//       return res.status(404).json({ message: 'Task not found' });
-//     }
-
-//     // Update its title to destination title
-//     task.title = title;
-
-//     // Save the updated task
-//     await task.save();
-
-//     return res.status(200).json({ message: 'Task title updated successfully' });
+//     await Task.updateOne(
+//       { _id: getTaskByIdAndTitle(id, title) },
+//       { $set: { title } }
+//     );
+//     res.redirect("/project");
 //   } catch (error) {
-//     console.error('Error updating task title:', error);
-//     return res.status(500).json({ message: 'Internal Server Error' });
+//     console.error(`Error moving task: ${error}`);
+//     res
+//       .status(500)
+//       .send(`An error occurred while moving the task: ${error.message}`);
 //   }
 // };
+
+const sortTask = async (req, res) => {
+  try {
+    const { sortCriteria } = req.params;
+    let { sortOrder } = req.params;
+    sortOrder = parseInt(sortOrder);
+    
+    let sortedTask;
+
+    if (sortCriteria == "tag") {
+      sortedTask = await Task.find().sort({ tag: sortOrder });
+    } else if (sortCriteria == "description") {
+      sortedTask = await Task.find().sort({ description: sortOrder });
+    }
+
+    await Task.deleteMany({});
+    await Task.insertMany(sortedTask);
+
+    res.redirect("/project"); // ini tidak berfungsi
+  } catch (error) {
+    console.error(`Error sorting task: ${error}`);
+    res.status(500).send(`An error occurred while sorting the task: ${error.message}`);
+  }
+}
 
 // Eksport fungsi-fungsi untuk digunakan di modul lain
 module.exports = {
@@ -199,5 +192,6 @@ module.exports = {
   createNewTask,
   deleteTask,
   updateTask,
-  dragAndMoveTask,
+  
+  sortTask,
 };

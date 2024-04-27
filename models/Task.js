@@ -21,6 +21,10 @@ const taskSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    ownerId: {
+        type: String,
+        required: true,
+    },
     owner: {
         type: String,
         required: true
