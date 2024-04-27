@@ -21,16 +21,51 @@ const getAllTaskData = async (req, res) => {
       { title: "Done 💯", tasks: done },
     ];
 
-    // Data untuk Task Progress (elemen aside dan dummy)
-    let progressData = [
-      { tag: "Perencanaan", current: 3, total: 4 },
-      { tag: "Desain UI/UX", current: 1, total: 3 },
-      { tag: "Frontend", current: 1, total: 2 },
-      { tag: "Backend", current: 0, total: 3 },
-      { tag: "Testing", current: 0, total: 2 },
-      { tag: "Deployment", current: 0, total: 2 },
-      { tag: "Maintenance", current: 0, total: 2 },
-    ];
+    // Data untuk Task Progress (elemen aside)
+    let doneTags = [];
+    done.forEach(task => {
+      doneTags = doneTags.concat(task.tag);
+    });
+    
+    let otherTags = [];
+    tasksToDo.concat(onGoing, needsReview, done).forEach(task => {
+      otherTags = otherTags.concat(task.tag);
+    });
+  
+    function generateProgressData(doneTags, otherTags) {
+      let progressData = {};
+    
+      // Menghitung jumlah tag untuk task "Done"
+      doneTags.forEach(tag => {
+        progressData[tag] = { tag: tag, current: doneTags.filter(t => t === tag).length, total: 0 };
+      });
+    
+      // Menghitung jumlah tag untuk task selain "Done"
+      otherTags.forEach(tag => {
+        if (!progressData[tag]) {
+          progressData[tag] = { tag: tag, current: 0, total: otherTags.filter(t => t === tag).length };
+        } else {
+          progressData[tag].total = otherTags.filter(t => t === tag).length;
+        }
+      });
+    
+      // Mengonversi hasil ke dalam bentuk array
+      return Object.values(progressData);
+    }
+    
+    // Contoh penggunaan fungsi
+    const progressData = generateProgressData(doneTags, otherTags);
+    console.log(progressData);
+
+    // let progressData = [
+    //   { tag: "Perencanaan", current: 3, total: 4 },
+    //   { tag: "Desain UI/UX", current: 1, total: 3 },
+    //   { tag: "Frontend", current: 1, total: 2 },
+    //   { tag: "Backend", current: 0, total: 3 },
+    //   { tag: "Testing", current: 0, total: 2 },
+    //   { tag: "Deployment", current: 0, total: 2 },
+    //   { tag: "Maintenance", current: 0, total: 2 },
+    // ];
 
     // Mengembalikan halaman dengan data yang diperoleh
     res.render("project.ejs", {
