@@ -6,12 +6,22 @@ const {
 const Task = require("../models/Task");
 // Mendapatkan dan membaca semua data task dari semua collection
 const getAllTaskData = async (req, res) => {
+  const currentUser = req.user.name;
   try {
     // Mengambil data dari model MongoDB
-    const tasksToDo = await Task.find({ title: "Task To Do 📝" });
-    const onGoing = await Task.find({ title: "On Going ⏳" });
-    const needsReview = await Task.find({ title: "Needs Review 🔎" });
-    const done = await Task.find({ title: "Done 💯" });
+    const tasksToDo = await Task.find({
+      title: "Task To Do 📝",
+      owner: currentUser,
+    });
+    const onGoing = await Task.find({
+      title: "On Going ⏳",
+      owner: currentUser,
+    });
+    const needsReview = await Task.find({
+      title: "Needs Review 🔎",
+      owner: currentUser,
+    });
+    const done = await Task.find({ title: "Done 💯", owner: currentUser });
 
     // Data yang telah diambil dari MongoDB dikemas untuk dikirimkan sebagai respons
     const columns = [
