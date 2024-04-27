@@ -3,6 +3,7 @@
   <main class="taskify">
     <!-- Tombol untuk sort -->
     <div class="sort-container">
+      <!-- Kolom untuk kriteria pengurutan -->
       <div class="sort-column">
         <h3>Sort by:</h3>
         <select id="sortCriteria">
@@ -10,6 +11,7 @@
           <option value="description">Description</option>
         </select>
       </div>
+      <!-- Kolom untuk urutan pengurutan -->
       <div class="sort-column">
         <h3>Sort order:</h3>
         <select id="sortOrder">
@@ -17,9 +19,9 @@
           <option value="-1">Z-A</option>
         </select>
       </div>
+      <!-- Tombol untuk memicu fungsi pengurutan -->
       <button class="sort-button" onclick="sortTasks()">Sort</button>
     </div>
-    
 
     <!-- Kontainer untuk daftar tugas -->
     <div class="taskify-tasks">
@@ -56,11 +58,7 @@
                 <label for="tag">Tag:</label>
                 <input type="text" id="tag" name="tag" required />
                 <label for="description">Description:</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  required
-                ></textarea>
+                <textarea id="description" name="description" required></textarea>
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date" required />
                 <label for="collaborators">Number of Collaborators:</label>
@@ -86,73 +84,33 @@
               </button>
               <div class="dropdown-content">
                 <!-- Tombol untuk mengedit tugas -->
-                <button
-                  class="edit-option"
-                  onclick="openModal('editTaskFormModal_<%= task._id %>')"
-                >
+                <button class="edit-option" onclick="openModal('editTaskFormModal_<%= task._id %>')">
                   <i class="fas fa-edit"></i> Edit
                 </button>
 
                 <!-- Modal untuk mengedit tugas -->
                 <div id="editTaskFormModal_<%= task._id %>" class="modal">
                   <div class="modal-content">
-                    <span
-                      class="close"
-                      onclick="closeModal('editTaskFormModal_<%= task._id %>')"
-                      >&times;</span
-                    >
+                    <span class="close" onclick="closeModal('editTaskFormModal_<%= task._id %>')">&times;</span>
                     <h2>Edit Current Task</h2>
                     <!-- Form untuk mengedit tugas -->
-                    <form
-                      action="/edit-task/<%= task.title %>/<%= task._id %>"
-                      method="POST"
-                    >
+                    <form action="/edit-task/<%= task.title %>/<%= task._id %>" method="POST">
                       <label for="tag">Tag:</label>
-                      <input
-                        type="text"
-                        id="tag"
-                        name="tag"
-                        value="<%= task.tag %>"
-                        required
-                      />
+                      <input type="text" id="tag" name="tag" value="<%= task.tag %>" required />
                       <label for="description">Description:</label>
-                      <textarea id="description" name="description" required>
-<%= task.description %></textarea
-                      >
+                      <textarea id="description" name="description" required><%= task.description %></textarea>
                       <label for="date">Date:</label>
-                      <input
-                        type="text"
-                        id="date"
-                        name="date"
-                        value="<%= task.date %>"
-                        required
-                      />
+                      <input type="text" id="date" name="date" value="<%= task.date %>" required />
                       <label for="collaborators">Number of Collaborators</label>
-                      <input
-                        type="text"
-                        id="collaborators"
-                        name="collaborators"
-                        value="<%= task.collaborators %>"
-                      />
-                      <button
-                        type="editTask"
-                        onclick="notifySuccess('Task edited successfully')"
-                      >
-                        Edit Task
-                      </button>
+                      <input type="text" id="collaborators" name="collaborators" value="<%= task.collaborators %>" />
+                      <button type="editTask" onclick="notifySuccess('Task edited successfully')">Edit Task</button>
                     </form>
                   </div>
                 </div>
 
                 <!-- Form untuk menghapus tugas -->
-                <form
-                  id="<%= task.owner %>"
-                  action="/delete-task/<%= task.title %>/<%= task._id %>"
-                  method="POST"
-                >
-                  <button class="delete-option">
-                    <i class="fas fa-trash-alt"></i> Delete
-                  </button>
+                <form id="<%= task.owner %>" action="/delete-task/<%= task.title %>/<%= task._id %>" method="POST">
+                  <button class="delete-option"><i class="fas fa-trash-alt"></i> Delete</button>
                 </form>
               </div>
             </div>
@@ -165,10 +123,7 @@
           <div class="task-desc">
             <span><i class="fas fa-calendar"></i> <%= task.date %></span>
             <button class="collaborators">
-              <span
-                ><i class="fas fa-user-friends"></i> <%= task.collaborators
-                %></span
-              >
+              <span><i class="fas fa-user-friends"></i> <%= task.collaborators %></span>
             </button>
             <span class="task-owner"><%= task.owner %></span>
           </div>
@@ -189,17 +144,9 @@
       <!-- Kontainer untuk progres -->
       <div class="tag-progress">
         <!-- Menampilkan tag progres -->
-        <p>
-          <%= progress.tag %><span
-            ><%= progress.current %>/<%= progress.total %></span
-          >
-        </p>
+        <p><%= progress.tag %><span><%= progress.current %>/<%= progress.total %></span></p>
         <!-- Progres bar -->
-        <progress
-          class="progress"
-          value="<%= progress.current %>"
-          max="<%= progress.total %>"
-        ></progress>
+        <progress class="progress" value="<%= progress.current %>" max="<%= progress.total %>"></progress>
       </div>
       <% } %>
     </div>
