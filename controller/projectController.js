@@ -146,21 +146,23 @@ const updateTask = async (req, res) => {
   }
 };
 
-// const dragAndMoveTask = async (req, res) => {
-//   try {
-//     const { title, id } = req.params;
-//     await Task.updateOne(
-//       { _id: getTaskByIdAndTitle(id, title) },
-//       { $set: { title } }
-//     );
-//     res.redirect("/project");
-//   } catch (error) {
-//     console.error(`Error moving task: ${error}`);
-//     res
-//       .status(500)
-//       .send(`An error occurred while moving the task: ${error.message}`);
-//   }
-// };
+const dragAndMoveTask = async (req, res) => {
+  try {
+    const { title, id } = req.params;
+    console.log(title);
+    console.log(id);
+    await Task.updateOne(
+      { _id: getTaskByIdAndTitle(id, title) },
+      { $set: { title } }
+    );
+    res.redirect("/project");
+  } catch (error) {
+    console.error(`Error moving task: ${error}`);
+    res
+      .status(500)
+      .send(`An error occurred while moving the task: ${error.message}`);
+  }
+};
 
 const sortTask = async (req, res) => {
   try {
@@ -169,6 +171,8 @@ const sortTask = async (req, res) => {
     sortOrder = parseInt(sortOrder);
     
     let sortedTask;
+    console.log(sortCriteria)
+    console.log(sortedTask);
 
     if (sortCriteria == "tag") {
       sortedTask = await Task.find().sort({ tag: sortOrder });
@@ -192,6 +196,6 @@ module.exports = {
   createNewTask,
   deleteTask,
   updateTask,
-  
+  dragAndMoveTask,
   sortTask,
 };

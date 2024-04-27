@@ -5,6 +5,7 @@ const {
   getAllTaskData,
   createNewTask,
   deleteTask,
+  dragAndMoveTask,
   updateTask,
 
   sortTask,
@@ -28,7 +29,7 @@ router.post("/delete-task/:title/:id", deleteTask);
 router.post("/edit-task/:title/:id", updateTask);
 
 // DRAG AND MOVE
-// router.post("/project/:title/:id", dragAndMoveTask);
+router.post("/project/:title/:id", dragAndMoveTask);
 
 // SORT TASK
 router.post("/project/:sortCriteria/:sortOrder", sortTask);
