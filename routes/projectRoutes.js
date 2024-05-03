@@ -6,7 +6,7 @@ const {
   createNewTask,
   deleteTask,
   updateTask,
-  dragAndMoveTask,
+  // dragAndMoveTask,
   sortTask,
 } = require("../controller/projectController");
 
@@ -26,7 +26,7 @@ router.post("/delete-task/:title/:id", deleteTask);
 router.post("/edit-task/:title/:id", updateTask);
 
 // DRAG AND MOVE - Client menarik dan memindahkan data ke Server untuk dipindahkan ke dalam title destinasi
-router.post("/project/:title/:id", dragAndMoveTask);
+// router.post("/project/:title/:id", dragAndMoveTask);
 
 // SORT TASK - Client mengurutkan data ke dalam task collection berdasarkan kolom sortCriteria dan sortOrder 
 router.post("/project/:sortCriteria/:sortOrder", sortTask);

@@ -57,16 +57,6 @@ const getAllTaskData = async (req, res) => {
     const progressData = generateProgressData(doneTags, otherTags);
     console.log(progressData);
 
-    // let progressData = [
-    //   { tag: "Perencanaan", current: 3, total: 4 },
-    //   { tag: "Desain UI/UX", current: 1, total: 3 },
-    //   { tag: "Frontend", current: 1, total: 2 },
-    //   { tag: "Backend", current: 0, total: 3 },
-    //   { tag: "Testing", current: 0, total: 2 },
-    //   { tag: "Deployment", current: 0, total: 2 },
-    //   { tag: "Maintenance", current: 0, total: 2 },
-    // ];
-
     // Mengembalikan halaman dengan data yang diperoleh
     res.render("project.ejs", {
       title: "Projects",
@@ -182,29 +172,29 @@ const updateTask = async (req, res) => {
   }
 };
 
-// Menarik dan memindahkan task ke kolom lain
-const dragAndMoveTask = async (req, res) => {
-  try {
-    // Membaca title dan ID task yang ingin dipindahkan
-    const { title, id } = req.params;
+// // Menarik dan memindahkan task ke kolom lain
+// const dragAndMoveTask = async (req, res) => {
+//   try {
+//     // Membaca title dan ID task yang ingin dipindahkan
+//     const { title, id } = req.params;
 
-    // Memperbaharui title asal ke title destinasi
-    await Task.updateOne(
-      { _id: getTaskByIdAndTitle(id, title) },
-      { $set: { title } }
-    );
-    // Redirect kembali setelah berhasil memindahkan task
-    res.redirect("/project");
+//     // Memperbaharui title asal ke title destinasi
+//     await Task.updateOne(
+//       { _id: getTaskByIdAndTitle(id, title) },
+//       { $set: { title } }
+//     );
+//     // Redirect kembali setelah berhasil memindahkan task
+//     res.redirect("/project");
 
-    // Jika terjadi error, error message akan dicetak ke console
-    // Server mengirim respons HTTP dengan status code 500: Internal Server Error
-  } catch (error) {
-    console.error(`Error moving task: ${error}`);
-    res
-      .status(500)
-      .send(`An error occurred while moving the task: ${error.message}`);
-  }
-};
+//     // Jika terjadi error, error message akan dicetak ke console
+//     // Server mengirim respons HTTP dengan status code 500: Internal Server Error
+//   } catch (error) {
+//     console.error(`Error moving task: ${error}`);
+//     res
+//       .status(500)
+//       .send(`An error occurred while moving the task: ${error.message}`);
+//   }
+// };
 
 // Mengurutkan task berdasarkan tag atau description
 const sortTask = async (req, res) => {
@@ -244,6 +234,6 @@ module.exports = {
   createNewTask,
   deleteTask,
   updateTask,
-  dragAndMoveTask,
+  // dragAndMoveTask,
   sortTask,
 };
