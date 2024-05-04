@@ -1,13 +1,13 @@
 <div class="main" id="blur">
   <h1 class="profile-title">Edit User Profile</h1>
   <div class="edit-profile">
-    <div class="user-profile-edit">
+    <form class="user-profile-edit">
       <img src="<%= photoUrl %>" class="userPfp" id="userPfp">
       <label for="editPfp">
         <img src="assets/edit_userPfp.png" class="edit-photo" id="edit-photo">
       </label>
-      <input type="file" onchange="loadFile(event)" id="editPfp">
-    </div>
+      <input type="file" id="editPfp" onchange="loadFile(event)">
+    </form>
     <ul class="field">
       <li>
         <div class="col-25">

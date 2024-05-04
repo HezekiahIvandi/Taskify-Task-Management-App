@@ -1,7 +1,10 @@
 const bcrypt = require("bcryptjs");
+const crypto = require('node:crypto');
 const passport = require("passport");
 const User = require("../models/User");
 const { contactListInit } = require("../controller/contactListController");
+const sendEmail = require("../utils/email");
+
 // Function menampilkan halaman login
 const renderLogin = async (req, res) => {
   res.render("login.ejs", {
@@ -155,10 +158,80 @@ const logoutUser = async (req, res, next) => {
   });
 };
 
+// Function forgot password
+const forgotPassword = async (req, res, next) => {
+  // Mencari user berdasarkan email;
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    next();
+  }
+
+  // Generasi token untuk reset password yang random
+  const resetToken = await user.createResetPasswordToken();
+  await user.save({ validateBeforeSave: false });
+
+  // Mengirimkan token ke email user
+  const resetUrl = `${req.protocol}://${req.get('host')}/reset/${resetToken}`;
+  const message = `We have received a password reset request. Please use the link below to reset your pasword\n\n${resetUrl}\n\nThis link will expire in 10 minutes`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Password reset request received',
+      message: message
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "password reset link send to the user email"
+    })
+  } catch (err) {
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(err);
+  }
+
+}
+
+// Function untuk reset password
+const resetPassword = async (req, res, next) => {
+  console.log(req.params.token);
+  // Mencari user dengan token reset password yang sesuai
+  const token = crypto.createHash('sha256').update(req.params.token).digest('hex');
+  const user = await User.findOne({ passwordResetToken: token, passwordResetTokenExpire: { $gt: Date.now() } });
+  if (!user) {
+    next();
+  }
+
+  // Reset password user
+  // Hasing password baru
+  new_password = req.body.password;
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(new_password, salt, (err, hash) => {
+      // Mengubah password user menjadi hash
+      user.password = hash;
+      user.save();
+    });
+  });
+  user.passwordResetToken = undefined;
+  user.passwordResetTokenExpire = undefined;
+
+  await user.save();
+
+  // Redirect user ke login setelah reset password
+  res.redirect("/login");
+}
+
+
 module.exports = {
   renderLogin,
   renderRegister,
   registerUser,
   loginUser,
   logoutUser,
+  forgotPassword,
+  resetPassword
 };

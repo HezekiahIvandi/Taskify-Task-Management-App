@@ -80,6 +80,11 @@ body {
     padding-top: 8vh;
 }
 
+#blur.active {
+    filter: blur(20px);
+    transition: 0.5s;
+}
+
 .form {
     margin: auto;
     width: 540px;
@@ -120,6 +125,15 @@ input[type=password] {
     border-radius: 8px;
 }
 
+.forgot-pass {
+    text-align: right;
+}
+
+#forgot-pass-text {
+    cursor: pointer;
+    user-select: none;
+}
+
 .form-button {
     min-width: 120px;
     min-height: 48px;
@@ -131,6 +145,7 @@ input[type=password] {
     cursor: pointer;
     transition: all 0.3s ease 0s;
     border-radius: 8px;
+    margin-top: 16px;
 }
 
 .form-button:hover {
@@ -144,4 +159,75 @@ input[type=password] {
 #my-signin2 {
     margin-left: 38px;
     margin-top: 30px;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.popup.active {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-header button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.edit-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-container-password {
+    margin-top: 10px;
+    display: inline;
+}
+
+.popup input {
+    width: 100%;
+    margin: 2px;
+    border: none;
+    outline: none;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    font-size: 1em;
+}
+
+.confirm-edit-button {
+    width: 100%;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.confirm-edit-button:hover {
+    background-color: #01377e;
 }

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { updateContactName } = require("./contactController");
+const { updateOne } = require("../models/contactModel");
 const renderProfile = async (req, res) => {
   res.render("profile.ejs", {
     title: "Profile",

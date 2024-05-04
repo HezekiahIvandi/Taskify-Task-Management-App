@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const User = require("../models/User");
-const { ensureNotAuthenticated } = require("../config/auth");
-const { renderLogin, renderRegister, registerUser, loginUser, logoutUser } = require("../controller/authController");
+const { ensureNotAuthenticated, ensureAuthenticated } = require("../config/auth");
+const { renderLogin, renderRegister, registerUser, loginUser, logoutUser, forgotPassword, resetPassword } = require("../controller/authController");
 
 // Menampilkan Halaman Login
 router.get("/login", ensureNotAuthenticated, renderLogin);
@@ -15,6 +15,10 @@ router.post("/register", ensureNotAuthenticated, registerUser);
 // Handling Login User
 router.post("/login", ensureNotAuthenticated, loginUser);
 // Handling Logout User
-router.get("/logout", logoutUser);
+router.get("/logout", ensureAuthenticated, logoutUser);
+// Handling Forgot Password
+router.post("/forgot", forgotPassword);
+// Handling Reset Password
+router.patch("/reset/:token", resetPassword)
 
 module.exports = router;

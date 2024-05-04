@@ -4,7 +4,6 @@ const {
   changeUsername,
   changeEmail,
   changePassword,
-  changeProfilePicture
 } = require("../controller/profileController");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/auth");

@@ -44,7 +44,7 @@ closePopupPassword.addEventListener("click", () => {
     blur.classList.remove("active");
 });
 
-let loadFile = function (event) {
+let loadFile = function(event) {
     let image = document.getElementById("userPfp");
     image.src = URL.createObjectURL(event.target.files[0]);
-};
+}

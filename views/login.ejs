@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" id="blur">
   <%- include ("partials/messages"); %>
   <br>
   <form class="form" action="/login" method="POST">
@@ -6,11 +6,12 @@
     <div class="textfield">
       <label for="email">Email</label>
       <input type="email" placeholder="email" name="email" id="email" required />
-      <br />
       <label for="password">Password</label>
       <input type="password" placeholder="password" name="password" id="password" required />
+      <div class="forgot-pass">
+        <p id="forgot-pass-text">Forgot Password?</p>
+      </div>
     </div>
-    <br />
     <button class="form-button" type="submit">Login</button>
 
     <!-- <div id="my-signin2"></div> -->
@@ -19,5 +20,19 @@
       Doesnt have an account?
       <a href="/register">Register</a> instead
     </p>
+  </form>
+</div>
+
+<!-- Popup forgot password -->
+<div class="popup" id="forgot-popup">
+  <div class="popup-header" id="forgot-popup-header">
+    <h2>Forgot Password</h2>
+    <button id="close-popup-forgot"><i class="fa-solid fa-x"></i></button>
+  </div>
+  <form action="/forgot" method="POST">
+    <div class="edit-container">
+      <input type="text" placeholder="Input Your Accunt Email" name="email" id="edit-forgot-popup">
+    </div>
+    <button class="confirm-edit-button" id="confirm-forgot" type="submit">Confirm</button>
   </form>
 </div>
