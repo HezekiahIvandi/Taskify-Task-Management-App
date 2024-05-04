@@ -92,12 +92,23 @@
   </div>
   <div class="users-pagination-2">
     <div class="users-container">
+      <% users.forEach(user => { %>
       <div class="user">
-        <p class="email">hezekiah@untar.com</p>
-        <p class="username">hezekiah</p>
-        <p class="see-task">See Task</p>
-        <p class="see-contacts">See Contacts</p>
-        <button class="Delete">Delete</button>
+        <p class="email"><%= user.email %></p>
+        <p class="username"><%= user.name %></p>
+        <p class="see-task" id="<%=user._id %>">See Task</p>
+        <p class="see-contacts" id="<%=user._id %>">See Contacts</p>
+        <button class="Delete" id="<%=user._id %>">Delete</button>
+      </div>
+      <% }) %>
+    </div>
+    <div class="pagination-nav">
+      <p>Showing data 1 to 4 of 3 entries</p>
+      <div class="nav">
+        <button class="prev-btn"><</button>
+        <button class="page-btn active">1</button>
+
+        <button class="next-btn">></button>
       </div>
     </div>
     <div></div>

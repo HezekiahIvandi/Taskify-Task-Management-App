@@ -125,9 +125,10 @@ h2 {
 }
 
 .columns {
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem 0rem 1rem 0;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr 0.8fr 0.6fr;
+
+  padding: 2rem 0rem 0.7rem 0;
 }
 
 .columns p {
@@ -136,14 +137,85 @@ h2 {
 
 .users-pagination-2 {
   background-color: white;
-  padding: 2rem;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
+  padding: 0 2rem;
   border-top: 1px solid lightgray;
 }
 
 .user {
+  padding: 1rem 0rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr 0.8fr 0.6fr;
+  border-bottom: 1px solid lightgray;
+}
+
+.user p {
+  font-weight: 600;
+}
+
+.Delete {
+  width: 5rem;
+  background-color: #ffc5c5;
+  color: #df0404;
+  border: none;
+  border-radius: 5px;
+  padding: 0.2rem 0;
+  transition: ease-in-out 0.2s;
+}
+.Delete:hover {
+  background-color: #df0404;
+  color: #ffc5c5;
+}
+
+.see-task {
+  color: #008767;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.see-contacts {
+  color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pagination-nav {
   display: flex;
+  padding: 1rem 0rem;
   justify-content: space-between;
-  align-items: center;
+}
+
+.pagination-nav p {
+  color: #b5b7c0;
+}
+
+.nav {
+  display: flex;
+}
+
+.nav button {
+  padding: 4px 12px;
+  margin: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav button:hover {
+  background-color: #c8c5c5;
+}
+
+.nav button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .prev-btn,
+.pagination .next-btn {
+  background-color: #333;
+  color: #fff;
 }
