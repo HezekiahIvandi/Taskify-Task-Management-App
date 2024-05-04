@@ -120,7 +120,7 @@ body {
     background-color: #eeeeee;
     position: absolute;
     left: 51.8%;
-    top: 39%;
+    top: 36%;
     cursor: pointer;
     transition: all 0.3s ease 0s;
 }
@@ -218,6 +218,11 @@ label {
     justify-content: space-between;
 }
 
+.edit-container-password {
+    margin-top: 10px;
+    display: inline;
+}
+
 .popup input {
     width: 100%;
     margin: 2px;
@@ -227,6 +232,10 @@ label {
     border-radius: 8px;
     border: 1px solid gray;
     font-size: 1em;
+}
+
+#edit-password-popup {
+    margin-top: 8px;
 }
 
 .confirm-edit-button {
@@ -245,4 +254,8 @@ label {
 
 .confirm-edit-button:hover {
     background-color: #01377e;
+}
+
+#editPfp {
+    display: none;
 }

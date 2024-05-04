@@ -93,6 +93,7 @@ header {
   top: 70px;
   right: 0px;
   z-index: 1000;
+  width: auto;
   background-color: #ffffff;
   border: #a1a1a1 solid 2px;
   border-radius: 12px;

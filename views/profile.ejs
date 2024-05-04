@@ -2,8 +2,11 @@
   <h1 class="profile-title">Edit User Profile</h1>
   <div class="edit-profile">
     <div class="user-profile-edit">
-      <img src="<%= photoUrl %>" class="userPfp">
-      <img src="assets/edit_userPfp.png" class="edit-photo" id="edit-photo">
+      <img src="<%= photoUrl %>" class="userPfp" id="userPfp">
+      <label for="editPfp">
+        <img src="assets/edit_userPfp.png" class="edit-photo" id="edit-photo">
+      </label>
+      <input type="file" onchange="loadFile(event)" id="editPfp">
     </div>
     <ul class="field">
       <li>
@@ -77,9 +80,10 @@
     <h2>Edit Password</h2>
     <button id="close-popup-password"><i class="fa-solid fa-x"></i></button>
   </div>
-  <form action="edit-password" method="POST">
-    <div class="edit-container">
-      <input type="text" placeholder="Input New Password" name="password" id="edit-password-popup">
+  <form action="/edit-password" method="POST">
+    <div class="edit-container-password">
+      <input type="text" placeholder="Input Old Password" name="old_password" id="edit-password-popup">
+      <input type="text" placeholder="Input New Password" name="new_password" id="edit-password-popup">
     </div>
     <button class="confirm-edit-button" id="confirm-password" type="submit">Confirm</button>
   </form>

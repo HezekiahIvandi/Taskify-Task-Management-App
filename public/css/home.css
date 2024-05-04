@@ -181,12 +181,6 @@ body {
   right: 1rem;
 }
 
-.footer-divider {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .footer {
   background-image: linear-gradient(
     to bottom,
@@ -198,7 +192,7 @@ body {
 }
 
 .socialIcons {
-  margin-top: 20px;
+  padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
