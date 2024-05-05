@@ -7,7 +7,8 @@ router.get("/", (req, res) => {
     js: "js/home.js",
     layout: "mainLayout.ejs",
     username: req.isAuthenticated() ? req.user.name : "username",
-    photoUrl: req.isAuthenticated() ? req.user.photoUrl : ""
+    photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 });
 module.exports = router;

@@ -19,6 +19,7 @@ const renderDashboard = async (req, res) => {
     username: currentUser,
     photoUrl: currentUserPfp,
     users: users,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 };
 

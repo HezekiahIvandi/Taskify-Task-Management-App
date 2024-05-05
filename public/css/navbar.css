@@ -110,6 +110,20 @@ header {
   margin: 8px;
 }
 
+.dashboard-button {
+  display: inline-block;
+  width: 90px;
+  height: 36px;
+  font-weight: bold;
+  font-size: 16;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  border-radius: 8px;
+}
+
 .edit-profile-button {
   display: inline-block;
   width: 90px;

@@ -67,6 +67,7 @@ const getAllTaskData = async (req, res) => {
       progressData: progressData,
       username: req.isAuthenticated() ? req.user.name : "username",
       photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
+      isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
     });
 
     // Jika terjadi error, error message akan dicetak ke console
