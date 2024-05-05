@@ -11,6 +11,7 @@ const renderDashboard = async (req, res) => {
   const users = await UserSchema.find();
   const currentUser = req.user.name;
   const currentUserPfp = req.user.photoUrl;
+  const slicedUsers = users.slice(0, 4);
   res.render("dashboard.ejs", {
     title: "Dashboard",
     css: "css/dashboard.css",
@@ -18,7 +19,7 @@ const renderDashboard = async (req, res) => {
     layout: "mainLayout.ejs",
     username: currentUser,
     photoUrl: currentUserPfp,
-    users: users,
+    users: slicedUsers,
   });
 };
 
@@ -54,4 +55,31 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { renderDashboard, deleteUserById, getAllUsers };
+const getPagination = async (req, res) => {
+  const itemsPerPage = 4;
+  console.log(itemsPerPage);
+  try {
+    const page = req.query.page ? parseInt(req.query.page) : 1; // Get the current page number from the query string, default to 1
+    console.log(page);
+    const startIndex = (page - 1) * itemsPerPage; // Calculate the starting index for the current page
+    const endIndex = startIndex + itemsPerPage; // Calculate the ending index for the current page
+
+    const users = await UserSchema.find(); // Fetch all users from the database
+
+    // Slice the users array to get the subset for the current page
+    const slicedUsers = users.slice(startIndex, endIndex);
+
+    // pass the users
+    res.status(200).json({ users: slicedUsers });
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ msg: "Unable to get users" });
+  }
+};
+
+module.exports = {
+  renderDashboard,
+  deleteUserById,
+  getAllUsers,
+  getPagination,
+};
