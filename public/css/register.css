@@ -40,7 +40,7 @@
 .main {
     background-image: var(--background);
     width: 100%;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 50px);
     /* Tinggi viewport - tinggi header */
     margin-top: 50px;
     text-align: center;

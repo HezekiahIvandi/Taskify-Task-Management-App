@@ -8,6 +8,7 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif; /* Mengatur font default ke Poppins */
   transition: 0.25s;
+  color: var(--text-color);
 }
 
 :root {
@@ -18,11 +19,14 @@
     rgba(255, 255, 255, 0.4) 100%
   );
   --background-2:#ffffff;
+  --button-hover: #f1f1f1;
 }
 
 .dark-theme {
   --background:linear-gradient(to top, #303249 0%, #303249 100%);
   --background-2:#25273b;
+  --button-hover: #25273b;
+
 }
 
 li,
@@ -35,7 +39,7 @@ a {
 /* Application Styles */
 .app {
   width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 50px);
   margin-top: 50px;
   padding-top: 20px;
   /* Gradient background untuk .app */
@@ -253,7 +257,7 @@ a {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #ffffff;
+  background-color: var(--background-color);
   border-radius: 8px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -270,7 +274,7 @@ a {
 
 .delete-option,
 .edit-option {
-  background-color: #ffffff;
+  background-color: var(--background-color);
   color: #007bff;
   border-radius: 8px;
   border: none;
@@ -283,7 +287,7 @@ a {
 
 .delete-option:hover,
 .edit-option:hover {
-  background-color: #f1f1f1;
+  background-color: var(--button-hover);
 }
 
 .delete-option {
@@ -316,7 +320,7 @@ a {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color:var(--background-color);
   margin: 10% auto;
   padding: 20px;
   border-radius: 10px;
@@ -341,18 +345,19 @@ a {
 form {
   display: grid;
   gap: 10px;
+  background-color: var(--background-color);
 }
 
 h2 {
   text-align: center;
-  color: #000000;
+  color: var(--text-color);
 }
 
 label {
   font-size: 16px;
   font-weight: bold;
   text-align: left;
-  color: #000000;
+  color: var(--text-color);
 }
 
 input[type="text"],
@@ -363,6 +368,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
+  background-color: var(--background-2);
 }
 
 button[type="submit"],
@@ -374,6 +380,7 @@ button[type="editTask"] {
   margin-top: 12px;
   padding: 10px 20px;
   cursor: pointer;
+  background-color: var(--primary-color);
 }
 
 button[type="submit"]:hover,
@@ -399,7 +406,7 @@ button[type="editTask"]:hover {
 
 .sort-button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -408,6 +415,14 @@ button[type="editTask"]:hover {
 
 .sort-button:hover {
   background-color: #0037ff;
+}
+
+select {
+  background-color: var(--background-color);
+}
+
+select option {
+  background-color: var(--background-color);
 }
 
 /* Media queries for small screens */
