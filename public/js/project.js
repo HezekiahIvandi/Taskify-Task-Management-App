@@ -1,16 +1,14 @@
-// Event listener untuk memastikan DOM sudah dimuat sebelum eksekusi kode
 document.addEventListener("DOMContentLoaded", () => {
-  // Pilih semua task yang dapat di-drag
+  // Pilih semua task yang dapat di drag
   const draggableTasks = document.querySelectorAll(".task");
-  // Pilih semua area yang dapat di-drop
+  // Pilih semua area yang dapat di drop
   const dropAreas = document.querySelectorAll(".taskify-col");
-  // Menyimpan referensi task yang sedang di-drag
+  // Menyimpan referensi task yang sedang di drag
   let draggedTask = null;
 
   // Function untuk memulai drag
   const startDrag = function () {
     draggedTask = this;
-    console.log(draggedTask);
     // Mengatur opasitas untuk memberikan efek drag
     setTimeout(() => (this.style.opacity = "0.5"), 0);
   };
@@ -19,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const endDrag = function () {
     // Mengembalikan opasitas ke nilai aslinya
     draggedTask.style.opacity = "1";
-    // Mereset referensi task yang sedang di-drag
+    // Mereset referensi task yang sedang di drag
     draggedTask = null;
   };
 
@@ -36,57 +34,57 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function untuk event saat task dilepas di dalam area drop
   const dropArea = async function () {
     // Mendapatkan kolom tujuan
-    const destinationColumn = this.closest(".taskify-col");
-    const title = destinationColumn.querySelector(
-      ".taskify-col-header-title"
-    ).innerText;
+    const destinationColumn = this.closest('.taskify-col');
+    const title = destinationColumn.querySelector('.taskify-col-header-title').innerText;
     console.log(title);
-
+  
     // Mendapatkan task ID
     const id = draggedTask.id;
-
+  
     try {
       // Mengirim permintaan ke server untuk memperbarui task di MongoDB
       const response = await fetch(`/project/${title}/${id}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({
+        })
       });
-
+  
       if (!response.ok) {
-        throw new Error("Failed to update task");
+        throw new Error('Failed to update task');
       }
-      window.location.href = "localhost:3000/project";
+      window.location.href = 'localhost:3000/project';
 
       // Jika permintaan berhasil, Anda mungkin ingin melakukan sesuatu, seperti menampilkan pesan atau melakukan navigasi.
     } catch (error) {
-      console.error("Error updating task:", error);
+      console.error('Error updating task:', error);
       // Menampilkan pesan kesalahan jika terjadi kesalahan saat memperbarui task di MongoDB
       Swal.fire({
-        title: "Error!",
-        text: "Terjadi kesalahan saat memindahkan task",
-        icon: "error",
-        confirmButtonText: "OK",
+        title: 'Error!',
+        text: 'Terjadi kesalahan saat memindahkan task',
+        icon: 'error',
+        confirmButtonText: 'OK',
       });
     }
   };
 
-  // Menambahkan event listener untuk setiap task yang dapat di-drag
+  // Menambahkan event listener untuk setiap task yang dapat di drag
   draggableTasks.forEach((task) => {
     task.addEventListener("dragstart", startDrag);
     task.addEventListener("dragend", endDrag);
   });
 
-  // Menambahkan event listener untuk setiap area yang dapat di-drop
+  // Menambahkan event listener untuk setiap area yang dapat di drop
   dropAreas.forEach((area) => {
     area.addEventListener("dragover", overArea); // Task di atas area
     area.addEventListener("dragenter", enterArea); // Task masuk ke dalam area
     area.addEventListener("drop", dropArea); // Task dilepas di dalam area
   });
+});
 
-  // Event listener untuk dropdown menu
+document.addEventListener("DOMContentLoaded", () => {
   const dropdownButtons = document.querySelectorAll(".dropdown-button");
 
   dropdownButtons.forEach((button) => {
@@ -108,138 +106,137 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+});
 
-  // Function untuk memuat data task dari server
-  async function loadTasksFromServer() {
-    try {
-      // Mengirim permintaan ke server untuk mendapatkan data task
-      const response = await fetch("/project");
-      if (!response.ok) {
-        throw new Error("Failed to fetch tasks");
-      }
-      const columns = await response.json();
-
-      // Membersihkan konten sebelum menambahkan task baru
-      columnsContainer.innerHTML = "";
-
-      // Iterasi melalui setiap kolom dan setiap task di dalamnya
-      columns.forEach((column) => {
-        const columnElement = document.createElement("div");
-        columnElement.classList.add("column");
-
-        const columnTitle = document.createElement("h2");
-        columnTitle.textContent = column.title;
-        columnElement.appendChild(columnTitle);
-
-        columnsContainer.appendChild(columnElement);
-      });
-    } catch (error) {
-      throw error;
+// Define loadTasksFromServer function
+async function loadTasksFromServer() {
+  try {
+    // Mengirim permintaan ke server untuk mendapatkan data task
+    const response = await fetch("/project");
+    if (!response.ok) {
+      throw new Error("Failed to fetch tasks");
     }
+    const columns = await response.json();
+
+    // Membersihkan konten sebelum menambahkan task baru
+    columnsContainer.innerHTML = "";
+
+    // Iterasi melalui setiap kolom dan setiap task di dalamnya
+    columns.forEach((column) => {
+      const columnElement = document.createElement("div");
+      columnElement.classList.add("column");
+
+      const columnTitle = document.createElement("h2");
+      columnTitle.textContent = column.title;
+      columnElement.appendChild(columnTitle);
+
+      columnsContainer.appendChild(columnElement);
+    });
+  } catch (error) {
+    throw error;
   }
+}
 
-  let columnsContainer; // Variabel untuk menyimpan referensi ke container kolom
+let columnsContainer; // Variabel untuk menyimpan referensi ke container kolom
 
-  // Event listener untuk memuat data tugas dari server saat halaman dimuat
-  document.addEventListener("DOMContentLoaded", async () => {
-    // Memuat ulang data tugas dari server saat halaman dimuat
-    await loadTasksFromServer().catch((error) => {
-      console.error("Error loading tasks:", error);
-    });
+document.addEventListener("DOMContentLoaded", async () => {
+  // Memuat ulang data tugas dari server saat halaman dimuat
+  await loadTasksFromServer().catch((error) => {
+    console.error("Error loading tasks:", error);
+  });
 
-    // Menyimpan referensi ke container kolom
-    columnsContainer = document.querySelector(".taskify-tasks");
+  // Menyimpan referensi ke container kolom
+  columnsContainer = document.querySelector(".taskify-tasks");
 
-    // Menambahkan event listener untuk tombol tambah task
-    const addTaskButtons = document.querySelectorAll(".add-task-button");
+  // Menambahkan event listener untuk tombol tambah task
+  const addTaskButtons = document.querySelectorAll(".add-task-button");
 
-    addTaskButtons.forEach((addTaskButton) => {
-      addTaskButton.addEventListener("click", () => {
-        const modal = document.getElementById("taskFormModal");
-        modal.style.display = "block";
-      });
-    });
-
-    // Menambahkan event listener untuk menutup modal saat tombol close di klik
-    const modal = document.getElementById("taskFormModal");
-    const closeButton = document.querySelector("#taskFormModal .close");
-
-    closeButton.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
-
-    // Menutup modal jika area di luar modal diklik
-    window.addEventListener("click", (event) => {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+  addTaskButtons.forEach((addTaskButton) => {
+    addTaskButton.addEventListener("click", () => {
+      const modal = document.getElementById("taskFormModal");
+      modal.style.display = "block";
     });
   });
 
-  // Event listener untuk form tambah task
-  document.addEventListener("DOMContentLoaded", () => {
-    const taskForm = document.getElementById("taskForm");
+  // Menambahkan event listener untuk menutup modal saat tombol close di klik
+  const modal = document.getElementById("taskFormModal");
+  const closeButton = document.querySelector("#taskFormModal .close");
 
-    // Event listener untuk submit form
-    taskForm.addEventListener("submit", async (event) => {
-      event.preventDefault(); // Mencegah pengiriman default form
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
-      // Mendapatkan nilai dari dropdown title
-      const titleDropdown = document.getElementById("title");
-      const title = titleDropdown.value;
+  // Menutup modal jika area di luar modal diklik
+  window.addEventListener("click", (event) => {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+});
 
-      // Mendapatkan nilai dari input lainnya
-      const tag = document.getElementById("tag").value;
-      const description = document.getElementById("description").value;
-      const date = document.getElementById("date").value;
-      const collaborators = document.getElementById("collaborators").value;
+document.addEventListener("DOMContentLoaded", () => {
+  const taskForm = document.getElementById("taskForm");
 
-      // Membuat objek data task
-      const newTask = {
-        title,
-        tag,
-        description,
-        date,
-        collaborators,
-      };
+  // Event listener untuk submit form
+  taskForm.addEventListener("submit", async (event) => {
+    event.preventDefault(); // Mencegah pengiriman default form
 
-      try {
-        // Mengirim data ke server
-        const response = await fetch("/project", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newTask),
-        });
+    // Mendapatkan nilai dari dropdown title
+    const titleDropdown = document.getElementById("title");
+    const title = titleDropdown.value;
 
-        if (response.ok) {
-          // Menampilkan pesan sukses jika request berhasil dengan jeda waktu
-          Swal.fire({
-            title: "Success!",
-            text: "Data berhasil ditambahkan",
-            icon: "success",
-            confirmButtonText: "OK",
-            timer: 2000,
-          }).then(() => {
-            // Setelah jeda waktu selesai, reset form dan redirect
-            taskForm.reset();
-            window.location.href = "/project";
-          });
-        } else {
-          // Menampilkan pesan kesalahan jika request gagal
-          throw new Error("Failed to add task");
-        }
-      } catch (error) {
-        console.error("Error adding task:", error);
-        // Menampilkan pesan kesalahan jika terjadi kesalahan saat mengirim data ke server
+    // Mendapatkan nilai dari input lainnya
+    const tag = document.getElementById("tag").value;
+    const description = document.getElementById("description").value;
+    const date = document.getElementById("date").value;
+    const collaborators = document.getElementById("collaborators").value;
+
+    // Membuat objek data task
+    const newTask = {
+      title,
+      tag,
+      description,
+      date,
+      collaborators
+    };
+
+    try {
+      // Mengirim data ke server
+      const response = await fetch("/project", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      if (response.ok) {
+        // Menampilkan pesan sukses jika request berhasil dengan jeda waktu
         Swal.fire({
-          title: "Error!",
-          text: "Terjadi kesalahan saat menambahkan data",
-          icon: "error",
+          title: "Success!",
+          text: "Data berhasil ditambahkan",
+          icon: "success",
           confirmButtonText: "OK",
+          timer: 2000 
+        }).then(() => {
+          // Setelah jeda waktu selesai, reset form dan redirect
+          taskForm.reset();
+          window.location.href = 'localhost:3000/project';
         });
+       
+      } else {
+        // Menampilkan pesan kesalahan jika request gagal
+        throw new Error("Failed to add task");
       }
-    });
+    } catch (error) {
+      console.error("Error adding task:", error);
+      // Menampilkan pesan kesalahan jika terjadi kesalahan saat mengirim data ke server
+      Swal.fire({
+        title: "Error!",
+        text: "Terjadi kesalahan saat menambahkan data",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
   });
 });

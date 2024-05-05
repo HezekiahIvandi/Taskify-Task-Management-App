@@ -100,7 +100,7 @@
                       <label for="description">Description:</label>
                       <textarea id="description" name="description" required><%= task.description %></textarea>
                       <label for="date">Date:</label>
-                      <input type="text" id="date" name="date" value="<%= task.date %>" required />
+                      <input type="date" id="date" name="date" value="<%= task.date %>" required />
                       <label for="collaborators">Number of Collaborators</label>
                       <input type="text" id="collaborators" name="collaborators" value="<%= task.collaborators %>" />
                       <button type="editTask" onclick="notifySuccess('Task edited successfully')">Edit Task</button>
