@@ -22,6 +22,10 @@ const User = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
   passwordResetToken: String,
   passwordResetTokenExpire: Date
 });

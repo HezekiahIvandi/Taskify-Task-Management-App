@@ -68,6 +68,7 @@ const getAllTaskData = async (req, res) => {
       progressData: progressData,
       username: req.isAuthenticated() ? req.user.name : "username",
       photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
+      isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
     });
 
     // Jika terjadi kesalahan saat mengambil data dari MongoDB, pesan kesalahan akan dicetak ke konsol

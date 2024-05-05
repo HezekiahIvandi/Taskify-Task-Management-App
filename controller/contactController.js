@@ -73,6 +73,7 @@ const renderChatPage = async (req, res) => {
     messagePlaceholder: messagePlaceholder,
     username: currentUser,
     photoUrl: currentUserPfp,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 };
 

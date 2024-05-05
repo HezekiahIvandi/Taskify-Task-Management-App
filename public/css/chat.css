@@ -7,6 +7,24 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+  transition: 0.5s;
+}
+
+:root {
+  --background: linear-gradient(to top,
+      rgba(210, 153, 194, 0.4) 0%,
+      rgba(254, 249, 215, 0.4) 90%,
+      rgba(255, 255, 255, 0.4) 100%);
+  --background-2: rgb(248, 240, 226);
+  --background-2-hover: rgb(189, 188, 188);
+
+}
+
+.dark-theme {
+  --background: linear-gradient(to top, #303249 0%, #303249 100%);
+  --background-2: #3c3f63;
+  --background-2-hover: #25273b;
 }
 
 .name,
@@ -14,6 +32,7 @@
 p {
   margin-bottom: 0 !important;
 }
+
 .relative {
   position: relative;
 }
@@ -22,6 +41,7 @@ p {
   color: #007bff;
   font-weight: 100;
 }
+
 .highlight {
   text-align: center;
   background-color: #e5f1fe;
@@ -38,7 +58,7 @@ p {
 }
 
 .container-fitur-chat#blur.active {
-  filter: blur(20px);
+  filter: blur(10px);
   pointer-events: none;
   user-select: none;
 }
@@ -46,7 +66,9 @@ p {
 .chat-contacts {
   width: 35%;
   min-height: inherit;
+  background-color: var(--background-color);
 }
+
 .chat-box {
   width: 100%;
   min-height: inherit;
@@ -61,6 +83,7 @@ p {
 .chat-contacts-header p {
   font-weight: 900;
 }
+
 .chat-contacts-list {
   border: solid 1px lightgrey;
   border-top: none;
@@ -80,6 +103,7 @@ p {
   background-color: #e5f1fe;
   transition: 0.2s ease-in;
 }
+
 .contact img {
   width: 3rem;
   height: auto;
@@ -88,7 +112,7 @@ p {
 }
 
 .add-contact {
-  background-color: rgb(248, 240, 226);
+  background-color: var(--background-2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,26 +121,30 @@ p {
 }
 
 .add-contact:hover {
-  background-color: rgb(189, 188, 188);
+  background-color: var(--background-2-hover);
 }
 
 .popup-delete-contact {
   position: absolute;
   top: 0;
-  right: -80px; /* Initially hidden */
+  right: -80px;
+  /* Initially hidden */
   width: 80px;
   height: 100%;
-  background-color: rgb(252, 249, 249);
+  background-color: var(--background-color);
   transition: opacity 1s ease, right 0.3s ease;
-  opacity: 0; /* Initially invisible */
+  opacity: 0;
+  /* Initially invisible */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .contact:hover .popup-delete-contact {
-  right: 0; /* Slide into view when hovering */
-  opacity: 1; /* Make visible */
+  right: 0;
+  /* Slide into view when hovering */
+  opacity: 1;
+  /* Make visible */
 }
 
 .delete-contact-icon {
@@ -124,6 +152,7 @@ p {
   height: 1rem;
   color: #007bff;
 }
+
 /* contacts section */
 
 /* chat section*/
@@ -139,17 +168,20 @@ p {
   border: 1px solid lightgrey;
   border-left: none;
   border-right: none;
+  background-color: var(--background-color);
 }
 
 .chat-box-header i {
   padding-right: 1rem;
   cursor: pointer;
 }
+
 .chat-box-header img {
   width: 3rem;
   margin-right: 0.4rem;
   border-radius: 50%;
 }
+
 .chat-box-header-info {
   display: flex;
 }
@@ -163,19 +195,15 @@ p {
   display: inline;
   padding: 0 10px 0 10px;
 }
+
 .chats {
   /* background-color: rgb(247, 245, 234); */
   /* background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
      */
   /* background-color: rgb(241, 240, 240); */
-  background-image: linear-gradient(
-    to top,
-    rgba(210, 153, 194, 0.4) 0%,
-    rgba(254, 249, 215, 0.4) 90%,
-    rgba(255, 255, 255, 0.4) 100%
-  );
+  background-image: var(--background);
   width: 100%;
-  min-height: 84.5%;
+  min-height: 85%;
   padding-bottom: 4.3rem;
 }
 
@@ -197,6 +225,7 @@ p {
   border: none;
   margin: 0 5px 0 5px;
 }
+
 .chat-input-form {
   display: flex;
   padding: 1rem 1rem 1rem 1rem;
@@ -212,11 +241,10 @@ p {
   /* color: rgb(119, 114, 114); */
 }
 
-.chat-bubble-container {
-}
+.chat-bubble-container {}
 
-.chat-bubble {
-}
+.chat-bubble {}
+
 .chat-bubble {
   display: flex;
   padding: 0.7rem;
@@ -227,6 +255,7 @@ p {
   padding: 0.7rem;
   justify-content: flex-end;
 }
+
 .my-chat-bubble-text {
   text-align: end;
   margin-right: 0.7rem;
@@ -237,6 +266,7 @@ p {
   margin-right: 0.4rem;
   border-radius: 50%;
 }
+
 .bubble {
   border: solid 1px lightgrey;
   background-color: white;
@@ -259,8 +289,9 @@ p {
 .send-button,
 .clear-button {
   border: none;
-  background-color: white;
+  background-color: var(--background-color);
 }
+
 .send-button i:hover,
 .plus-button:hover,
 .clear-button:hover,
@@ -296,7 +327,7 @@ input:focus,
   width: 600px;
   padding: 50px;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-  background-color: white;
+  background-color: var(--background-color);
   visibility: hidden;
   opacity: 0;
   transition: 0.5s;
@@ -313,6 +344,7 @@ input:focus,
   display: flex;
   justify-content: space-between;
 }
+
 #add-contact-header button {
   border: none;
   background-color: transparent;
@@ -335,6 +367,7 @@ input:focus,
   padding: 8px;
   border-radius: 9px;
   border: 1px solid gray;
+  color: var(--text-color);
 }
 
 #popup #add-button {
@@ -359,7 +392,8 @@ input:focus,
 .search-icon {
   position: absolute;
   top: 50%;
-  right: 20px; /* Adjust as needed */
+  right: 20px;
+  /* Adjust as needed */
   transform: translateY(-50%);
   cursor: pointer;
 }
@@ -425,11 +459,11 @@ input:focus,
   border-radius: 50%;
 }
 
-.checkbox-container:hover input ~ .checkmark {
+.checkbox-container:hover input~.checkmark {
   background-color: #ccc;
 }
 
-.checkbox-container input:checked ~ .checkmark {
+.checkbox-container input:checked~.checkmark {
   background-color: #2196f3;
 }
 
@@ -439,7 +473,7 @@ input:focus,
   display: none;
 }
 
-.checkbox-container input:checked ~ .checkmark:after {
+.checkbox-container input:checked~.checkmark:after {
   display: block;
 }
 
@@ -465,15 +499,19 @@ input:focus,
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 .chat-input-form {
   width: 100%;
+  background-color: var(--background-color);
 }
 
-.text-area::placeholder {
+input {
+  background-color: var(--background-color);
 }
+
+.text-area::placeholder {}
 
 .popup-addcontact-title {
   display: block;
@@ -484,13 +522,16 @@ input:focus,
   margin-inline-end: 0px;
   font-weight: bold;
 }
+
 li,
 a {
   font-weight: bold;
   font-size: 16px;
   text-decoration: none;
 }
+
 @media only screen and (max-width: 600px) {
+
   .latest-chat,
   .contact img,
   .chat-contacts-header {
@@ -519,7 +560,9 @@ a {
     display: none;
   }
 }
+
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
+
   .latest-chat,
   .contact img,
   .chat-contacts-header {
@@ -535,6 +578,7 @@ a {
     min-height: inherit;
     font-size: 16px;
   }
+
   .chat-contacts-list {
     border-top: 1px solid lightgrey;
   }

@@ -20,6 +20,7 @@ const renderDashboard = async (req, res) => {
     username: currentUser,
     photoUrl: currentUserPfp,
     users: slicedUsers,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 };
 
@@ -33,6 +34,7 @@ const renderEditHome = async (req, res) => {
     layout: "mainLayout.ejs",
     username: currentUser,
     photoUrl: currentUserPfp,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 };
 

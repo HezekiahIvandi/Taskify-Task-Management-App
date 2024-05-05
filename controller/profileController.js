@@ -11,6 +11,7 @@ const renderProfile = async (req, res) => {
     username: req.isAuthenticated() ? req.user.name : "username",
     photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
     email: req.isAuthenticated() ? req.user.email : "",
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 };
 

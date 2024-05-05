@@ -1,23 +1,39 @@
 <div class="main">
   <%- include ("partials/messages"); %>
-  <br>
-  <form class="form" action="/register" method="POST">
-    <h1 class="form-title">Create Account</h1>
-    <div class="textfield">
-      <label for="email">Email</label>
-      <input type="email" placeholder="email" name="email" id="email" required  value="<%= typeof email != 'undefined' ? email : '' %>"/>
-      <label for="name">Username</label>
-      <input type="name" placeholder="name" name="name" id="name" required value="<%= typeof name != 'undefined' ? name : '' %>"/>
-      <br />
-      <label for="password">Password</label>
-      <input type="password" placeholder="password" name="password" id="password" required value="<%= typeof password != 'undefined' ? password : '' %>"/>
-      <label for="password2">Confirm Password</label>
-      <input type="password" placeholder="confirm password" name="password2" id="password2" required value="<%= typeof password2 != 'undefined' ? password2 : '' %>"/>
-    </div>
-    <br />
-    <button class="form-button" type="submit">Register</button>
-    <p class="signup">
-      Already have an account? <a href="/login">Login</a> here
-    </p>
-  </form>
+    <br>
+    <form class="form" action="/register" method="POST">
+      <h1 class="form-title">Create Account</h1>
+      <div class="textfield">
+        <label for="email">Email</label>
+        <input type="email" placeholder="email" name="email" id="email" required
+          value="<%= typeof email != 'undefined' ? email : '' %>" />
+        <label for="name">Username</label>
+        <input type="name" placeholder="name" name="name" id="name" required
+          value="<%= typeof name != 'undefined' ? name : '' %>" />
+        <label for="password">Password</label>
+        <input type="password" placeholder="password" name="password" id="password" required
+          value="<%= typeof password != 'undefined' ? password : '' %>" />
+        <label for="password2">Confirm Password</label>
+        <input type="password" placeholder="confirm password" name="password2" id="password2" required
+          value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+        <div class="admin-container">
+          <p id="admin-text">Admin Secret Pass</p>
+        </div>
+      </div>
+      <button class="form-button" type="submit">Register</button>
+      <p class="login-link">
+        Already have an account? <a class="link" href="/login">Login</a> here
+      </p>
+
+      <!-- Popup Admin -->
+      <div class="popup" id="admin-popup" >
+        <div class="popup-header" id="admin-popup-header">
+          <h2>Admin Scecret Pass</h2>
+           <p id="close-popup-admin"><i class="fa-solid fa-x"></i></p>
+        </div>
+        <div class="edit-container">
+          <input type="text" placeholder="Input Secret Pass" name="admin" id="edit-admin-popup" required>
+        </div>
+      </div>
+    </form>
 </div>

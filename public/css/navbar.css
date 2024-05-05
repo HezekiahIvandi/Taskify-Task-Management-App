@@ -1,3 +1,18 @@
+:root {
+  --background-color: #ffffff;
+  --primary-color: #007bff;
+  --secondary-color: #231e6b;
+  --text-color: #000000;
+  --nav-color: #a1a1a1;
+}
+
+.dark-theme {
+  --background-color: #303249;
+  --primary-color: #8eb7c4;
+  --secondary-color: #007bff;
+  --text-color: #ffffff;
+}
+
 li,
 a {
   text-decoration: none;
@@ -11,7 +26,7 @@ header {
   position: fixed;
   z-index: 100;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--background-color);
   top: 0;
   left: 0;
 }
@@ -32,16 +47,16 @@ header {
 
 .nav-links li a {
   font-weight: bold;
-  color: #a1a1a1;
+  color: var(--nav-color);
   transition: all 0.3s ease 0s;
 }
 
 .nav-links li a.active {
-  color: #007bff;
+  color: var(--primary-color);
 }
 
 .nav-links li a:hover {
-  color: #007bff;
+  color: var(--primary-color);
 }
 
 .login-button {
@@ -50,27 +65,36 @@ header {
   font-weight: bold;
   font-size: 16;
   color: #ffffff;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-  margin-left: 60px;
   border-radius: 8px;
+  margin-left: 60px;
+  margin-bottom: 10px;
 }
 
 .login-button:hover {
   background-color: #01377e;
 }
 
+.dark-mode {
+  position: absolute;
+  right: 210px;
+  width: 28px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 .nav-user {
   width: 100px;
   height: 70px;
   margin-top: 8px;
-  margin-left: 60px;
   text-align: center;
   cursor: pointer;
   position: relative;
   display: inline-block;
+  margin-left: 60px;
 }
 
 .nav-userPfp {
@@ -78,7 +102,7 @@ header {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  border: #a1a1a1 solid 2px;
+  border: var(--nav-color) solid 2px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -86,6 +110,7 @@ header {
 .nav-userName  {
   font-size: 0.9rem;
   font-weight: 500;
+  color: var(--text-color);
 }
 
 .settings {
@@ -94,8 +119,8 @@ header {
   right: 0px;
   z-index: 1000;
   width: auto;
-  background-color: #ffffff;
-  border: #a1a1a1 solid 2px;
+  background-color: var(--background-color);
+  border: var(--nav-color) solid 2px;
   border-radius: 12px;
   padding: 4px;
   opacity: 0;
@@ -117,7 +142,7 @@ header {
   font-weight: bold;
   font-size: 16;
   color: #ffffff;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease 0s;
