@@ -202,6 +202,22 @@ const sortTask = async (req, res) => {
   }
 }
 
+const dragAndMoveTask = async (req, res) => {
+  try {
+    const { title, id } = req.params;
+    await Task.updateOne(
+      { _id: getTaskByIdAndTitle(id, title) },
+      { $set: { title } }
+    );
+    res.redirect("/project");
+  } catch (error) {
+    console.error(`Error moving task: ${error}`);
+    res
+      .status(500)
+      .send(`An error occurred while moving the task: ${error.message}`);
+  }
+};
+
 // Eksport fungsi-fungsi untuk digunakan di modul lain
 module.exports = {
   getAllTaskData,
@@ -209,4 +225,5 @@ module.exports = {
   deleteTask,
   updateTask,
   sortTask,
+  dragAndMoveTask, 
 };

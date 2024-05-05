@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     try {
       // Mengirim permintaan ke server untuk memperbarui task di MongoDB
-      const response = await fetch(`/project/${title}/${id}`, {
+      const response = await fetch(`/project/dragndrop/${title}/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

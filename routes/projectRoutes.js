@@ -1,7 +1,7 @@
 // Import modul yang dibutuhkan
 const express = require("express");
 const { ensureAuthenticated } = require("../config/auth");
-const { getAllTaskData, createNewTask, deleteTask, updateTask, sortTask} = require("../controller/projectController");
+const { getAllTaskData, createNewTask, deleteTask, updateTask, sortTask, dragAndMoveTask} = require("../controller/projectController");
 
 // Membuat objek router menggunakan Router()
 const router = express.Router();
@@ -22,6 +22,9 @@ router.post("/edit-task/:title/:id", updateTask);
 
 // SORT TASK - Client mengurutkan data ke dalam task collection berdasarkan kolom sortCriteria dan sortOrder 
 router.post("/project/:sortCriteria/:sortOrder", sortTask);
+
+// DRAG AND MOVE 
+router.post("/project/dragndrop/:title/:id", dragAndMoveTask);
 
 // Mengekspor objek router
 module.exports = router;
