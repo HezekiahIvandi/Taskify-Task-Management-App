@@ -1,7 +1,6 @@
-// Memuat modul Mongoose untuk berinteraksi dengan MongoDB
 const mongoose = require('mongoose');
 
-// Mendefinisikan schema untuk task
+// Definisikan schema untuk tugas
 const taskSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -13,19 +12,14 @@ const taskSchema = new mongoose.Schema({
     },
     tag: {
         type: String,
-        required: true
+        default: 'General'
     },
     date: {
         type: Date,
-        required: true
     },
     collaborators: {
         type: String,
-        required: true
-    },
-    ownerId: {
-        type: String,
-        required: true,
+        default: ''
     },
     owner: {
         type: String,
@@ -33,6 +27,7 @@ const taskSchema = new mongoose.Schema({
     }
 });
 
-// Membuat model 'Task' dari schema
+// Buat model 'Task' dari schema
 const Task = mongoose.model('Task', taskSchema);
+
 module.exports = Task;
