@@ -1,4 +1,4 @@
-<div class="dashboard-container">
+<div class="dashboard-container" id="blur">
   <div class="header-morning">
     <h1>Good Morning Admin!👋🏼</h1>
     <div class="search-container">
@@ -103,7 +103,7 @@
       <% }) %>
     </div>
     <div class="pagination-nav">
-      <p>Showing data 1 to 4 of 3 entries</p>
+      <p id="pagination-label"></p>
       <div class="nav">
         <button class="prev-btn"><</button>
         <button class="page-btn active">1</button>
@@ -111,6 +111,24 @@
         <button class="next-btn">></button>
       </div>
     </div>
-    <div></div>
   </div>
+</div>
+<!-- see task popup -->
+<div id="popup" class="popup-styles">
+  <div id="Task-header">
+    <h2 class="popup-title">See Task</h2>
+    <button id="close-popup"><i class="fa-solid fa-x"></i></button>
+  </div>
+
+  <div id="task-list"></div>
+</div>
+
+<!-- see contacts popup -->
+<div id="popup2" class="popup-styles">
+  <div id="Contact-header">
+    <h2 class="popup-title">See Contacts</h2>
+    <button id="close-popup-2"><i class="fa-solid fa-x"></i></button>
+  </div>
+
+  <div id="task-list"></div>
 </div>

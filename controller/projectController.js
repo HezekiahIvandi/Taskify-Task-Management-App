@@ -5,12 +5,21 @@ const Task = require("../models/Task");
 // Membaca semua task dari task collection
 const getAllTaskData = async (req, res) => {
   try {
-    const currentOwnerId= String(req.user.id);
+    const currentOwnerId = String(req.user.id);
 
     // Mengambil data dari model MongoDB untuk setiap title
-    const tasksToDo = await Task.find({ title: "Task To Do 📝", ownerId: currentOwnerId });
-    const onGoing = await Task.find({ title: "On Going ⏳", ownerId: currentOwnerId });
-    const needsReview = await Task.find({ title: "Needs Review 🔎", ownerId: currentOwnerId });
+    const tasksToDo = await Task.find({
+      title: "Task To Do 📝",
+      ownerId: currentOwnerId,
+    });
+    const onGoing = await Task.find({
+      title: "On Going ⏳",
+      ownerId: currentOwnerId,
+    });
+    const needsReview = await Task.find({
+      title: "Needs Review 🔎",
+      ownerId: currentOwnerId,
+    });
     const done = await Task.find({ title: "Done 💯", ownerId: currentOwnerId });
 
     // Data yang diperoleh dikemas untuk dikirim sebagai respons
@@ -23,36 +32,44 @@ const getAllTaskData = async (req, res) => {
 
     // Data untuk Task Progress (elemen aside)
     let doneTags = [];
-    done.forEach(task => {
+    done.forEach((task) => {
       doneTags = doneTags.concat(task.tag);
     });
-    
+
     let otherTags = [];
-    tasksToDo.concat(onGoing, needsReview, done).forEach(task => {
+    tasksToDo.concat(onGoing, needsReview, done).forEach((task) => {
       otherTags = otherTags.concat(task.tag);
     });
-  
+
     function generateProgressData(doneTags, otherTags) {
       let progressData = {};
-    
+
       // Menghitung jumlah tag untuk task "Done"
-      doneTags.forEach(tag => {
-        progressData[tag] = { tag: tag, current: doneTags.filter(t => t === tag).length, total: 0 };
+      doneTags.forEach((tag) => {
+        progressData[tag] = {
+          tag: tag,
+          current: doneTags.filter((t) => t === tag).length,
+          total: 0,
+        };
       });
-    
+
       // Menghitung jumlah tag untuk task selain "Done"
-      otherTags.forEach(tag => {
+      otherTags.forEach((tag) => {
         if (!progressData[tag]) {
-          progressData[tag] = { tag: tag, current: 0, total: otherTags.filter(t => t === tag).length };
+          progressData[tag] = {
+            tag: tag,
+            current: 0,
+            total: otherTags.filter((t) => t === tag).length,
+          };
         } else {
-          progressData[tag].total = otherTags.filter(t => t === tag).length;
+          progressData[tag].total = otherTags.filter((t) => t === tag).length;
         }
       });
-    
+
       // Mengonversi hasil ke dalam bentuk array
       return Object.values(progressData);
     }
-    
+
     // Contoh penggunaan fungsi
     const progressData = generateProgressData(doneTags, otherTags);
     console.log(progressData);
@@ -87,12 +104,12 @@ const createNewTask = async (req, res) => {
   try {
     // Membaca informasi dari task baru yang ingin ditambahkan
     const { title, tag, description, date, collaborators } = req.body;
-    
+
     // Membaca user id dan name (hanya inisial) pemilik task
     ownerId = String(req.user.id);
     owner = req.user.name.charAt(0).toUpperCase();
-    
-    // Inisialisasi task baru 
+
+    // Inisialisasi task baru
     const newTask = new Task({
       title,
       tag,
@@ -154,7 +171,7 @@ const updateTask = async (req, res) => {
     // Membaca title, ID, dan informasi task yang ingin diperbaharui
     const { title, id } = req.params;
     let { tag, description, date, collaborators } = req.body;
-    
+
     // Memperbaharui task di MongoDB berdasarkan ID
     await Task.updateOne(
       { _id: getTaskByIdAndTitle(id, title) },
@@ -204,7 +221,7 @@ const sortTask = async (req, res) => {
     const { sortCriteria } = req.params;
     let { sortOrder } = req.params;
     sortOrder = parseInt(sortOrder);
-    
+
     let sortedTask; // Variabel untuk menyimpas task yang sudah diurutkan
 
     // Memeriksa kriteria dan mengurutkan task sesuai dengan kriteria tersebut
@@ -225,9 +242,11 @@ const sortTask = async (req, res) => {
     // Server mengirim respons HTTP dengan status code 500: Internal Server Error
   } catch (error) {
     console.error(`Error sorting task: ${error}`);
-    res.status(500).send(`An error occurred while sorting the task: ${error.message}`);
+    res
+      .status(500)
+      .send(`An error occurred while sorting the task: ${error.message}`);
   }
-}
+};
 
 // Eksport fungsi-fungsi untuk digunakan di modul lain
 module.exports = {

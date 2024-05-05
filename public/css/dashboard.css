@@ -1,16 +1,13 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
 
 /* Global Styles */
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
-
 p,
 h2 {
   margin-bottom: 0;
@@ -231,4 +228,72 @@ h2 {
 .pagination .next-btn {
   background-color: #333;
   color: #fff;
+}
+
+/* popup */
+
+.popup-styles {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  padding: 50px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.popup-styles.active {
+  top: 50%;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.5s;
+}
+.popup-styles label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px;
+  margin-top: 8px;
+}
+
+.popup-styles input {
+  width: 100%;
+  margin: 2px;
+  border: none;
+  outline: none;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid gray;
+}
+
+.popup-title {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+#Task-header,
+#Contact-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#Task-header button,
+#Contact-header button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.dashboard-container#blur.active {
+  filter: blur(20px);
+  pointer-events: none;
+  user-select: none;
 }
