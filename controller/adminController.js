@@ -8,6 +8,7 @@ const {
 } = require("../controller/contactListController");
 const HomePageSchema = require("../models/HomepageModel");
 const renderDashboard = async (req, res) => {
+  S;
   const users = await UserSchema.find();
   const currentUser = req.user.name;
   const currentUserPfp = req.user.photoUrl;

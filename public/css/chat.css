@@ -12,13 +12,14 @@
 }
 
 :root {
-  --background: linear-gradient(to top,
-      rgba(210, 153, 194, 0.4) 0%,
-      rgba(254, 249, 215, 0.4) 90%,
-      rgba(255, 255, 255, 0.4) 100%);
+  --background: linear-gradient(
+    to top,
+    rgba(210, 153, 194, 0.4) 0%,
+    rgba(254, 249, 215, 0.4) 90%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
   --background-2: rgb(248, 240, 226);
   --background-2-hover: rgb(189, 188, 188);
-
 }
 
 .dark-theme {
@@ -37,6 +38,10 @@ p {
   position: relative;
 }
 
+.chat-bubble-text-color {
+  color: black;
+}
+
 .light-blue {
   color: #007bff;
   font-weight: 100;
@@ -51,7 +56,7 @@ p {
 }
 
 .container-fitur-chat {
-  margin-top: 4.2rem;
+  margin-top: 5.8rem;
   display: flex;
   min-height: 80vh;
   position: relative;
@@ -241,9 +246,11 @@ p {
   /* color: rgb(119, 114, 114); */
 }
 
-.chat-bubble-container {}
+.chat-bubble-container {
+}
 
-.chat-bubble {}
+.chat-bubble {
+}
 
 .chat-bubble {
   display: flex;
@@ -459,11 +466,11 @@ input:focus,
   border-radius: 50%;
 }
 
-.checkbox-container:hover input~.checkmark {
+.checkbox-container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-.checkbox-container input:checked~.checkmark {
+.checkbox-container input:checked ~ .checkmark {
   background-color: #2196f3;
 }
 
@@ -473,7 +480,7 @@ input:focus,
   display: none;
 }
 
-.checkbox-container input:checked~.checkmark:after {
+.checkbox-container input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -511,7 +518,8 @@ input {
   background-color: var(--background-color);
 }
 
-.text-area::placeholder {}
+.text-area::placeholder {
+}
 
 .popup-addcontact-title {
   display: block;
@@ -531,7 +539,6 @@ a {
 }
 
 @media only screen and (max-width: 600px) {
-
   .latest-chat,
   .contact img,
   .chat-contacts-header {
@@ -562,7 +569,6 @@ a {
 }
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
-
   .latest-chat,
   .contact img,
   .chat-contacts-header {

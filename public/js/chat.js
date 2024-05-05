@@ -60,8 +60,8 @@ const createMyChatBubble = (text) => `
 <div class="my-chat-bubble">
     <div class="my-chat-bubble-text">
         <p>You</p>
-        <div class="my-bubble">
-            <p>${text}</p>
+        <div class="my-bubble ">
+            <p class="chat-bubble-text-color">${text}</p>
         </div>
     </div>
     <div><img src="../../assets/Pfp.png" alt=""></div>
@@ -76,7 +76,7 @@ const createChatBubble = (prop) => `
     <div>
         <p class="chat-current-contact-name">${prop[0]}</p>
         <div class="bubble">
-            <p>${prop[1]}</p>
+            <p class="chat-bubble-text-color">${prop[1]}</p>
         </div>
     </div>
 </div>
