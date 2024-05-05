@@ -23,6 +23,19 @@ const renderDashboard = async (req, res) => {
   });
 };
 
+const renderEditHome = async (req, res) => {
+  const currentUser = req.user.name;
+  const currentUserPfp = req.user.photoUrl;
+  res.render("editHome.ejs", {
+    title: "Edit home",
+    css: "css/editHome.css",
+    js: "js/editHome.js",
+    layout: "mainLayout.ejs",
+    username: currentUser,
+    photoUrl: currentUserPfp,
+  });
+};
+
 const deleteUserById = async (req, res) => {
   const id = req.params.id;
   console.log("id is ", id);
@@ -82,4 +95,5 @@ module.exports = {
   deleteUserById,
   getAllUsers,
   getPagination,
+  renderEditHome,
 };
