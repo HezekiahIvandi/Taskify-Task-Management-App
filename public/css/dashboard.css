@@ -33,6 +33,7 @@ h2 {
   margin-bottom: 0;
 }
 .dashboard-container {
+  position: relative;
   padding: 5rem 13rem 20rem 13rem;
   background-image: var(--background);
 }
@@ -327,4 +328,23 @@ input {
   filter: blur(10px);
   pointer-events: none;
   user-select: none;
+}
+
+.edit-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #007bff;
+  font-weight: 700;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  cursor: pointer;
+}
+.edit-home img {
+  width: 4rem;
+}
+.edit-home:hover {
+  color: #acacac;
 }

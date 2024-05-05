@@ -1,6 +1,18 @@
 const express = require("express");
 const router = express.Router();
-router.get("/", (req, res) => {
+const HomePageSchema = require("../models/HomepageModel");
+router.get("/", async (req, res) => {
+  // Retrieve the document
+  let homepageData = await HomePageSchema.find();
+  if (homepageData.length == 0) {
+    // Create a new document (if it doesn't exist)
+    const homepage = new HomePageSchema();
+    await homepage.save();
+    homepageData = await HomePageSchema.find();
+  }
+  homepageData = homepageData[0];
+  console.log(homepageData);
+  console.log(homepageData.length);
   res.render("index.ejs", {
     title: "Home",
     css: "css/home.css",
@@ -8,7 +20,8 @@ router.get("/", (req, res) => {
     layout: "mainLayout.ejs",
     username: req.isAuthenticated() ? req.user.name : "username",
     photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
-    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,,
+    homepageData: homepageData,
   });
 });
 module.exports = router;
