@@ -34,6 +34,7 @@ const renderEditHome = async (req, res) => {
     layout: "mainLayout.ejs",
     username: currentUser,
     photoUrl: currentUserPfp,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
   });
 };
 

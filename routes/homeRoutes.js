@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     layout: "mainLayout.ejs",
     username: req.isAuthenticated() ? req.user.name : "username",
     photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
-    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,,
+    isAdmin: req.isAuthenticated() ? req.user.isAdmin : false,
     homepageData: homepageData,
   });
 });

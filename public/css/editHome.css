@@ -7,6 +7,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  color: var(--text-color);
 }
 p,
 h2 {
@@ -14,15 +15,27 @@ h2 {
   font-weight: 600;
 }
 
-.edit-home-container {
-  position: relative;
-  padding: 6rem 13rem 20rem 13rem;
-  background-image: linear-gradient(
+:root {
+  --background:linear-gradient(
     to top,
     rgba(210, 153, 194, 0.4) 0%,
     rgba(254, 249, 215, 0.4) 90%,
     rgba(255, 255, 255, 0.4) 100%
   );
+  --background-2:#ffffff;
+  --edit-text: #545454;
+}
+
+.dark-theme {
+  --background:linear-gradient(to top, #303249 0%, #303249 100%);
+  --background-2:#25273b;
+  --edit-text: #ececec;
+}
+
+.edit-home-container {
+  position: relative;
+  padding: 6rem 13rem 20rem 13rem;
+  background-image: var(--background);
 }
 
 .header-title {
@@ -32,7 +45,7 @@ h2 {
 }
 
 .editing-space {
-  background-color: white;
+  background-color: var(--background-2);
   padding: 2rem 2rem 2rem 2rem;
   border-radius: 2rem;
   border-bottom: 1px lightgray solid solid;
@@ -47,8 +60,8 @@ h2 {
 .editable-input {
   border: none;
   outline: none;
-  background: white;
-  color: #545454;
+  background: var(--background-2);
+  color: var(--edit-text);
   width: 40rem;
 }
 
