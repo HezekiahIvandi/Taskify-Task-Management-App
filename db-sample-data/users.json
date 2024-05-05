@@ -6,6 +6,7 @@
   "email": "marchella@marchella.com",
   "password": "$2a$10$w5AB9Q/GlcwPZ4tm6wnUZeRE7d6llJmyrbvs90evttGQ4zJWpUtuu",
   "photoUrl": "assets/Pfp.png",
+  "isAdmin": "false",
   "date": {
     "$date": "2024-04-27T07:42:06.591Z"
   },
@@ -19,6 +20,7 @@
   "email": "angelina@angelina.com",
   "password": "$2a$10$mY.JRjJNmcmDMt.Cz1LHd.xDTHOdXwDPBb3Xi2K2Ml4FOE5leHOx6",
   "photoUrl": "assets/Pfp.png",
+  "isAdmin": "true",
   "date": {
     "$date": "2024-04-27T07:42:58.090Z"
   },

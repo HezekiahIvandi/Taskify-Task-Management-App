@@ -12,6 +12,11 @@
     transition: 0.25s;
 }
 
+#blur.active {
+    filter: blur(10px);
+    transition: 0.5s;
+}
+
 :root {
     --background:linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
     --background-2:#ffffff;
@@ -86,6 +91,16 @@ input[type=password] {
     color: var(--text-color);
 }
 
+.admin-container {
+    text-align: right;
+}
+
+#admin-text {
+    cursor: pointer;
+    user-select: none;
+    color: var(--link);
+}
+
 .form-button {
     min-width: 120px;
     min-height: 48px;
@@ -97,6 +112,7 @@ input[type=password] {
     cursor: pointer;
     transition: all 0.3s ease 0s;
     border-radius: 8px;
+    margin-top: 24px;
 }
 
 .form-button:hover {
@@ -110,4 +126,70 @@ input[type=password] {
 
 .link {
     color: var(--link);
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    background-color: var(--background-2);
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+    z-index: 1000;
+}
+
+.popup.active {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color);
+}
+
+.popup-header button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.edit-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-container-password {
+    margin-top: 10px;
+    display: inline;
+}
+
+a {
+    color: var(--link);
+}
+
+.popup input {
+    width: 100%;
+    margin: 2px;
+    border: none;
+    outline: none;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 1em;
+    background-color: var(--background--color);
+    color: var(--text-color);
+}
+
+.confirm-edit-button:hover {
+    background-color: #01377e;
 }
