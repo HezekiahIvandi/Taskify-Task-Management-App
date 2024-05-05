@@ -37,15 +37,6 @@ body {
     /* Tinggi viewport - tinggi header */
     margin-top: 50px;
     text-align: center;
-    padding-top: 12vh;
-}
-
-.form {
-    margin: auto;
-    margin-top: 2vh;
-    width: 540px;
-    text-align: center;
-    padding: 36px;
     background-color: var(--background-2);
     box-shadow: rgba(105, 104, 104, 0.1) 0px 2px 8px 0px;
     border-radius: 24px;
