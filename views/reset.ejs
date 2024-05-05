@@ -1,0 +1,13 @@
+<div class="main">
+    <%- include ("partials/messages"); %>
+        <form action="/reset" method="post" class="form">
+            <h1 class="form-title">Reset Password</h1>
+            <div class="textfield">
+                <label for="token">Reset token</label>
+                <input type="text" placeholder="Input the reset token here" name="token" id="token" required />
+                <label for="password">New Password</label>
+                <input type="text" placeholder="Input the new password" name="password" id="password" required />
+            </div>
+            <button class="form-button" type="submit">Confirm</button>
+        </form>
+</div>

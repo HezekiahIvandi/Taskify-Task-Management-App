@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const User = require("../models/User");
 const { ensureNotAuthenticated, ensureAuthenticated } = require("../config/auth");
-const { renderLogin, renderRegister, registerUser, loginUser, logoutUser, forgotPassword, resetPassword } = require("../controller/authController");
+const { renderLogin, renderRegister, registerUser, renderReset, loginUser, logoutUser, forgotPassword, resetPassword } = require("../controller/authController");
 
 // Menampilkan Halaman Login
 router.get("/login", ensureNotAuthenticated, renderLogin);
@@ -18,7 +18,9 @@ router.post("/login", ensureNotAuthenticated, loginUser);
 router.get("/logout", ensureAuthenticated, logoutUser);
 // Handling Forgot Password
 router.post("/forgot", forgotPassword);
+// Menampilkan Halaman Reset Password
+router.get("/reset",ensureNotAuthenticated, renderReset)
 // Handling Reset Password
-router.patch("/reset/:token", resetPassword)
+router.post("/reset", resetPassword)
 
 module.exports = router;
