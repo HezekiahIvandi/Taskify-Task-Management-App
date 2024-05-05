@@ -132,6 +132,11 @@ input[type=password] {
 #forgot-pass-text {
     cursor: pointer;
     user-select: none;
+    color: blue;
+}
+
+#forgot-pass-text:active {
+    color: purple;
 }
 
 .form-button {

@@ -29,6 +29,18 @@ const renderRegister = async (req, res) => {
   });
 };
 
+// Function menampilkan halaman reset password
+const renderReset = async (req, res) => {
+  res.render("reset.ejs", {
+    title: "Reset Password",
+    css: "css/reset.css",
+    js: "js/reset.js",
+    layout: "mainLayout.ejs",
+    username: req.isAuthenticated() ? req.user.name : "username",
+    photoUrl: req.isAuthenticated() ? req.user.photoUrl : "",
+  });
+};
+
 // Function Register User
 const registerUser = async (req, res) => {
   const { name, email, password, password2 } = req.body;
@@ -164,71 +176,76 @@ const forgotPassword = async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
+    req.flash("error_msg", "No User Found")
+    res.redirect("/login");
     next();
-  }
-
-  // Generasi token untuk reset password yang random
-  const resetToken = await user.createResetPasswordToken();
-  await user.save({ validateBeforeSave: false });
-
-  // Mengirimkan token ke email user
-  const resetUrl = `${req.protocol}://${req.get('host')}/reset/${resetToken}`;
-  const message = `We have received a password reset request. Please use the link below to reset your pasword\n\n${resetUrl}\n\nThis link will expire in 10 minutes`;
-
-  try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Password reset request received',
-      message: message
-    });
-
-    res.status(200).json({
-      status: "success",
-      message: "password reset link send to the user email"
-    })
-  } catch (err) {
-    user.passwordResetToken = undefined;
-    user.passwordResetTokenExpire = undefined;
+  } else {
+    // Generasi token untuk reset password yang random
+    const resetToken = await user.createResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    return next(err);
+    // Mengirimkan token ke email user
+    const message = `We have received a password reset request. Please use the token below to reset your pasword\n\n${resetToken}\n\nThis token will expire in 10 minutes`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Password reset request received',
+        message: message
+      });
+      // Setelah email dikirim, redirect ke page reset
+      req.flash("success_msg", "Reset Password Token Has Been Sent To Your Email");
+      res.redirect("/reset");
+    } catch (err) {
+      user.passwordResetToken = undefined;
+      user.passwordResetTokenExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      return next(err);
+    }
   }
 
 }
 
 // Function untuk reset password
 const resetPassword = async (req, res, next) => {
-  console.log(req.params.token);
+  console.log(req.body.token);
   // Mencari user dengan token reset password yang sesuai
-  const token = crypto.createHash('sha256').update(req.params.token).digest('hex');
+  const token = crypto.createHash('sha256').update(req.body.token).digest('hex');
   const user = await User.findOne({ passwordResetToken: token, passwordResetTokenExpire: { $gt: Date.now() } });
   if (!user) {
+    req.flash("error_msg", "Token Is Invalid")
+    res.redirect("/reset");
     next();
+  } else {
+    // Reset password user
+    // Hasing password baru
+    new_password = req.body.password;
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(new_password, salt, (err, hash) => {
+        // Mengubah password user menjadi hash
+        user.password = hash;
+        user.save();
+      });
+    });
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpire = undefined;
+
+    await user.save();
+
+    // Redirect user ke login setelah reset password
+    req.flash("success_msg", "Reset Password Successful, Please Login");
+    res.redirect("/login");
   }
 
-  // Reset password user
-  // Hasing password baru
-  new_password = req.body.password;
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(new_password, salt, (err, hash) => {
-      // Mengubah password user menjadi hash
-      user.password = hash;
-      user.save();
-    });
-  });
-  user.passwordResetToken = undefined;
-  user.passwordResetTokenExpire = undefined;
 
-  await user.save();
-
-  // Redirect user ke login setelah reset password
-  res.redirect("/login");
 }
 
 
 module.exports = {
   renderLogin,
   renderRegister,
+  renderReset,
   registerUser,
   loginUser,
   logoutUser,
