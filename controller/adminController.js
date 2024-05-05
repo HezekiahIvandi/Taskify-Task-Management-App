@@ -6,7 +6,7 @@ const {
   updateSavedContactsId,
   deleteSavedContactId,
 } = require("../controller/contactListController");
-
+const HomePageSchema = require("../models/HomepageModel");
 const renderDashboard = async (req, res) => {
   const users = await UserSchema.find();
   const currentUser = req.user.name;
@@ -90,10 +90,72 @@ const getPagination = async (req, res) => {
   }
 };
 
+const getHome = async (req, res) => {
+  try {
+    const homepageData = await HomePageSchema.find();
+    res.status(200).json({ homepage: homepageData });
+  } catch (err) {
+    console.error("Error fetching hp:", err);
+    res.status(500).json({ msg: "Unable to get hp" });
+  }
+};
+
+const updateChangingText = async (req, res) => {
+  const { newChangingText } = req.body;
+  console.log("halo", newChangingText);
+  try {
+    const updatedHomepage = await HomePageSchema.findOneAndUpdate(
+      {},
+      { ChangingText: newChangingText },
+      { new: true }
+    );
+    console.log("Updated ChangingText:", updatedHomepage.ChangingText);
+    res.status(200).json({ message: "ChangingText updated successfully" });
+  } catch (err) {
+    console.error("Error updating ChangingText:", err);
+    res.status(500).json({ error: "Error updating ChangingText" });
+  }
+};
+
+const updateMainTitleDesc = async (req, res) => {
+  const { newDesc } = req.body;
+  try {
+    const updatedHomepage = await HomePageSchema.findOneAndUpdate(
+      {},
+      { mainTitleDesc: newDesc },
+      { new: true }
+    );
+    console.log("Updated mainTitleDesc:", updatedHomepage.newDesc);
+    res.status(200).json({ message: "mainTitleDesc updated successfully" });
+  } catch (err) {
+    console.error("Error updating mainTitleDesc:", err);
+    res.status(500).json({ error: "Error updating mainTitleDesc" });
+  }
+};
+
+const updateFeaturesInfo = async (req, res) => {
+  const { newInfo } = req.body;
+  try {
+    const updatedHomepage = await HomePageSchema.findOneAndUpdate(
+      {},
+      { featuresInfo: newInfo },
+      { new: true }
+    );
+    console.log("Updated featuresInfo:", updatedHomepage.newInfo);
+    res.status(200).json({ message: "featuresInfo updated successfully" });
+  } catch (err) {
+    console.error("Error updating featuresInfo:", err);
+    res.status(500).json({ error: "Error updating featuresInfo" });
+  }
+};
 module.exports = {
   renderDashboard,
   deleteUserById,
   getAllUsers,
   getPagination,
   renderEditHome,
+  getHome,
+  updateChangingText,
+  updateMainTitleDesc,
+  updateFeaturesInfo,
 };

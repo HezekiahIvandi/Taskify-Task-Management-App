@@ -68,6 +68,13 @@ body {
   font-size: 1.5em;
   font-weight: 500;
   color: #a1a1a1;
+  width: 33rem;
+}
+.main-subtitle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .start-button {
