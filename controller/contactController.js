@@ -7,6 +7,7 @@ const {
   deleteSavedContactId,
 } = require("../controller/contactListController");
 
+//Duplicate test
 const isDuplicateNameArray = async (namesArray) => {
   // cari apakah ada contact dengan names yang sama
   const existingDocuments = await ContactSchema.find({
