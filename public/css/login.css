@@ -15,61 +15,6 @@ body {
     background-color: #ffffff;
 }
 
-/* Header Styles */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 5px 5%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-}
-
-.logo {
-    cursor: pointer;
-    width: 200px;
-}
-
-.navbar a {
-    font-size: 16px;
-    color: #a1a1a1;
-    transition: all 0.3s ease 0s;
-    font-weight: bold;
-    text-decoration: none;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.navbar a:hover {
-    color: #007bff;
-}
-
-.navbar a.active {
-    color: #007bff;
-}
-
-.login-button {
-    min-width: 100px;
-    min-height: 40px;
-    font-weight: bold;
-    font-size: 16;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    margin-left: 60px;
-    border-radius: 8px;
-}
-
-.login-button:hover {
-    background-color: #01377e;
-}
-
 .main {
     background-image: linear-gradient(to top, rgba(210, 153, 194, 0.4) 0%, rgba(254, 249, 215, 0.4) 90%, rgba(255, 255, 255, 0.4) 100%);
     width: 100%;

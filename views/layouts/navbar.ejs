@@ -1,5 +1,5 @@
 <header>
-  <a href="/"><img alt="Logo Taskify" class="logo" src="assets/Taskify.png" /></a>
+  <a href="/"><img alt="Logo Taskify" class="logo" id="logo" src="assets/Taskify.png" /></a>
   <nav>
     <ul class="nav-links">
       <li>
@@ -16,14 +16,16 @@
           <li>
             <a href="/dashboard" class="<%= currentPage === '/dashboard' ? 'active' : '' %>">Dashboard</a>
           </li>
-        <% } else { %>
-        <% } %>
-      <% } %>
+          <% } else { %>
+            <% } %>
+              <% } %>
     </ul>
   </nav>
   <% if (isAuthenticated===false) { %>
+    <img src="assets/moon.png" class="dark-mode" id="dark-mode">
     <a class="login" href="/login"><button class="login-button">Login</button></a>
     <% } else { %>
+      <img src="assets/moon.png" class="dark-mode" id="dark-mode">
       <div class="nav-user">
         <div class="profile">
           <img src="<%= photoUrl %>" class="nav-userPfp" />
@@ -42,6 +44,5 @@
           </ul>
         </div>
       </div>
-
       <% } %>
 </header>

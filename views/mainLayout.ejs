@@ -1,77 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- head -->
-  <%- include('layouts/head') %>
-  <body>
+<!-- head -->
+<%- include('layouts/head') %>
+
+  <body class="">
     <!-- navbar -->
     <%- include('layouts/navbar') %>
-    <!-- body -->
-    <%- body %>
+      <!-- body -->
+      <%- body %>
 
-    <!-- Sweet Alert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- Sweet Alert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <!-- Load the Google Platform Library -->
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+        <!-- Load the Google Platform Library -->
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
-    <script>
-      // Fungsi untuk menyortir tugas berdasarkan opsi yang dipilih
-      async function sortTasks() {
-        var sortCriteria = document.getElementById("sortCriteria").value;
-        var sortOrder = document.getElementById("sortOrder").value;
+        <script>
+          // Fungsi untuk menyortir tugas berdasarkan opsi yang dipilih
+          async function sortTasks() {
+            var sortCriteria = document.getElementById("sortCriteria").value;
+            var sortOrder = document.getElementById("sortOrder").value;
 
-        // Lakukan sortir sesuai dengan kriteria dan urutan yang dipilih
-        console.log("Sorting tasks by " + sortCriteria + " in " + sortOrder + " order");
+            // Lakukan sortir sesuai dengan kriteria dan urutan yang dipilih
+            console.log("Sorting tasks by " + sortCriteria + " in " + sortOrder + " order");
 
-        // Kirim data ke backend
-        try {
-          const response = await fetch(`/project/${sortCriteria}/${sortOrder}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({}),
-          });
-        } catch (error) {
-          // Tangani kesalahan jika ada kesalahan saat melakukan permintaan
-          console.error("Terjadi kesalahan:", error);
-        }
-      }
-      
-      function onSuccess(googleUser) {
-        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-      }
-      function onFailure(error) {
-        console.log(error);
-      }
-      function renderButton() {
-        gapi.signin2.render('my-signin2', {
-          'scope': 'profile email',
-          'width': 240,
-          'height': 50,
-          'longtitle': true,
-          'theme': 'dark',
-          'onsuccess': onSuccess,
-          'onfailure': onFailure
-        });
-      }
+            // Kirim data ke backend
+            try {
+              const response = await fetch(`/project/${sortCriteria}/${sortOrder}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({}),
+              });
+            } catch (error) {
+              // Tangani kesalahan jika ada kesalahan saat melakukan permintaan
+              console.error("Terjadi kesalahan:", error);
+            }
+          }
 
-      // Fungsi untuk membuka modal
-      function openModal(modalId) {
-        document.getElementById(modalId).style.display = "block";
-      }
-      
-      // Fungsi untuk menutup modal
-      function closeModal(modalId) {
-        document.getElementById(modalId).style.display = "none";
-      }
+          function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+          }
+          function onFailure(error) {
+            console.log(error);
+          }
+          function renderButton() {
+            gapi.signin2.render('my-signin2', {
+              'scope': 'profile email',
+              'width': 240,
+              'height': 50,
+              'longtitle': true,
+              'theme': 'dark',
+              'onsuccess': onSuccess,
+              'onfailure': onFailure
+            });
+          }
 
-      // Menutup modal jika klik dilakukan di luar area modal
-      window.onclick = function(event) {
-        if (event.target.classList.contains("modal")) {
-          event.target.style.display = "none";
-        }
-      }
-    </script>
+          // Fungsi untuk membuka modal
+          function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+          }
+
+          // Fungsi untuk menutup modal
+          function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+          }
+
+          // Menutup modal jika klik dilakukan di luar area modal
+          window.onclick = function (event) {
+            if (event.target.classList.contains("modal")) {
+              event.target.style.display = "none";
+            }
+          }
+
+          // Mengecek apakah user ada preferensi dark mode dari localstorage
+          const isDarkMode = localStorage.getItem("darkMode") === "true";
+
+          // Function buat toggle dark mode
+          function toggleDarkMode() {
+            const body = document.body;
+            const darkMode = document.getElementById("dark-mode");
+            const logo = document.getElementById("logo");
+
+            // Toggle class dark-theme pada body
+            body.classList.toggle("dark-theme");
+
+            // Update icon dark mode dan logo berdasarkan theme
+            if (body.classList.contains("dark-theme")) {
+              darkMode.src = "assets/sun.png";
+              logo.src = "assets/Taskify-dark.png";
+              // Simpen preferensi dark mode di local storage
+              localStorage.setItem("darkMode", "true");
+            } else {
+              darkMode.src = "assets/moon.png";
+              logo.src = "assets/Taskify.png";
+              // Hapus preferensi dark mode di local storage
+              localStorage.setItem("darkMode", "false");
+            }
+          }
+
+          // Inisialisasi dark mode berdasarkan preferensi user
+          if (isDarkMode) {
+            document.body.classList.add("dark-theme");
+            document.getElementById("dark-mode").src = "assets/sun.png";
+            document.getElementById("logo").src = "assets/Taskify-dark.png";
+          }
+
+          // Tambah eventlistener untuk button dark mode
+          document.getElementById("dark-mode").addEventListener("click", toggleDarkMode);
+
+        </script>
   </body>
+
 </html>
