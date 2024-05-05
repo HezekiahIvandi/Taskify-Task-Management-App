@@ -11,6 +11,7 @@
 p,
 h2 {
   margin-bottom: 0;
+  font-weight: 600;
 }
 
 .edit-home-container {
@@ -32,8 +33,34 @@ h2 {
 
 .editing-space {
   background-color: white;
-  padding: 2rem 2rem 0rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
   border-radius: 2rem;
   margin-top: 2.5rem;
   border-bottom: 1px lightgray solid solid;
+}
+
+.editable-field {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editable-input {
+  border: none;
+  outline: none;
+  background: white;
+  color: #545454;
+  width: 40rem;
+}
+
+.edit-button {
+  cursor: pointer;
+  font-size: 2em;
+  position: relative;
+  top: 5px;
+}
+
+iframe {
+  width: 100%;
+  height: 90vh;
 }
